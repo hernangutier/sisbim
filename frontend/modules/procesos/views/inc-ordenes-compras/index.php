@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'id_prov',
                 'value'=>function ($searchModel){
-                  return '<span class="badge badge-danger"><b>' . $searchModel->prov->razon . '</b></span>';
+                  return '<span class="badge badge-info"><b>' . $searchModel->prov->razon . '</b></span>';
                 },
                 'format'=>'raw',
                 'filter' => Html::activeDropDownList($searchModel,
