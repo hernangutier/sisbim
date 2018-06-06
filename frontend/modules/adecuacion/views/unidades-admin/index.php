@@ -111,41 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-            ['class' => 'yii\grid\ActionColumn',
-                'template' => '{asignar}',
 
-                 //--------- Actualizar ---
-             'buttons' => [
-               'delete' => function ($url, $searchModel) {
-                 return Html::a(Yii::t('app',''), ['unidades-admin/delete', 'id' => $searchModel->id], [
-                     'class' => 'ace-icon fa fa-trash-o bigger-120 red',
-                     'data' => [
-                         'confirm' => Yii::t('app', 'Estas Seguro de Eliminar la Unidad Administrativa: '.$searchModel->codigo ),
-                         'method' => 'post',
-                     ],
-                 ]);
-
-
-               },
-
-
-
-               'update' => function ($url,$searchModel) {
-                 return Html::a( '<i class="ace-icon fa fa-pencil bigger-120"></i>',
-                            ['unidades-admin/update','id'=>$searchModel->id],
-
-                            ['title'=>'Actualizar',
-                            'class'=>'blue',
-                           ]);
-               },
-
-
-                 'asignar' => function ($url,$model) {
-                        return Html::a('<span class="glyphicon glyphicon-equalizer"></span>',['asignarpadre','id'=>$model->id]);
-
-                    },
-             ],
-            ],
         ],
     ]); ?>
     </div>

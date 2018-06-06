@@ -16,6 +16,25 @@ use \kartik\switchinput\SwitchInput;
 
 
 	<?= $form->field($model, 'ubicacion')->textInput(['maxlength' => true]) ?>
+	<?php //-------------- Contactos -------------
+
+       echo $form->field($model, 'id_und_superior')->widget(Select2::classname(), [
+
+            'data' => ArrayHelper::map(common\models\UnidadesAdmin::find()->all(),'id',
+                 function($model, $defaultValue) {
+                    return $model->descripcion;
+            }
+    ),
+            'language' => 'es',
+
+            'options' => ['placeholder' => 'Seleccione Unidad Superior ...'],
+            'pluginOptions' => [
+            'allowClear' => true
+            ],
+
+            ]);
+
+    ?>
 
 	<?php //-------------- Contactos -------------
 

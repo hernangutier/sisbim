@@ -16,6 +16,7 @@ use Yii;
  * @property integer $categoria
  * @property integer $disponible_inc
  * @property integer $id
+ * @property integer $id_und_superior
  * @property integer $id_sede
  * @property string $email
  * @property SdbCatUnidadesAdmin $categoria0
@@ -41,7 +42,7 @@ class UnidadesAdmin extends \yii\db\ActiveRecord
     {
         return [
             [['descripcion', 'ubicacion',  'disponible_inc', 'id_sede','categoria','codigo','nomenclatura'], 'required'],
-            [['id_resp', 'default_active', 'categoria', 'disponible_inc', 'id_sede'], 'integer'],
+            [['id_resp', 'default_active', 'categoria', 'disponible_inc', 'id_sede','id_und_superior'], 'integer'],
             [['descripcion', 'ubicacion'], 'string', 'max' => 150],
             [['telefono'], 'string', 'max' => 70],
             [['codigo'], 'string', 'max' => 20],
@@ -69,7 +70,8 @@ class UnidadesAdmin extends \yii\db\ActiveRecord
             'id_sede' => 'Sede de Adscripción',
             'email'=>'e-mail',
             'tel_ext' => 'Extención Telefonica',
-            'nomenclatura'=>'Abreviación de la Unidad'
+            'nomenclatura'=>'Abreviación de la Unidad',
+            'id_und_superior'=>'Unidad Superior de Dependencia'
         ];
     }
 

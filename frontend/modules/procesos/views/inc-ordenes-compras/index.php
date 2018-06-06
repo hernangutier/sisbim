@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\IncOrdenesComprasSearch */
@@ -95,9 +96,20 @@ $this->params['breadcrumbs'][] = $this->title;
                   return '<span class="badge badge-info"><b>' . $searchModel->prov->razon . '</b></span>';
                 },
                 'format'=>'raw',
-                'filter' => Html::activeDropDownList($searchModel,
-                'id_prov', ArrayHelper::map(common\models\Proveedores::find()->all(),
-                'id', 'razon'),['class'=>'form-control','prompt' => 'No Filtro']),
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'id_prov',
+                    'data' => ArrayHelper::map(common\models\Proveedores::find()->all(),'id','razon'),
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                    'options' => [
+
+                      'placeholder' => 'Filtrar por Proveedor...',
+                    ]
+                ]),
+
+
             ],
 
 

@@ -72,6 +72,22 @@ class IncOrdenesComprasController extends Controller
         ]);
     }
 
+    public function actionNulls($id)
+    {
+      $model= new IncOrdenesNulls();
+      $model->id_oc=$id;
+
+      if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['view', 'id' => $model->id]);
+      }
+
+      $this->layout="main";
+      return $this->renderAjax('_form_nulls', [
+          'model' => $model,
+      ]);
+
+    }
+
     /**
      * Displays a single IncOrdenesCompras model.
      * @param integer $id

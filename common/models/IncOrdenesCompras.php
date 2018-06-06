@@ -14,6 +14,7 @@ use Yii;
  * @property string $descripcion
  * @property int $status 0: abierta 1: procesada o cerrada 2: anulada
  * @property int $id_user
+ 
  *
  * @property Proveedores $prov
  * @property UserBm $user
