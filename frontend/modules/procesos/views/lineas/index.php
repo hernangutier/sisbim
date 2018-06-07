@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProveedoresSearch */
+/* @var $searchModel app\models\LineasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Proveedores');
+$this->title = Yii::t('app', 'Lineas');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
@@ -19,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h3 class="header smaller lighter blue">
       <i class="ace-icon fa  	fa-comments "></i>
-        Maestro de Proveedores
+        Maestro de Lineas
     </h3>
   <p>
     <div class="btn-group">
-      <?= Html::a('Crear Proveedor', ['create'], ['class' => 'btn btn-success']) ?>
+      <?= Html::a('Crear Linea', ['create'], ['class' => 'btn btn-success']) ?>
       <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
     </div>
 
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                   'title' => Yii::t('yii', 'Delete'),
                                   'aria-label' => Yii::t('yii', 'Delete'),
                                   'onclick' => "
-                                  krajeeDialog.confirm('Esta seguro de eliminar el Proveedor:  ' +  '$model->razon', function (result) {
+                                  krajeeDialog.confirm('Esta seguro de eliminar el Proveedor:  ' +  '$model->descripcion', function (result) {
                                        if (result) {
                                           $.ajax({
 
@@ -95,18 +95,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'label'=>'Código',
 
             'value'=>function ($searchModel, $key, $index, $widget) {
-                return Html::a($searchModel->codigo,
+                return Html::a($searchModel->ref,
                     ['view','id'=>$searchModel->id],
-                    ['title'=>'Ver Datos del Proveedor' ]);
+                    ['title'=>'Ver Datos de la Linea' ]);
             },
 
             'format'=>'raw'
             ],
-            'cedrif',
-            'razon',
-            'direccion',
-            'telefono',
-            'fax',
+            'descripcion',
+
             // 'email:email',
             // 'responsable',
             // 'tlfcontact',

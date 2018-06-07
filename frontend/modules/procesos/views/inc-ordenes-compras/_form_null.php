@@ -20,13 +20,24 @@ use yii\web\View;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<div class="container">
 
+<<<<<<< HEAD
     <?php $form = ActiveForm::begin([
         'id' => 'poliza-form',
         'enableAjaxValidation' => true,
         'enableClientScript' => true,
         'enableClientValidation' => true,
     ]); ?>
+=======
+
+<?php $form = ActiveForm::begin([
+    'id' => 'orden-anular-form',
+    'enableAjaxValidation' => true,
+    'enableClientScript' => true,
+    'enableClientValidation' => true,
+]); ?>
+>>>>>>> ef9d25a9491197045026662347043b92075b69d0
       <fieldset>
 
           <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
@@ -38,3 +49,4 @@ use yii\web\View;
       </div>
 
     <?php ActiveForm::end(); ?>
+</div>

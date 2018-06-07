@@ -20,12 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
   <h3 class="header smaller lighter blue">
     <i class="ace-icon fa  	fa-comments "></i>
-      Maestro de Bienes Muebles
+    <?= ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles' : 'Consultar Registro Activo  Bienes de Uso' ?>
   </h3>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Crear Bien Mueble'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 
 
     <?php Pjax::begin(); ?>
@@ -35,28 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{update}',
-                            'buttons' => [
 
-
-
-
-                              'update' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-refresh bigger-120"></i></span> ',
-                                      Url::to(['bienes/update','id'=>$model->id]), [
-                                      'id' => 'activity-index-link',
-                                      'title' => Yii::t('app', 'Actualizar'),
-
-                                  ]);
-                              },
-
-
-
-
-                            ],
-              ],
 
             [
             'attribute'=>'codigo',
