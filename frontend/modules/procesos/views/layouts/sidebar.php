@@ -90,6 +90,17 @@
 
                         <b class="arrow"></b>
                     </li>
+
+                    <li class="">
+                          <a href="<?=  Url::to(['bienes-en-custodia/index'])  ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                           Bienes en Custodia
+                          </a>
+
+                          <b class="arrow"></b>
+                      </li>
+
+
                     <li class="">
                           <a href="<?=  Url::to(['lineas/index'])  ?>">
                             <i class="menu-icon fa fa-caret-right"></i>
