@@ -41,7 +41,7 @@ class IncOrdenesComprasController extends Controller
         $query = new Query;
         $query->select('*')
             ->from('vw_proveedores_activos')
-            ->where(['like', 'descripcion', strtoupper($q)])
+            ->where(['like', 'tostring', strtoupper($q)])
             //->where(['id_und_actual'=>$id_und])
             ->limit(40);
         $command = $query->createCommand();
@@ -96,6 +96,7 @@ class IncOrdenesComprasController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout="main";
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -119,6 +120,10 @@ class IncOrdenesComprasController extends Controller
             'model' => $model,
         ]);
     }
+
+
+
+
 
     /**
      * Updates an existing IncOrdenesCompras model.

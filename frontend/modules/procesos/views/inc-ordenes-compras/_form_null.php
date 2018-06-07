@@ -21,8 +21,14 @@ use yii\web\View;
 ?>
 
 
-  <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'poliza-form',
+        'enableAjaxValidation' => true,
+        'enableClientScript' => true,
+        'enableClientValidation' => true,
+    ]); ?>
       <fieldset>
+
           <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 
       </fieldset>
