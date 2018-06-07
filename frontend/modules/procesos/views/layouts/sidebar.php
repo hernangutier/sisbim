@@ -47,6 +47,117 @@
 
         <li class="">
 						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-tag "></i>
+							<span class="menu-text">
+							   Referencias
+							</span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+
+
+              <li class="">
+                <a href="#" class="dropdown-toggle">
+                  	<i class="menu-icon fa fa-caret-right"></i>
+                  <span class="menu-text">
+                     Bienes
+                  </span>
+
+                  <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+								<b class="arrow"></b>
+
+                <ul class="submenu">
+
+                  <li class="">
+                        <a href="<?=  Url::to(['bienes/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                          Bienes Muebles
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+                  <li class="">
+                        <a href="<?=  Url::to(['bienes/index-uso'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                         Bienes de Uso
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                          <a href="<?=  Url::to(['lineas/index'])  ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                           Lineas
+                          </a>
+
+                          <b class="arrow"></b>
+                    </li>
+
+
+
+                  </ul>
+							</li>
+
+
+              <li class="">
+                <a href="#" class="dropdown-toggle">
+                  	<i class="menu-icon fa fa-caret-right"></i>
+                  <span class="menu-text">
+                     Ubicación
+                  </span>
+
+                  <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+								<b class="arrow"></b>
+
+                <ul class="submenu">
+
+                  <li class="">
+                        <a href="<?=  Url::to(['unidades-admin/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                          Unidades Funcionales
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+                  <li class="">
+                        <a href="<?=  Url::to(['responsables/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Responsables
+                        </a>
+
+                        <b class="arrow"></b>
+                      </li>
+
+
+
+                  </ul>
+							</li>
+
+
+              <li class="">
+										<a href="<?= Url::to(['proveedores/index'])  ?>">
+											<i class="menu-icon fa fa-caret-right"></i>
+											Proveedores
+										</a>
+
+										<b class="arrow"></b>
+							</li>
+
+
+
+          </li>
+  </ul>
+
+        <li class="">
+						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-hand-o-down "></i>
 							<span class="menu-text">
 							   Incorporaciones
@@ -126,23 +237,7 @@
                     <b class="arrow"></b>
               </li>
 
-              <li class="">
-										<a href="<?= Url::to(['unidades-admin/index'])  ?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Unidades Administrativas
-										</a>
 
-										<b class="arrow"></b>
-							</li>
-
-              <li class="">
-										<a href="<?= Url::to(['proveedores/index'])  ?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Proveedores
-										</a>
-
-										<b class="arrow"></b>
-							</li>
 
           </li>
   </ul>

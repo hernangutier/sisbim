@@ -14,38 +14,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" style="min-height: 212.133px;">
-                  <div class="widget-box widget-color-blue2">
-                    <div class="widget-header">
-                      <h5 class="widget-title"> <b>Maestro de Proveedores</b></h5>
-
-                      <div class="widget-toolbar">
-													<a href="#" data-action="collapse">
-														<i class="1 ace-icon fa fa-chevron-up bigger-125"></i>
-													</a>
+  <div class="container">
 
 
+    <h3 class="header smaller lighter blue">
+      <i class="ace-icon fa  	fa-comments "></i>
+        Maestro de Proveedores
+    </h3>
+  <p>
+    <div class="btn-group">
+      <?= Html::a('Crear Proveedor', ['create'], ['class' => 'btn btn-success']) ?>
+      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
+    </div>
 
-												</div>
-
-                        <div class="widget-toolbar ">
-                        <div class="widget-menu">
-                          <?= Html::a(Yii::t('app', '<i class="ace-icon fa fa-plus "></i> Nuevo'), ['create'], ['class' => 'btn  btn-primary btn-bold pull-right']) ?>
-
-
-
-                        </div>
-                        </div>
-
-
-
-
-
-                    </div>
-
-                    <div class="widget-body">
-                      <div class="widget-main">
+  </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -143,9 +125,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
     </div>

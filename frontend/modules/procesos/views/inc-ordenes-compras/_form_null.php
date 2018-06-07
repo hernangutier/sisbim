@@ -20,8 +20,15 @@ use yii\web\View;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<div class="container">
 
-  <?php $form = ActiveForm::begin(); ?>
+
+<?php $form = ActiveForm::begin([
+    'id' => 'orden-anular-form',
+    'enableAjaxValidation' => true,
+    'enableClientScript' => true,
+    'enableClientValidation' => true,
+]); ?>
       <fieldset>
           <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 
@@ -32,3 +39,4 @@ use yii\web\View;
       </div>
 
     <?php ActiveForm::end(); ?>
+</div>
