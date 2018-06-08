@@ -82,4 +82,57 @@ class BienesEnCustodia extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UnidadesAdmin::className(), ['id' => 'id_und_actual']);
     }
+
+    public function getEstadoUso(){
+      if ($this->estado_uso==1){
+        return 'En Uso';
+      }
+      if ($this->estado_uso==2){
+        return 'En Comodato';
+      }
+      if ($this->estado_uso==3){
+        return 'En Arrendamiento';
+      }
+      if ($this->estado_uso==4){
+        return 'En Mantenimiento';
+      }
+      if ($this->estado_uso==5){
+        return 'En Reparación';
+      }
+      if ($this->estado_uso==6){
+        return 'En proceso de disposición';
+      }
+      if ($this->estado_uso==7){
+        return 'En Desuso por Obsolecencia';
+      }
+      if ($this->estado_uso==8){
+        return 'En Desuso por Inservibilidad';
+      }
+      if ($this->estado_uso==9){
+        return 'En Desuso por Obsolecencia e Inservibilidad';
+      }
+      if ($this->estado_uso==10){
+        return 'En Almacen o Deposito para su Asignación';
+      }
+      if ($this->estado_uso==11){
+        return 'Otro Uso';
+      }
+
+    }
+
+    public static function getListEstadosUso(){
+      return [
+            '1'=>'En Uso',
+            '2'=>'En Comodato',
+            '3'=>'En Arrendamiento',
+            '4'=>'En Mantenimiento',
+            '4'=>'En Reparación',
+            '6'=>'En proceso de disposoción',
+            '7'=>'En Desuso por Obsolecencia',
+            '8'=>'En Desuso por Inservibilidad',
+            '9'=>'En Desuso por Obsolecencia e Inservibilidad',
+            '10'=>'En Almacen o Deposito para su Asignación',
+            '11'=>'Otro Uso',
+        ];
+    }
 }

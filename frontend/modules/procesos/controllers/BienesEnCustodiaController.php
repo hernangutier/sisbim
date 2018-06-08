@@ -37,7 +37,7 @@ class BienesEnCustodiaController extends Controller
     {
         $searchModel = new BienesEnCustodiaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $this->layout="main";
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

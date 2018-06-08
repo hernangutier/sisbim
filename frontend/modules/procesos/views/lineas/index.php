@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
   <p>
     <div class="btn-group">
       <?= Html::a('Crear Linea', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
+      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  '#', ['class' => 'btn btn-info']) ?>
     </div>
 
   </p>
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   'buttons' => [
                     'update' => function ($url, $model, $key) {
                         return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-refresh bigger-120"></i></span> ',
-                            Url::to(['proveedores/update','id'=>$model->id]), [
+                            Url::to(['lineas/update','id'=>$model->id]), [
                             'id' => 'activity-index-link',
                             'title' => Yii::t('app', 'Actualizar'),
 

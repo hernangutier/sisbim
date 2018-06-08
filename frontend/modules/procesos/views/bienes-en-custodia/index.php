@@ -47,8 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'format'=>'raw'
             ],
-            'old_cod',
-
+            
             'descripcion',
             [
                 'attribute'=>'Ubicacion Actual',
@@ -79,25 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id_lin', ArrayHelper::map(common\models\Lineas::find()->all(),
                 'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
-            [
-                'attribute'=>'Categoria (SUDEBIP)',
-                'value'=>function($model){
-                  if (is_null($model->idcat0)){
-                    return '';
-                  }  else {
-                      return $model->idcat0->descripcion;
-                  }
 
-                },
-                'filter' => Html::activeDropDownList($searchModel,
-                'id_cat', ArrayHelper::map(common\models\SdbCategoriasEsp::find()->all(),
-                'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
-            ],
 
             [
                 'attribute'=>'Estado Uso (SUDEBIP)',
                 'value'=>function($model){
-                  if (is_null($model->estado_uso)){
+                  if (is_null($model->status_uso_sdb)){
                     return '';
                   }  else {
                       return $model->getEstadoUso();
@@ -105,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 },
                 'filter' => Html::activeDropDownList($searchModel,
-                'estado_uso', ArrayHelper::map(common\models\Bienes::getListEstadosUso(),
+                'status_uso_sdb', ArrayHelper::map(common\models\Bienes::getListEstadosUso(),
                 'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
 
