@@ -4,6 +4,7 @@ namespace frontend\modules\procesos\controllers;
 
 use Yii;
 use common\models\IncOrdenesCompras;
+use common\models\IncOrdenesNulls;
 use common\models\IncOrdenesComprasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,6 +78,7 @@ class IncOrdenesComprasController extends Controller
     {
       $model= new IncOrdenesNulls();
       $model->id_oc=$id;
+      $model->id_user=Yii::$app->user->identity->id_bm;
 
       if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
           Yii::$app->response->format = Response::FORMAT_JSON;
@@ -96,7 +98,7 @@ class IncOrdenesComprasController extends Controller
           }
       }
 
-      return $this->renderAjax('_form_nulls', [
+      return $this->renderAjax('_form_null', [
           'model' => $model,
       ]);
 

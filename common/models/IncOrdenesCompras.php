@@ -14,7 +14,7 @@ use Yii;
  * @property string $descripcion
  * @property int $status 0: abierta 1: procesada o cerrada 2: anulada
  * @property int $id_user
- 
+
  *
  * @property Proveedores $prov
  * @property UserBm $user
@@ -92,11 +92,11 @@ class IncOrdenesCompras extends \yii\db\ActiveRecord
         return '<span class="badge badge-warning"><b>Pendiente</b></span>';
       }
 
-      if ($this->status==0){
+      if ($this->status==1){
         return '<span class="badge badge-success">Procesado</span>';
       }
 
-      if ($this->status==0){
+      if ($this->status==2){
         return '<span class="badge badge-danger">Anulado</span>';
       }
 

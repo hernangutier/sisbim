@@ -92,7 +92,7 @@
                     </li>
 
                     <li class="">
-                          <a href="<?=  Url::to(['bienes-en-custodia/index'])  ?>">
+                          <a href="<?=  Url::to(['bienes/index-cuido'])  ?>">
                             <i class="menu-icon fa fa-caret-right"></i>
                            Bienes en Custodia
                           </a>
@@ -221,9 +221,9 @@
 
 
               <li class="">
-										<a href="<?= Url::to(['bienes/index'])  ?>">
+										<a href="<?= Url::to(['inc-bm/create'])  ?>">
 											<i class="menu-icon fa fa-caret-right"></i>
-											por Compras
+											Incorporar
 										</a>
 
 										<b class="arrow"></b>

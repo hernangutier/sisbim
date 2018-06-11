@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BienesEnCustodia */
+/* @var $model common\models\IncBm */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Bienes En Custodias', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Inc Bms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bienes-en-custodia-view">
+<div class="inc-bm-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,12 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'num_bien',
-            'descripcion',
-            'id_lin',
-            'id_class_sudebip',
-            'status_fisico_sdb',
-            'status_uso_sdb',
+            'fecha',
+            'periodo',
+            'status',
+            'observaciones',
+            'ref',
+            'id_origen',
+            'tipo',
         ],
     ]) ?>
 

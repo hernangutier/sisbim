@@ -32,7 +32,7 @@ class IncOrdenesNulls extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_oc', 'id_user','motivo'], 'default', 'required' ],
+            [['id_oc', 'id_user','motivo'],  'required' ],
             [['id_oc', 'id_user'], 'default', 'value' => null],
             [['id_oc', 'id_user'], 'integer'],
             [['fecha_nulls'], 'safe'],

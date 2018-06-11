@@ -51,6 +51,7 @@ use Yii;
  * @property boolean $pend_in_mov
  * @property string $motivo_indisponibilidad
  * @property boolean $is_in
+ * @property bool $is_custodia
 
  * @property boolean $etiquetar
  * @property boolean $no_ubicado
@@ -89,7 +90,7 @@ class Bienes extends \yii\db\ActiveRecord
             [['id', 'codigo', 'status', 'costo', 'notasigned', 'isvehicle', 'isasigned', 'tipobien', 'pendientedesinc', 'aplicaiva', 'existe', 'disponibilidad'], 'required'],
             [['id', 'id_inc', 'dias_garantia', 'id_resp_directo', 'status', 'notasigned', 'isvehicle', 'id_vehicle', 'id_und_actual', 'isasigned', 'id_clas', 'id_user', 'operativo', 'tipobien', 'id_lin', 'pendientedesinc', 'aplicaiva', 'existe', 'id_cat', 'statusfisical', 'disponibilidad', 'mantenimiento', 'estado_uso', 'estado_fisico', 'activo','id_color'], 'integer'],
             [['costo'], 'number'],
-            [['sin_user','etiquetar','desincorporar','no_ubicado'], 'boolean'],
+            [['sin_user','etiquetar','desincorporar','no_ubicado','is_custodia'], 'boolean'],
             [['foto', 'descripcion', 'foto1'], 'string'],
             [['fcreacion', 'fdesinc'], 'safe'],
             [['is_colectivo', 'is_in', 'is_asegurable','pend_in_mov'], 'boolean'],
@@ -158,6 +159,7 @@ class Bienes extends \yii\db\ActiveRecord
             'etiquetar'=>'Etiquetar',
             'desincorporar'=>'Desincorporar',
             'no_ubicado'=>'No Ubicado',
+            'is_custodia'=>'Bien en Custodia o Cuido',
         ];
     }
 
@@ -389,6 +391,22 @@ class Bienes extends \yii\db\ActiveRecord
             '4'=>'Chatarra',
             '6'=>'No Operativo',
             '7'=>'Otra Condicón Física',
+
+        ];
+    }
+
+    public static function getListTiposAdquisicion(){
+      return [
+            '1'=>'Compra Directa (por consulta de precio)',
+            '2'=>'Permuta',
+            '3'=>'Dación en Pago',
+            '4'=>'Donación',
+            '4'=>'Transferencia',
+            '6'=>'Expropiación',
+            '7'=>'Confiscación',
+            '8'=>'Compra por Concurso Abierto',
+            '9'=>'Compra por Concurso Cerrado',
+            '10'=>'Adjudicación',
 
         ];
     }

@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BienesEnCustodiaSearch */
+/* @var $model common\models\IncBmSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bienes-en-custodia-search">
+<div class="inc-bm-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,17 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'num_bien') ?>
+    <?= $form->field($model, 'fecha') ?>
 
-    <?= $form->field($model, 'descripcion') ?>
+    <?= $form->field($model, 'periodo') ?>
 
-    <?= $form->field($model, 'id_lin') ?>
+    <?= $form->field($model, 'status') ?>
 
-    <?= $form->field($model, 'id_class_sudebip') ?>
+    <?= $form->field($model, 'observaciones') ?>
 
-    <?php // echo $form->field($model, 'status_fisico_sdb') ?>
+    <?php // echo $form->field($model, 'ref') ?>
 
-    <?php // echo $form->field($model, 'status_uso_sdb') ?>
+    <?php // echo $form->field($model, 'id_origen') ?>
+
+    <?php // echo $form->field($model, 'tipo') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

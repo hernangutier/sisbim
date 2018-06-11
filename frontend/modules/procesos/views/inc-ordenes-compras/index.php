@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use kartik\dialog\Dialog;
 use yii\bootstrap\Modal;
+//use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\IncOrdenesComprasSearch */
@@ -16,48 +17,11 @@ $this->title = 'Ordenes de Compra';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php $this->registerJs("
-$(document).on('click','.add',function (){
-
-  $('.tl').text('Anular Orden de Compra');
-  $.get(
-
-      $(this).data('url'),
-      function (data) {
-          $('.modal-body').html(data);
-          $('#modal-orden-anular').modal();
-      }
-  );
-
-
-  });
-
-  $(document).on('click','.add-poliza',function (){
-
-    $('.tl').text('Registrar Poliza');
-    $.get(
-
-        $(this).data('url'),
-        function (data) {
-            $('.modal-body').html(data);
-            $('#modal-accesorios').modal();
-        }
-    );
-
-
-    });
-
-
-
-
-
-");
-?>
 
 <?php
 Modal::begin([
-    'id' => 'modal-orden-anular',
-    'header' => '<h4 class="blue bigger tl">Nuevo Articulo</h4>',
+    'id' => 'modal-ordenes-null',
+    'header' => '<h4 class="blue bigger tl">Anular Orden de Compra</h4>',
 
 ]);
 
@@ -80,6 +44,13 @@ Modal::end();
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-ordenes',
+            ],
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -101,33 +72,42 @@ Modal::end();
                               'template' => '{print}',
                               'buttons' => [
                                 'print' => function ($url, $model, $key) {
-                                    return Html::a('<span class="btn btn-xs btn-default  "><i class="ace-icon fa fa-print bigger-120"></i></span> ',
-                                        Url::to(['movimientos/view','id'=>$model->id]), [
-                                        'id' => 'activity-index-link',
-                                        'title' => Yii::t('app', 'Imprimir Comprobante'),
 
-                                    ]);
                                 },
                         ],
                 ],
+                [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{nulls}',
+                                'buttons' => [
 
-            [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{nulls}',
-                            'buttons' => [
-                              'nulls' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-danger add"><i class="ace-icon fa fa-ban bigger-120"></i></span> ',
-                                      '#', [
-                                      'title' => Yii::t('app', 'Anular Transacción'),
-                                      'data-toggle' => 'modal',
-                                      'data-target' => '#modal-orden-anular',
-                                      'data-url' =>  Url::to(['inc-ordenes-compras/nulls','id'=>$model->id]),
-                                      'data-pjax' => '0',
+                                  'nulls' => function ($url, $model, $key) {
+                                    $url=Url::to(['inc-ordenes-compras/nulls','id'=>$model->id]);
+                                    return
 
-                                  ]);
-                              },
-                      ],
-              ],
+                                    ($model->status==0) ?
+                                    Html::a('<span class="btn btn-xs btn-danger open"><i class="ace-icon fa fa-ban bigger-120"></i></span>', '#', [
+                                        'title' => Yii::t('yii', 'Anular Orden de Compra'),
+
+                                        'onclick' => "
+
+                                        $('#modal-ordenes-null').modal('show')
+
+                                        .find('.modal-body')
+                                        .load('$url');
+
+                                        ",
+
+                                    ]) : '';
+
+
+
+                                  },
+
+                          ],
+                  ],
+
+
 
             [
               'attribute'=>'num',

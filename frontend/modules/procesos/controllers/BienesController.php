@@ -38,9 +38,24 @@ class BienesController extends Controller
         $searchModel = new BienesSearch();
         $searchModel->tipobien=0;
         $searchModel->activo=1;
+        $searchModel->is_custodia=false;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->layout="main";
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndexCuido()
+    {
+        $searchModel = new BienesSearch();
+        $searchModel->tipobien=0;
+        $searchModel->activo=1;
+        $searchModel->is_custodia=true;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $this->layout="main";
+        return $this->render('index_cuido', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

@@ -22,7 +22,7 @@ use cornernote\ace\web\AceAsset;
 					<a href="index.html" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							SISBIM-SOFT Modulo Activo: [Movimientos]
+							SISBIM-SOFT Modulo Activo: [Sistema Activo]
                Periodo Activo (<?= '2018' //common\models\RefPeriodos::getPeriodoActive()->ano ?>)
 
 						</small>

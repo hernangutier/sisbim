@@ -75,7 +75,7 @@ transform: rotate(-7deg);
 												<i class="ace-icon fa fa-wrench"></i>
 
 											</span>
-											Bienvenido al Modulo de Movimientos
+											Bienvenido al Modulo de Sistema Activo
 										</h1>
 									</div>
 

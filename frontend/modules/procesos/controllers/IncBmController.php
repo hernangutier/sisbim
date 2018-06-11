@@ -3,16 +3,16 @@
 namespace frontend\modules\procesos\controllers;
 
 use Yii;
-use common\models\BienesEnCustodia;
-use common\models\BienesEnCustodiaSearch;
+use common\models\IncBm;
+use common\models\IncBmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BienesEnCustodiaController implements the CRUD actions for BienesEnCustodia model.
+ * IncBmController implements the CRUD actions for IncBm model.
  */
-class BienesEnCustodiaController extends Controller
+class IncBmController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,14 +30,14 @@ class BienesEnCustodiaController extends Controller
     }
 
     /**
-     * Lists all BienesEnCustodia models.
+     * Lists all IncBm models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BienesEnCustodiaSearch();
+        $searchModel = new IncBmSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $this->layout="main";
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -45,7 +45,7 @@ class BienesEnCustodiaController extends Controller
     }
 
     /**
-     * Displays a single BienesEnCustodia model.
+     * Displays a single IncBm model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,25 +58,26 @@ class BienesEnCustodiaController extends Controller
     }
 
     /**
-     * Creates a new BienesEnCustodia model.
+     * Creates a new IncBm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BienesEnCustodia();
+        $model = new IncBm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $this->layout="main";  
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing BienesEnCustodia model.
+     * Updates an existing IncBm model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +97,7 @@ class BienesEnCustodiaController extends Controller
     }
 
     /**
-     * Deletes an existing BienesEnCustodia model.
+     * Deletes an existing IncBm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +111,15 @@ class BienesEnCustodiaController extends Controller
     }
 
     /**
-     * Finds the BienesEnCustodia model based on its primary key value.
+     * Finds the IncBm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return BienesEnCustodia the loaded model
+     * @return IncBm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BienesEnCustodia::findOne($id)) !== null) {
+        if (($model = IncBm::findOne($id)) !== null) {
             return $model;
         }
 

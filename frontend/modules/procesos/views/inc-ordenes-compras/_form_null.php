@@ -3,50 +3,88 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\ActiveField;
-use kartik\money\MaskMoney;
-use yii\helpers\ArrayHelper;
-use kartik\select2\Select2;
-use common\models\Proveedores;
-use kartik\widgets\DatePicker;
-use yii\helpers\Url;
-use yii\bootstrap\Modal;
-use yii\web\Response;
-use yii\web\JsExpression;
-use kartik\editable\Editable;
-use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\IncOrdenesNulls */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="container">
 
-<<<<<<< HEAD
+
+<div class="profile-user-info profile-user-info-striped">
+                      <div class="profile-info-row">
+                        <div class="profile-info-name"> N° de Orden: </div>
+
+                        <div class="profile-info-value">
+                          <span class="editable editable-click" id="username"><?= $model->oc->num  ?></span>
+                        </div>
+                      </div>
+
+                      <div class="profile-info-row">
+                        <div class="profile-info-name"> Proveedor </div>
+
+                        <div class="profile-info-value">
+                          <i class="fa fa-map-marker light-orange bigger-110"></i>
+                          <span class="editable editable-click" id="country"><?= $model->oc->prov->razon  ?></span>
+                          <span class="editable editable-click" id="city"><?= $model->oc->prov->cedrif  ?></span>
+                        </div>
+                      </div>
+
+                      <div class="profile-info-row">
+                        <div class="profile-info-name"> Fecha </div>
+
+                        <div class="profile-info-value">
+                          <span class="editable editable-click" id="age"><?= $model->oc->fecha  ?></span>
+                        </div>
+                      </div>
+
+    </div>
+
+
     <?php $form = ActiveForm::begin([
-        'id' => 'poliza-form',
+        'id' => 'ordenes-nulls-form',
         'enableAjaxValidation' => true,
         'enableClientScript' => true,
         'enableClientValidation' => true,
     ]); ?>
-=======
 
-<?php $form = ActiveForm::begin([
-    'id' => 'orden-anular-form',
-    'enableAjaxValidation' => true,
-    'enableClientScript' => true,
-    'enableClientValidation' => true,
-]); ?>
->>>>>>> ef9d25a9491197045026662347043b92075b69d0
       <fieldset>
 
-          <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+          <?= $form->field($model, 'motivo')->textarea(['rows' => 6]) ?>
 
       </fieldset>
 
-      <div class="form-actions center">
-        <?= Html::submitButton('<i class="ace-icon fa fa-floppy-o bigger-120 green"></i> Guardar', ['class' => 'btn btn-white btn-success btn-bold']) ?>
+      <div class="modal-footer">
+
+        <button class="btn btn-white btn-danger btn-bold" data-dismiss="modal">
+          <i class="ace-icon fa fa-times red2"></i>
+          Cancelar
+        </button>
+
+          <?= Html::submitButton('<i class="ace-icon fa fa-floppy-o bigger-120 green "></i>Procesar', ['class' => 'btn btn-white btn-success btn-bold pull-right']) ?>
       </div>
 
     <?php ActiveForm::end(); ?>
-</div>
+
+    <?php
+    $this->registerJs('
+        // obtener la id del formulario y establecer el manejador de eventos
+            $("form#ordenes-nulls-form").on("beforeSubmit", function(e) {
+                var form = $(this);
+                $.post(
+                    form.attr("action")+"&submit=true",
+                    form.serialize()
+                )
+                .done(function(result) {
+                  $.pjax.reload({container: "#grid-ordenes"});
+                  $("#modal-ordenes-null").modal("hide");
+
+                });
+                return false;
+            }).on("submit", function(e){
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            });
+        ');
+    ?>

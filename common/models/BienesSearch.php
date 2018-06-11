@@ -21,7 +21,7 @@ class BienesSearch extends Bienes
             [['id', 'id_inc', 'dias_garantia', 'id_resp_directo', 'status', 'notasigned', 'isvehicle', 'id_vehicle', 'id_und_actual', 'isasigned', 'id_clas', 'id_user', 'operativo', 'tipobien', 'id_lin', 'pendientedesinc', 'aplicaiva', 'existe', 'id_cat', 'statusfisical', 'disponibilidad', 'mantenimiento', 'estado_uso', 'estado_fisico', 'activo','id_color'], 'integer'],
             [['codigo', 'serial', 'observacion', 'foto', 'descripcion', 'marca', 'fcreacion', 'localizacion', 'fdesinc', 'undmedida', 'foto1', 'old_cod', 'motivo_indisponibilidad'], 'safe'],
             [['costo'], 'number'],
-            [['is_colectivo', 'is_in'], 'boolean'],
+            [['is_colectivo', 'is_in','is_custodia'], 'boolean'],
         ];
     }
 
@@ -88,6 +88,7 @@ class BienesSearch extends Bienes
             'activo' => $this->activo,
             'is_colectivo' => $this->is_colectivo,
             'is_in' => $this->is_in,
+            'is_custodia'=>$this->is_custodia,
         ]);
 
         $query->andFilterWhere(['like', 'codigo', $this->codigo])

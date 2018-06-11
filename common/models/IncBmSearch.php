@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\BienesEnCustodia;
+use common\models\IncBm;
 
 /**
- * BienesEnCustodiaSearch represents the model behind the search form of `common\models\BienesEnCustodia`.
+ * IncBmSearch represents the model behind the search form of `common\models\IncBm`.
  */
-class BienesEnCustodiaSearch extends BienesEnCustodia
+class IncBmSearch extends IncBm
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class BienesEnCustodiaSearch extends BienesEnCustodia
     public function rules()
     {
         return [
-            [['id', 'id_lin', 'id_class_sudebip', 'status_fisico_sdb', 'status_uso_sdb', 'id_und_actual', 'id_resp_directo'], 'integer'],
-            [['num_bien', 'descripcion', 'date_creation'], 'safe'],
+            [['id', 'periodo', 'status', 'id_origen', 'tipo'], 'integer'],
+            [['fecha', 'observaciones', 'ref'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class BienesEnCustodiaSearch extends BienesEnCustodia
      */
     public function search($params)
     {
-        $query = BienesEnCustodia::find();
+        $query = IncBm::find();
 
         // add conditions that should always apply here
 
@@ -60,17 +60,15 @@ class BienesEnCustodiaSearch extends BienesEnCustodia
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_lin' => $this->id_lin,
-            'id_class_sudebip' => $this->id_class_sudebip,
-            'status_fisico_sdb' => $this->status_fisico_sdb,
-            'status_uso_sdb' => $this->status_uso_sdb,
-            'id_und_actual' => $this->id_und_actual,
-            'id_resp_directo' => $this->id_resp_directo,
-            'date_creation' => $this->date_creation,
+            'fecha' => $this->fecha,
+            'periodo' => $this->periodo,
+            'status' => $this->status,
+            'id_origen' => $this->id_origen,
+            'tipo' => $this->tipo,
         ]);
 
-        $query->andFilterWhere(['ilike', 'num_bien', $this->num_bien])
-            ->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);
+        $query->andFilterWhere(['ilike', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['ilike', 'ref', $this->ref]);
 
         return $dataProvider;
     }

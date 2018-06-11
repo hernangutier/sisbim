@@ -9,10 +9,10 @@ use  yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\BienesEnCustodiaSearch */
+/* @var $searchModel common\models\BienesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Bienes en Custodia o Prestamo');
+$this->title = Yii::t('app', 'Bienes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
   <h3 class="header smaller lighter blue">
     <i class="ace-icon fa  	fa-comments "></i>
-    Consultar Registro Activo de Bienes Muebles en Custodia o Cuido
+    <?= ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles en Cuido' : 'Consultar Registro Activo  Bienes de Uso' ?>
   </h3>
 
 
@@ -47,7 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'format'=>'raw'
             ],
-            
+            'old_cod',
+
             'descripcion',
             [
                 'attribute'=>'Ubicacion Actual',
@@ -78,12 +79,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id_lin', ArrayHelper::map(common\models\Lineas::find()->all(),
                 'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
+            [
+                'attribute'=>'Categoria (SUDEBIP)',
+                'value'=>function($model){
+                  if (is_null($model->idcat0)){
+                    return '';
+                  }  else {
+                      return $model->idcat0->descripcion;
+                  }
 
+                },
+                'filter' => Html::activeDropDownList($searchModel,
+                'id_cat', ArrayHelper::map(common\models\SdbCategoriasEsp::find()->all(),
+                'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
+            ],
 
             [
                 'attribute'=>'Estado Uso (SUDEBIP)',
                 'value'=>function($model){
-                  if (is_null($model->status_uso_sdb)){
+                  if (is_null($model->estado_uso)){
                     return '';
                   }  else {
                       return $model->getEstadoUso();
@@ -91,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 },
                 'filter' => Html::activeDropDownList($searchModel,
-                'status_uso_sdb', ArrayHelper::map(common\models\Bienes::getListEstadosUso(),
+                'estado_uso', ArrayHelper::map(common\models\Bienes::getListEstadosUso(),
                 'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
 
