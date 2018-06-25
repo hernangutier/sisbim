@@ -154,10 +154,10 @@
                                   <div class="col-xs-4">
                                     <div class="box-custom">
                                       <div class="imagen">
-                                          <a href="<?= Url::to(['procesos/default/index'])  ?>"> <img src="../web/images/reportes.png" class="imagen" /> </a>
+                                          <a href="<?= Url::to(['inspecciones/default/index'])  ?>"> <img src="../web/images/reportes.png" class="imagen" /> </a>
                                       </div>
                                       <div class="titulo">
-                                          <h3>Consultas y Reportes</h3>
+                                          <h3>Div. de Inspección</h3>
                                        </div>
                                     </div>
 

@@ -41,6 +41,10 @@ return [
             'class' => 'frontend\modules\vehiculos\Vehiculos',
         ],
 
+        'inspecciones' => [
+            'class' => 'frontend\modules\inspecciones\Inspecciones',
+        ],
+
         'gridview' =>  [
         'class' => '\kartik\grid\Module'
         // enter optional module parameters below - only if you need to
