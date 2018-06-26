@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \kartik\switchinput\SwitchInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\DivSemovientes */
@@ -21,11 +22,44 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nbov')->textInput(['maxlength' => true]) ?>
 
+    <?php
+
+          echo  $form->field($model, 'sexo')->widget(SwitchInput::classname(), [
+            'items' => [
+                    ['label' => 'Hembra', 'value' => 'H'],
+                    ['label' => 'Macho', 'value' => 'M'],
+
+                    ],
+                    'pluginOptions' => [
+                            'onText' => 'Macho',
+                            'offText' => 'Hembra',
+                            'onColor' => 'danger',
+                            'offColor' => 'primary',
+                    ]
+
+            ]);
+
+    ?>
+
+
     <?= $form->field($model, 'categoria')->textInput() ?>
 
-    <?= $form->field($model, 'sexo')->textInput() ?>
 
-    <?= $form->field($model, 'is_herrado')->checkbox() ?>
+
+    <?php
+
+          echo  $form->field($model, 'is_herrado')->widget(SwitchInput::classname(), [
+
+                    'pluginOptions' => [
+                            'onText' => 'Si',
+                            'offText' => 'No',
+                            'onColor' => 'primary',
+                            'offColor' => 'danger',
+                    ]
+
+            ]);
+
+    ?>
 
     <?= $form->field($model, 'observaciones')->textInput(['maxlength' => true]) ?>
 

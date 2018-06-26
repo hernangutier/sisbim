@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
 use kartik\dialog\Dialog;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\DivInspecciones */
@@ -26,6 +27,18 @@ $this->registerJsFile(
     '@web/js/inventario_init.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
+?>
+
+<?php
+Modal::begin([
+    'id' => 'modal-accesorios',
+    'header' => '<h4 class="blue bigger tl">Nuevo Articulo</h4>',
+
+]);
+
+echo "<div class='well'></div>";
+
+Modal::end();
 ?>
 
 

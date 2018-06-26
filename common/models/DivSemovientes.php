@@ -67,4 +67,18 @@ class DivSemovientes extends \yii\db\ActiveRecord
     {
         return $this->hasOne(DivInspecciones::className(), ['id' => 'id_insp']);
     }
+
+    public function getSexoHtml(){
+
+        if ($this->sexo=='H'){
+          return '<span class="label label-danger arrowed-in arrowed-in-right">Hembra</span>';
+        }
+        if ($this->sexo=='M'){
+          return '<span class="label label-primary arrowed-right arrowed-in">Macho</span>';
+        }
+
+
+    }
+
+
 }

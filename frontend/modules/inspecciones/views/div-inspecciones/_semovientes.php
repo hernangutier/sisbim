@@ -140,7 +140,13 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         'nbov',
-        'sexo',
+        [
+          'attribute'=>'sexo',
+          'value'=>function($model){
+            return $model->getSexoHtml();
+          },
+          'format'=>'raw',
+        ],
         'categoria',
 
 
