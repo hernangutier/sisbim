@@ -16,56 +16,65 @@ use \kartik\switchinput\SwitchInput;
     'enableClientValidation' => true,
 ]); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+
 
 
 
     <?= $form->field($model, 'nbov')->textInput(['maxlength' => true]) ?>
 
-    <?php
+    <div class="row">
 
-          echo  $form->field($model, 'sexo')->widget(SwitchInput::classname(), [
-            'items' => [
-                    ['label' => 'Hembra', 'value' => 'H'],
-                    ['label' => 'Macho', 'value' => 'M'],
+      <div class="col-sm-6">
+        <?= $form->field($model, 'categoria')->dropDownList(
+                          [
+                            '0'=>  'VACA',
+                            '1'=> 'TORO',
+                            '2'=> 'BECERRO (A)',
+                            '3'=> 'MAUTE (A)',
+                            '4'=> 'NOVILLO (A)',
 
-                    ],
-                    'pluginOptions' => [
-                            'onText' => 'Macho',
-                            'offText' => 'Hembra',
-                            'onColor' => 'danger',
-                            'offColor' => 'primary',
-                    ]
-
-            ]);
-
-    ?>
+                        ]
+                      )
 
 
-    <?= $form->field($model, 'categoria')->textInput() ?>
+        ?>
+      </div>
+      <div class="col-sm-6">
+        <?= $form->field($model, 'sexo')->dropDownList(
+                        ['H'=>'Hembra',
+                        'M'=>'Macho',
+
+                        ]
+                      )
 
 
-
-    <?php
-
-          echo  $form->field($model, 'is_herrado')->widget(SwitchInput::classname(), [
-
-                    'pluginOptions' => [
-                            'onText' => 'Si',
-                            'offText' => 'No',
-                            'onColor' => 'primary',
-                            'offColor' => 'danger',
-                    ]
-
-            ]);
-
-    ?>
-
-    <?= $form->field($model, 'observaciones')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        ?>
+      </div>
     </div>
+
+
+
+
+
+
+
+
+
+    <?= $form->field($model, 'observaciones')->textarea(['rows' => 4]) ?>
+
+    <div class="modal-footer">
+
+      <button class="btn btn-white btn-danger btn-bold" data-dismiss="modal">
+        <i class="ace-icon fa fa-times red2"></i>
+        Cancelar
+      </button>
+
+
+
+      <?= Html::submitButton('<i class="ace-icon fa fa-floppy-o bigger-120 green "></i>Guardar', ['class' => 'btn btn-white btn-success btn-bold pull-right']) ?>
+
+
+     </div>
 
     <?php ActiveForm::end(); ?>
 
@@ -73,15 +82,15 @@ use \kartik\switchinput\SwitchInput;
     $this->registerJs('
         // obtener la id del formulario y establecer el manejador de eventos
             $("form#semovientes-form").on("beforeSubmit", function(e) {
+
                 var form = $(this);
                 $.post(
                     form.attr("action")+"&submit=true",
                     form.serialize()
                 )
                 .done(function(result) {
-                  $.pjax.reload({container: "#grid-accesorios"});
-                  $("#modal-accesorios").modal("hide");
-
+                  $.pjax.reload({container: "#grid-semovientes"});
+                  $("#modal-semovientes").modal("hide");
                 });
                 return false;
             }).on("submit", function(e){

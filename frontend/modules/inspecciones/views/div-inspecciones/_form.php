@@ -19,6 +19,8 @@ use kartik\widgets\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 <fieldset>
+		<?= $form->field($model, 'sitio')->textarea(['rows' => 6]) ?>
+		<?= $form->field($model, 'ubicacion')->textarea(['rows' => 6]) ?>
 		<?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 
 

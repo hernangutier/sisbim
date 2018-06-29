@@ -21,17 +21,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php echo Dialog::widget(); ?>
 
 <?php
-//---------------   Script me controla la Tabla -------
+  $this->registerJs("
+  $(document).on('click', '#activity-index-link', (function() {
+      $('.tl').text('Nuevo Bovino');
+      $.get(
 
-$this->registerJsFile(
-    '@web/js/inventario_init.js',
-    ['depends' => [\yii\web\JqueryAsset::className()]]
-);
-?>
+          $(this).data('url'),
+          function (data) {
+              $('.modal-body').html(data);
+              $('#modal-semovientes').modal();
+          }
+      );
+  }));
+  ");
+ ?>
 
 <?php
 Modal::begin([
-    'id' => 'modal-accesorios',
+    'id' => 'modal-semovientes',
     'header' => '<h4 class="blue bigger tl">Nuevo Articulo</h4>',
 
 ]);

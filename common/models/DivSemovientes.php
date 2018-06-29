@@ -81,4 +81,24 @@ class DivSemovientes extends \yii\db\ActiveRecord
     }
 
 
+    public function getCategoria(){
+      if ($this->categoria==0){
+        return 'VACA';
+      }
+
+      if ($this->categoria==1){
+        return 'TORO';
+      }
+      if ($this->categoria==2){
+        return 'BECERRO(A)';
+      }
+      if ($this->categoria==3){
+        return 'MAUTE(A)';
+      }
+      if ($this->categoria==4){
+        return 'NOVILLO(A)';
+      }
+    }
+
+
 }

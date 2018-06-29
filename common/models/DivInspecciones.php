@@ -15,6 +15,8 @@ use Yii;
  * @property string $date_creation
  * @property int $status 0: abierta 1: cerrada 2: anulada
  * @property int $id_user
+ * @property string $sitio
+ * @property string $ubicacion
  *
  * @property UserBm $user
  * @property DivSemovientes[] $divSemovientes
@@ -35,12 +37,12 @@ class DivInspecciones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion'], 'required'],
+            [['descripcion','sitio','ubicacion'], 'required'],
             [['f_ini', 'f_fin','date_creation'], 'safe'],
             [['status', 'id_user'], 'default', 'value' => null],
             [['status', 'id_user'], 'integer'],
             [['ncontrol'], 'string', 'max' => 10],
-            [['descripcion'], 'string', 'max' => 400],
+            [['descripcion','ubicacion'], 'string', 'max' => 400],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => UserBm::className(), 'targetAttribute' => ['id_user' => 'id_bm']],
         ];
     }
@@ -53,11 +55,14 @@ class DivInspecciones extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ncontrol' => 'Referencia',
-            'descripcion' => 'Descripción de la Inspección',
+            'descripcion' => 'Motivo de la Inspección',
+            'sitio'=>'Sitio de Inspección',
+            'ubicación'=>'Direccion o Ubicación',
             'f_ini' => 'Fecha de Inicio',
             'f_fin' => 'Fecha de Cierre',
             'date_creation' => 'Creado el',
             'status' => 'Estatus',
+            'ubicacion'=>'Dirección o Ubicacion Geografica',
             'id_user' => 'Id User',
         ];
     }

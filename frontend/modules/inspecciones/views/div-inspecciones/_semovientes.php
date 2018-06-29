@@ -45,8 +45,17 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                              'id' => 'activity-index-link',
                              'class' => 'btn btn-primary add',
                              'data-toggle' => 'modal',
-                             'data-target' => '#modal-accesorios',
+                             'data-target' => '#modal-semovientes',
                              'data-url' => Url::to(['div-semovientes/create','id_insp'=>$model->id]),
+                             'data-pjax' => '0',
+                           ]);
+                           ?>
+
+                           <?=
+                           Html::button('<i class="fa fa-print"></i>',[
+                             'id' => 'reporte',
+                             'class' => 'btn btn-primary',
+                             'data-url' => Url::to('/sisbim/report/bienes_no_ubicados.php'),
                              'data-pjax' => '0',
                            ]);
                            ?>
@@ -70,6 +79,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
   'responsive'=>true,
   'hover'=>true,
   'pjax'=>true,
+  'filterModel' => $searchModel,
   'pjaxSettings'=>[
       'neverTimeout'=>true,
       'options'=>[
@@ -79,28 +89,6 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
-        [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => '{update}',
-                        'buttons' => [
-
-
-
-
-                          'update' => function ($url, $model, $key) {
-                              return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-refresh bigger-120"></i></span> ',
-                                  Url::to(['gv-accesorios-vehiculos/update','id'=>$model->id]), [
-                                  'id' => 'activity-index-link',
-                                  'title' => Yii::t('app', 'Actualizar'),
-
-                              ]);
-                          },
-
-
-
-
-                        ],
-          ],
 
         [
               'class' => 'yii\grid\ActionColumn',
@@ -123,8 +111,8 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                                     $('.alert-d-ant').html('<strong>Error!</strong> El Registro no se pudo eliminar').show().fadeOut(2000);
                                   },
                                   success: function (json){
-                                    $.pjax.reload({container: '#grid-accesorios'});
-                                    //$('.alert-s-ant').html('<strong>Felicitaciones!</strong> El Registro a sido Eliminado con Exito').show().fadeOut(2000);
+                                    $.pjax.reload({container: '#grid-semovientes'});
+
                                   },
 
                               });
@@ -147,7 +135,12 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           },
           'format'=>'raw',
         ],
-        'categoria',
+        [
+          'attribute'=>'categoria',
+          'value'=>function($model){
+            return $model->getCategoria();
+          }
+        ]
 
 
 
