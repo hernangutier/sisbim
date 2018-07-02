@@ -8,31 +8,26 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="widget-box widget-color-red3">
-											<div class="widget-header">
-												<h4 class="widget-title">Nuevo Registro BM3 (Concepto 60 Faltantes) N°: <?= $model->getNextRef()  ?></h4>
-											</div>
-
-											<div class="widget-body">
-												<div class="widget-main no-padding">
+<div class="bm3-form">
 
     <?php $form = ActiveForm::begin(); ?>
- <fieldset>
 
+    <?= $form->field($model, 'id_bien')->textInput() ?>
 
-    <?= $form->field($model, 'observaciones')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'id_bm3')->textInput() ?>
 
-</fieldset>
+    <?= $form->field($model, 'date_caducidad')->textInput() ?>
 
-<div class="form-actions center">
+    <?= $form->field($model, 'active')->checkbox() ?>
 
-  <?= Html::submitButton('<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i> Guardar y Continuar ' , ['class' =>  'btn btn-sm btn-success' ]  ) ?>
+    <?= $form->field($model, 'date_in')->textInput() ?>
 
+    <?= $form->field($model, 'observaciones')->textInput(['maxlength' => true]) ?>
 
-</div>
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 
-</div>
-</div>
 </div>

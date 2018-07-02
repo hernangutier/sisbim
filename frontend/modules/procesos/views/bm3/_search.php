@@ -17,13 +17,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'id_periodo') ?>
+    <?= $form->field($model, 'id_bien') ?>
 
-    <?= $form->field($model, 'date_creation') ?>
+    <?= $form->field($model, 'id_bm3') ?>
 
-    <?= $form->field($model, 'id_user') ?>
+    <?= $form->field($model, 'date_caducidad') ?>
 
-    <?= $form->field($model, 'observaciones') ?>
+    <?= $form->field($model, 'active')->checkbox() ?>
+
+    <?php // echo $form->field($model, 'date_in') ?>
+
+    <?php // echo $form->field($model, 'observaciones') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

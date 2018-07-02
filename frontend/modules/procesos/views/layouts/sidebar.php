@@ -268,9 +268,9 @@
 						<ul class="submenu">
 
               <li class="">
-										<a href="<?=  Url::to(['bm3/create'])  ?>">
+										<a href="<?=  Url::to(['bm3/index'])  ?>">
 											<i class="menu-icon fa fa-caret-right"></i>
-										por Concepto (60 Faltantes)
+										Registro de (60 Faltantes)
                     </a>
 
 										<b class="arrow"></b>

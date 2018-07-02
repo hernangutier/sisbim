@@ -18,8 +18,9 @@ class Bm3Search extends Bm3
     public function rules()
     {
         return [
-            [['id', 'id_periodo', 'id_user'], 'integer'],
-            [['date_creation', 'observaciones'], 'safe'],
+            [['id', 'id_bien', 'id_bm3'], 'integer'],
+            [['date_caducidad', 'date_in', 'observaciones'], 'safe'],
+            [['active'], 'boolean'],
         ];
     }
 
@@ -60,9 +61,11 @@ class Bm3Search extends Bm3
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_periodo' => $this->id_periodo,
-            'date_creation' => $this->date_creation,
-            'id_user' => $this->id_user,
+            'id_bien' => $this->id_bien,
+            'id_bm3' => $this->id_bm3,
+            'date_caducidad' => $this->date_caducidad,
+            'active' => $this->active,
+            'date_in' => $this->date_in,
         ]);
 
         $query->andFilterWhere(['ilike', 'observaciones', $this->observaciones]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace app\models;
 
 use Yii;
 
@@ -53,7 +53,7 @@ class Bm3 extends \yii\db\ActiveRecord
             'id_bm3' => 'Id Bm3',
             'date_caducidad' => 'Date Caducidad',
             'active' => 'Active',
-            'date_in' => 'Fecha de Ingreso a Bm3',
+            'date_in' => 'Date In',
             'observaciones' => 'Observaciones',
         ];
     }
