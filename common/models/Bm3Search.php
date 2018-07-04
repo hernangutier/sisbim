@@ -18,7 +18,7 @@ class Bm3Search extends Bm3
     public function rules()
     {
         return [
-            [['id', 'id_bien', 'id_bm3'], 'integer'],
+            [['id', 'id_bien'], 'integer'],
             [['date_caducidad', 'date_in', 'observaciones'], 'safe'],
             [['active'], 'boolean'],
         ];
@@ -62,7 +62,6 @@ class Bm3Search extends Bm3
         $query->andFilterWhere([
             'id' => $this->id,
             'id_bien' => $this->id_bien,
-            'id_bm3' => $this->id_bm3,
             'date_caducidad' => $this->date_caducidad,
             'active' => $this->active,
             'date_in' => $this->date_in,

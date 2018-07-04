@@ -8,6 +8,8 @@ use common\models\Bm3Search;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use  yii\db\Query;
+use yii\web\Response;
 
 /**
  * Bm3Controller implements the CRUD actions for Bm3 model.
@@ -57,23 +59,47 @@ class Bm3Controller extends Controller
         ]);
     }
 
+
+    public function actionBienesList($q = null) {
+    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'']];
+    if (!is_null($q)) {
+        $query = new Query;
+        $query->select('*')
+            ->from('vw_bienes_disp_bm3')
+            ->where(['like', 'tostring', $q])
+            ->limit(40);
+        $command = $query->createCommand();
+        $data = $command->queryAll();
+        $out['results'] = array_values($data);
+    }
+    elseif ($id > 0) {
+        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion];
+    }
+    return $out;
+}
+
     /**
      * Creates a new Bm3 model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Bm3();
+        $model->id_bien=$id;
 
+        Yii::$app->response->format = Response::FORMAT_JSON;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $error=false;
+        } else {
+           return $error=true;
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
     }
+
+
 
     /**
      * Updates an existing Bm3 model.

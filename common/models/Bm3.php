@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property int $id_bien
- * @property int $id_bm3
  * @property string $date_caducidad
  * @property bool $active
  * @property string $date_in
@@ -33,8 +32,8 @@ class Bm3 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_bien', 'id_bm3'], 'default', 'value' => null],
-            [['id_bien', 'id_bm3'], 'integer'],
+
+            [['id_bien'], 'integer'],
             [['date_caducidad', 'date_in'], 'safe'],
             [['active'], 'boolean'],
             [['observaciones'], 'string', 'max' => 400],
@@ -50,7 +49,6 @@ class Bm3 extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_bien' => 'Id Bien',
-            'id_bm3' => 'Id Bm3',
             'date_caducidad' => 'Date Caducidad',
             'active' => 'Active',
             'date_in' => 'Fecha de Ingreso a Bm3',

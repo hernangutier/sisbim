@@ -1,18 +1,61 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
+use kartik\widgets\Select2;
+use yii\web\View;
+use yii\web\JsExpression;
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\MovimientosSearch */
+/* @var $searchModel common\models\Bm3Search */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$url =Url::to(['bienes-list']);
 $this->title = 'Movimientos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+<?php
+
+
+//--------------- Script para la Consulta de los Articulos ----
+$formatJs = <<< 'JS'
+var formatRepo = function (city) {
+  if (city.loading) {
+      return city.descripcion;
+  }
+  var markup =
+'<div class="row">' +
+  '<div class="col-sm-3">' +
+    '<h4><b/>' + city.codigo + '</h4>' +
+  '</div>' +
+  '<div class="col-sm-6">' +
+
+      '<h4><b style="margin-left:5px">' + city.descripcion + '</b></h4>' +
+  '</div>' +
+
+  '<div class="col-sm-3">' +
+
+      '<h4><b style="margin-left:5px">' + city.asignacion + '</b></h4>' +
+  '</div>' +
+
+'</div>';
+
+  return '<div style="overflow:hidden;">' + markup + '</div>';
+};
+JS;
+
+$this->registerJs($formatJs, View::POS_HEAD);
+
+ ?>
+
+
+
 <div class="container">
+
+
 
 
   <h3 class="header smaller lighter red">
@@ -21,11 +64,86 @@ $this->params['breadcrumbs'][] = $this->title;
   </h3>
 
 
+  <?=
 
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+
+  Select2::widget([
+      'name' => 'id_bien',
+      'value' => '1',
+      'size' => Select2::LARGE,
+      'initValueText' => 'Consultar Bienes...',
+      'options' => ['placeholder' => 'Buscar Bienes'],
+
+
+      'pluginOptions' => [
+          'allowClear' => true,
+          'minimumInputLength' => 1,
+          'ajax' => [
+              'url' => $url,
+              'dataType' => 'json',
+              'delay' => 250,
+              'data' => new JsExpression('function(params) { return {q:params.term, page: params.page}; }'),
+
+          ],
+          'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+         'templateResult' => new JsExpression('formatRepo'),
+         'templateSelection' => new JsExpression('function (city) { return city.codigo + " " + city.descripcion; }'),
+      ],
+
+      'pluginEvents' => [
+
+          "select2:select" => "function() {
+
+            // creamos peticion ajax ----
+            $.ajax(
+                  {
+                    url : 'index.php?r=procesos%2Fbm3%2Fcreate',
+                    type: 'GET',
+                    data : {'id': $(this).val()},
+                    DataType:'JSON',
+                  })
+                    .done(function(data) {
+
+                          $.pjax.reload({container:'#grid-bm3'});
+                      
+
+
+                    })
+                    .fail(function(data) {
+                      alert( 'Ocurrio un Error...' );
+                    })
+                    .always(function(data) {
+                      //alert( 'complete' );
+              });
+
+          }",
+
+          "select2:unselect" => "function() {itemSelected=null;
+            $('.detalle').hide();
+          }"
+      ],
+
+
+  ]);
+
+
+
+
+  ?>
+
+  <?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    //'filterModel'=>$searchModel,
+    'responsive'=>true,
+    'hover'=>true,
+    'pjax'=>true,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true,
+        'options'=>[
+          'id'=>'grid-bm3',
+        ],
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -93,19 +211,6 @@ $this->params['breadcrumbs'][] = $this->title;
               'date_in',
 
 
-
-
-
-
-
-            // 'id_user',
-            // 'ncontrol',
-            // 'tipo',
-            // 'status',
-            // 'periodo',
-            // 'ano',
-            // 'fecha_process',
-            // 'fecha_creation',
 
 
         ],
