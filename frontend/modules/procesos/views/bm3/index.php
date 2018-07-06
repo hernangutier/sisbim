@@ -9,11 +9,12 @@ use kartik\widgets\Select2;
 use yii\web\View;
 use yii\web\JsExpression;
 use kartik\dialog\Dialog;
+use kartik\editable\Editable;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Bm3Search */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $url =Url::to(['bienes-list']);
-$this->title = 'Registro de Bienes en 60 Faltnates';
+$this->title = 'Registro de Bienes en 60 Faltantes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -205,7 +206,19 @@ $this->registerJs($formatJs, View::POS_HEAD);
               }
             ],
 
-              'observaciones',
+            [
+              'class'=>'kartik\grid\EditableColumn',
+              'attribute'=>'observaciones',
+
+              'editableOptions'=>[
+                  'header'=>'Existencia',
+                  'asPopover' => false,
+                  'inputType'=>Editable::INPUT_TEXTAREA,
+
+              ],
+
+
+          ],
               'date_in',
 
 
