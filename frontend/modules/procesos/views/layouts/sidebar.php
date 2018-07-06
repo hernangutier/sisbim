@@ -332,6 +332,15 @@
                       <b class="arrow"></b>
                   </li>
 
+                  <li class="">
+                        <a href="<?= Url::to(['movimientos/desvincular'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                           Desvincular Bienes a Usuarios...
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
 
 
 

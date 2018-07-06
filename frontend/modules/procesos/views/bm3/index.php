@@ -8,11 +8,12 @@ use yii\helpers\Url;
 use kartik\widgets\Select2;
 use yii\web\View;
 use yii\web\JsExpression;
+use kartik\dialog\Dialog;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Bm3Search */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $url =Url::to(['bienes-list']);
-$this->title = 'Movimientos';
+$this->title = 'Registro de Bienes en 60 Faltnates';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -38,7 +39,7 @@ var formatRepo = function (city) {
 
   '<div class="col-sm-3">' +
 
-      '<h4><b style="margin-left:5px">' + city.asignacion + '</b></h4>' +
+      '<h4><b style="margin-left:5px">' + city.ubicacion + '</b></h4>' +
   '</div>' +
 
 '</div>';
@@ -50,6 +51,8 @@ JS;
 $this->registerJs($formatJs, View::POS_HEAD);
 
  ?>
+
+
 
 
 
@@ -106,7 +109,7 @@ $this->registerJs($formatJs, View::POS_HEAD);
                     .done(function(data) {
 
                           $.pjax.reload({container:'#grid-bm3'});
-                      
+
 
 
                     })
@@ -146,44 +149,38 @@ $this->registerJs($formatJs, View::POS_HEAD);
     ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{admin}',
-                            'buttons' => [
-                              'admin' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-wrench bigger-120"></i></span> ',
-                                      Url::to(['bienes/view','id'=>$model->id]), [
-                                      'id' => 'activity-index-link',
-                                      'title' => Yii::t('app', 'Administrar'),
 
-                                  ]);
-                              },
-                      ],
-              ],
-              [
-                              'class' => 'yii\grid\ActionColumn',
-                              'template' => '{print}',
-                              'buttons' => [
-                                'print' => function ($url, $model, $key) {
-                                    return Html::a('<span class="btn btn-xs btn-default"><i class="ace-icon fa fa-print bigger-120"></i></span> ',
-                                        Url::to(['movimientos/view','id'=>$model->id]), [
-                                        'id' => 'activity-index-link',
-                                        'title' => Yii::t('app', 'Imprimir Comprobante'),
-
-                                    ]);
-                                },
-                        ],
-                ],
 
             [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{nulls}',
                             'buttons' => [
                               'nulls' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-ban bigger-120"></i></span> ',
-                                      Url::to(['bienes/update','id'=>$model->id]), [
-                                      'id' => 'activity-index-link',
-                                      'title' => Yii::t('app', 'Anular Transacción'),
+                                  $url1=Url::to(['bm3/delete','id'=>$model->id]);
+                                  return Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash bigger-120"></i></span> ', '#', [
+                                      'title' => Yii::t('yii', 'Eliminar el Items'),
+                                      'aria-label' => Yii::t('yii', 'Delete'),
+                                      'onclick' => "
+                                      krajeeDialog.confirm('Esta seguro de eliminar el Items:  ', function (result) {
+                                           if (result) {
+                                              $.ajax({
+
+                                              url: '$url1',
+                                              type: 'POST',
+
+                                              error : function(xhr, status) {
+                                                $('.alert-d-ant').html('<strong>Error!</strong> El Registro no se pudo eliminar').show().fadeOut(2000);
+                                              },
+                                              success: function (json){
+                                                $.pjax.reload({container: '#grid-bm3'});
+                                                //$('.alert-s-ant').html('<strong>Felicitaciones!</strong> El Registro a sido Eliminado con Exito').show().fadeOut(2000);
+                                              },
+
+                                          });
+                                        }
+                                      });
+                                          return false;
+                                      ",
 
                                   ]);
                               },
@@ -208,7 +205,9 @@ $this->registerJs($formatJs, View::POS_HEAD);
               }
             ],
 
+              'observaciones',
               'date_in',
+
 
 
 

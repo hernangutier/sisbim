@@ -62,19 +62,19 @@ class Bm3Controller extends Controller
 
     public function actionBienesList($q = null) {
     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'']];
+    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'', 'ubicacion'=>'']];
     if (!is_null($q)) {
         $query = new Query;
         $query->select('*')
             ->from('vw_bienes_disp_bm3')
-            ->where(['like', 'tostring', $q])
+            ->where(['like', 'tostring', strtoupper($q)])
             ->limit(40);
         $command = $query->createCommand();
         $data = $command->queryAll();
         $out['results'] = array_values($data);
     }
     elseif ($id > 0) {
-        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion];
+        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion,'ubicacion' => Bienes::find($id)->idUndActual->descripcion];
     }
     return $out;
 }
@@ -90,7 +90,7 @@ class Bm3Controller extends Controller
         $model->id_bien=$id;
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->save()) {
             return $error=false;
         } else {
            return $error=true;

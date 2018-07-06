@@ -150,6 +150,15 @@ class MovimientosController extends Controller
         }
     }
 
+    public function actionDesvincular()
+    {
+      $model = new \frontend\models\FormDesvincular();
+      $this->layout="main";
+      return $this->render('desvincular', [
+          'model' => $model,
+      ]);
+    }
+
     /**
      * Updates an existing Movimientos model.
      * If update is successful, the browser will be redirected to the 'view' page.
