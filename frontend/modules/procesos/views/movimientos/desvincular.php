@@ -4,7 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-
+use common\models\Bienes;
+use common\models\BienesSearch;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\FormDesvincular */
 /* @var $form yii\widgets\ActiveForm */
@@ -37,16 +40,52 @@ use yii\helpers\ArrayHelper;
                                       'pluginOptions' => [
                                       'allowClear' => true
                                       ],
+                                      'pluginEvents' => [
+
+                                          "select2:select" => "function() {
+
+                                            $.pjax.reload({container: '#grid-bienes-users'}); }",
+
+                                      ],
 
                                       ]);
 
                               ?>
 
+                              <?php
+                                  $searchModel = new BienesSearch();
+                                  $searchModel->id_resp_directo=$model->id_resp;
+                                  $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                               ?>
+
+
+
+                               <?= GridView::widget([
+                                 'dataProvider' => $dataProvider,
+                                 'responsive'=>true,
+                                 'hover'=>true,
+                                 'pjax'=>true,
+                                 'pjaxSettings'=>[
+                                     'neverTimeout'=>true,
+                                     'options'=>[
+                                       'id'=>'grid-bienes-users',
+                                     ],
+                                 ],
+                                   'columns' => [
+                                       ['class' => 'yii\grid\SerialColumn'],
 
 
 
 
 
+
+                                       'codigo',
+                                       'descripcion',
+
+
+
+                                   ],
+                               ]); ?>
 
 
 
