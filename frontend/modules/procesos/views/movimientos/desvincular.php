@@ -31,7 +31,7 @@ use yii\widgets\Pjax;
 
                                       'data' => ArrayHelper::map(common\models\Responsables::find()->all(),'id',
                                            function($model, $defaultValue) {
-                                              return  $model->cedrif . ' ' . $model->nombres;
+                                              return  $model->cedrif . ' ' . $model->nombres . ' ' . $model->apellidos;
                                       }
                               ),
                                       'language' => 'es',
@@ -52,40 +52,9 @@ use yii\widgets\Pjax;
 
                               ?>
 
-                              <?php
-                                  $searchModel = new BienesSearch();
-                                  $searchModel->id_resp_directo=$model->id_resp;
-                                  $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                               ?>
+                            <div class="bienes">
 
-
-
-                               <?= GridView::widget([
-                                 'dataProvider' => $dataProvider,
-                                 'responsive'=>true,
-                                 'hover'=>true,
-                                 'pjax'=>true,
-                                 'pjaxSettings'=>[
-                                     'neverTimeout'=>true,
-                                     'options'=>[
-                                       'id'=>'grid-bienes-users',
-                                     ],
-                                 ],
-                                   'columns' => [
-                                       ['class' => 'yii\grid\SerialColumn'],
-
-
-
-
-
-
-                                       'codigo',
-                                       'descripcion',
-
-
-
-                                   ],
-                               ]); ?>
+                            </div>
 
 
 

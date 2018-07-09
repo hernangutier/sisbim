@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use  yii\db\Query;
 use yii\web\Response;
+use yii\helpers\Url;
+use yii\helpers\Json;
 
 /**
  * Bm3Controller implements the CRUD actions for Bm3 model.
@@ -37,6 +39,37 @@ class Bm3Controller extends Controller
      */
     public function actionIndex()
     {
+
+      // validate if there is a editable input saved via AJAX
+    if (Yii::$app->request->post('hasEditable')) {
+        // instantiate your book model for saving
+        $dtId = Yii::$app->request->post('editableKey');
+        $model = Bm3::findOne($dtId);
+
+        // store a default json response as desired by editable
+        $out = Json::encode(['output'=>'', 'message'=>'']);
+
+        // fetch the first entry in posted data (there should only be one entry
+        // anyway in this array for an editable submission)
+        // - $posted is the posted data for Book without any indexes
+        // - $post is the converted array for single model validation
+        $posted = current($_POST['Bm3']);
+        $post = ['detalle' => $posted];
+
+        if (isset($posted['observaciones'])){
+            $model->observaciones=$posted['observaciones'];
+            $output=$model->observaciones;
+            if ($model->save() ) {
+              $out = Json::encode(['output'=>$output, 'message'=>'']);
+              echo $out;
+              return;
+            }
+
+        }
+
+      }
+
+
         $searchModel = new Bm3Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->layout="main";
