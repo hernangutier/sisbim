@@ -8,6 +8,9 @@ use common\models\DivInspeccionesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\helpers\Url;
+use yii\helpers\Json;
 
 /**
  * DivInspeccionesController implements the CRUD actions for DivInspecciones model.
@@ -52,11 +55,41 @@ class DivInspeccionesController extends Controller
      */
     public function actionView($id)
     {
-        $this->layout="main";
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+
+      if (Yii::$app->request->post('hasEditable')) {
+          // instantiate your book model for saving
+          $dtId = Yii::$app->request->post('hasEditable');
+          $model = DivInspecciones::findOne($dtId);
+
+          // store a default json response as desired by editable
+          $out = Json::encode(['output'=>'', 'message'=>'']);
+
+          // fetch the first entry in posted data (there should only be one entry
+          // anyway in this array for an editable submission)
+          // - $posted is the posted data for Book without any indexes
+          // - $post is the converted array for single model validation
+
+
+          if (isset($_POST['motivo'])){
+              $model->descripcion=$_POST['motivo'];
+              $output=$model->descripcion;
+              if ($model->save() ) {
+                $out = Json::encode(['output'=>$output, 'message'=>'']);
+                echo $out;
+                return;
+              }
+
+          }
+
+
     }
+
+    $this->layout="main";
+    return $this->render('view', [
+        'model' => $this->findModel($id),
+    ]);
+
+  }
 
     /**
      * Creates a new DivInspecciones model.

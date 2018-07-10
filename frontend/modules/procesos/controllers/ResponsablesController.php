@@ -4,6 +4,7 @@ namespace frontend\modules\procesos\controllers;
 
 use Yii;
 use common\models\Responsables;
+use common\models\Bienes;
 use common\models\ResponsablesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -73,6 +74,14 @@ class ResponsablesController extends Controller
         ]);
     }
 
+    public function actionBienes($id)
+    {
+      $ls =Bienes::find()->where(['id_resp_directo'=>$id])->andWhere(['tipobien'=>0])
+      ->andWhere(['activo'=>1])->all();
+      \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+      return $ls;
+
+    }
     /**
      * Creates a new Responsables model.
      * If creation is successful, the browser will be redirected to the 'view' page.

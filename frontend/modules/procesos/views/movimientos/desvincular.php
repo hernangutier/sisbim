@@ -13,14 +13,14 @@ use yii\widgets\Pjax;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="col-sm-offset-3 col-sm-6">
-<div class="widget-box">
-											<div class="widget-header">
-												<h4 class="widget-title">Nuevo Movimiento Especial (Desvinculación de Bienes por Usuario Directo)</h4>
+<div class='col-sm-offset-3 col-sm-6'>
+<div class='widget-box'>
+											<div class='widget-header'>
+												<h4 class='widget-title'>Nuevo Movimiento Especial (Desvinculación de Bienes por Usuario Directo)</h4>
 											</div>
 
-											<div class="widget-body">
-												<div class="widget-main no-padding">
+											<div class='widget-body'>
+												<div class='widget-main no-padding'>
 													<?php $form = ActiveForm::begin(); ?>
 														<!-- <legend>Form</legend> -->
 														<fieldset>
@@ -42,9 +42,31 @@ use yii\widgets\Pjax;
                                       ],
                                       'pluginEvents' => [
 
-                                          "select2:select" => "function() {
+                                          'select2:select' => "function() {
+																								//---- Iniciamos una Peticion Ajax ---
 
-                                            $.pjax.reload({container: '#grid-bienes-users'}); }",
+																							$.ajax({
+																							    // En data puedes utilizar un objeto JSON, un array o un query string
+																							    data: {'id' : $(this).val()},
+																							    //Cambiar a type: POST si necesario
+																							    type: 'GET',
+																							    // Formato de datos que se espera en la respuesta
+																							    dataType: 'json',
+																							    // URL a la que se enviará la solicitud Ajax
+																							    url: 'script.php',
+																							})
+																							 .done(function( data, textStatus, jqXHR ) {
+																							     if ( console && console.log ) {
+																							         console.log( 'La solicitud se ha completado correctamente.' );
+																							     }
+																							 })
+																							 .fail(function( jqXHR, textStatus, errorThrown ) {
+																							     if ( console && console.log ) {
+																							         console.log( 'La solicitud a fallado: ' +  textStatus);
+																							     }
+																							});
+
+																						}",
 
                                       ],
 
@@ -53,7 +75,20 @@ use yii\widgets\Pjax;
                               ?>
 
                             <div class="bienes">
+																<table class="table">
+																	<thead>
+																		<th scope="col"> #</th>
+																		<th scope="col">N° de Bien</th>
+																		<th scope="col">Descripción</th>
+																	</thead>
+																	<tbody class="tableBody">
+																		<th scope="row">1</th>
+															      <td>PGEB-BM-1005</td>
+															      <td>COMPUTADOR VIT</td>
 
+																	</tbody>
+
+																</table>
                             </div>
 
 
@@ -62,7 +97,7 @@ use yii\widgets\Pjax;
 
 														<div class="form-actions center">
 
-                              <?= Html::submitButton('<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i> Guardar y Continuar ' , ['class' =>  'btn btn-sm btn-success' ]  ) ?>
+                              <?= Html::submitButton("<i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i> Guardar y Continuar " , ["class" =>  "btn btn-sm btn-success" ]  ) ?>
 
 
 														</div>
