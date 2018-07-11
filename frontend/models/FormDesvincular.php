@@ -10,6 +10,7 @@ use yii\base\Model;
 class FormDesvincular extends Model
 {
     public $id_resp;
+    public $motivo;
 
 
 
@@ -21,6 +22,7 @@ class FormDesvincular extends Model
         return [
 
             ['id_resp', 'required'],
+            ['motivo','required'],
             ['id_resp', 'integer'],
 
         ];

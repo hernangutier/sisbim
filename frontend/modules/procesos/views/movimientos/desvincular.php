@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use common\models\Bienes;
 use common\models\BienesSearch;
 use kartik\grid\GridView;
-use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\FormDesvincular */
 /* @var $form yii\widgets\ActiveForm */
@@ -24,7 +24,9 @@ use yii\widgets\Pjax;
 													<?php $form = ActiveForm::begin(); ?>
 														<!-- <legend>Form</legend> -->
 														<fieldset>
-
+															<?php
+																	$url=Url::to(['responsables/bienes']);
+															 ?>
                               <?php //-------------- Lineas -------------
 
                                  echo $form->field($model, 'id_resp')->widget(Select2::classname(), [
@@ -53,16 +55,24 @@ use yii\widgets\Pjax;
 																							    // Formato de datos que se espera en la respuesta
 																							    dataType: 'json',
 																							    // URL a la que se enviará la solicitud Ajax
-																							    url: 'script.php',
+																							    url: '$url',
 																							})
 																							 .done(function( data, textStatus, jqXHR ) {
-																							     if ( console && console.log ) {
-																							         console.log( 'La solicitud se ha completado correctamente.' );
-																							     }
+																								 var items=[];
+																							 $('.tb').empty();
+																							 $.each(data,function (key,val){
+																								 items.push('<tr>');
+																								 items.push('<td>' + val.codigo + '</td>');
+																								 items.push('<td>' + val.descripcion + '</td>');
+																								 items.push('</tr>');
+
+																							 });
+
+																							 $('<tbody/>',{'class': 'tb', 'html' : items.join('')}).appendTo($('.table'));
 																							 })
 																							 .fail(function( jqXHR, textStatus, errorThrown ) {
 																							     if ( console && console.log ) {
-																							         console.log( 'La solicitud a fallado: ' +  textStatus);
+																							         alert( 'La solicitud a fallado: ' +  textStatus);
 																							     }
 																							});
 
@@ -74,19 +84,21 @@ use yii\widgets\Pjax;
 
                               ?>
 
+															<?= $form->field($model, 'motivo')->textarea(['rows' => 4]) ?>
+
                             <div class="bienes">
-																<table class="table">
+																<table  class="table">
 																	<thead>
 																		<th scope="col"> #</th>
 																		<th scope="col">N° de Bien</th>
 																		<th scope="col">Descripción</th>
 																	</thead>
-																	<tbody class="tableBody">
-																		<th scope="row">1</th>
-															      <td>PGEB-BM-1005</td>
-															      <td>COMPUTADOR VIT</td>
+
+																	<tbody>
 
 																	</tbody>
+
+
 
 																</table>
                             </div>
@@ -97,7 +109,7 @@ use yii\widgets\Pjax;
 
 														<div class="form-actions center">
 
-                              <?= Html::submitButton("<i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i> Guardar y Continuar " , ["class" =>  "btn btn-sm btn-success" ]  ) ?>
+                              <?= Html::submitButton("<i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i> Registrar Movimiento " , ["class" =>  "btn btn-sm btn-success" ]  ) ?>
 
 
 														</div>
