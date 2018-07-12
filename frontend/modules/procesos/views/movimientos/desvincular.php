@@ -8,9 +8,33 @@ use common\models\Bienes;
 use common\models\BienesSearch;
 use kartik\grid\GridView;
 use yii\helpers\Url;
+use kartik\dialog\Dialog;
+use yii\web\JsExpression;
+
+
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\FormDesvincular */
 /* @var $form yii\widgets\ActiveForm */
+?>
+
+
+
+
+
+<?php
+$this->registerJs('
+		// obtener la id del formulario y establecer el manejador de eventos
+				$("#desvincular-form").on("beforeSubmit", function(e) {
+					krajeeDialog.confirm("Esta seguro de procesar el Movimiento  ", function (result) {
+							 if (result) {
+							 } else {
+
+							 }
+						})
+
+				});
+		');
 ?>
 
 <div class='col-sm-offset-3 col-sm-6'>
@@ -21,7 +45,10 @@ use yii\helpers\Url;
 
 											<div class='widget-body'>
 												<div class='widget-main no-padding'>
-													<?php $form = ActiveForm::begin(); ?>
+													<?php $form = ActiveForm::begin([
+												      'id' => 'desvincular-form',
+
+												  ]); ?>
 														<!-- <legend>Form</legend> -->
 														<fieldset>
 															<?php
@@ -109,7 +136,7 @@ use yii\helpers\Url;
 
 														<div class="form-actions center">
 
-                              <?= Html::submitButton("<i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i> Registrar Movimiento " , ["class" =>  "btn btn-sm btn-success" ]  ) ?>
+                              <?= Html::submitButton("<i class='ace-icon fa fa-check icon-on-right bigger-110'></i> Registrar Movimiento " , ["class" =>  "btn btn-sm btn-success" ]  ) ?>
 
 
 														</div>

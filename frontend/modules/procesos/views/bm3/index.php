@@ -8,7 +8,7 @@ use yii\helpers\Url;
 use kartik\widgets\Select2;
 use yii\web\View;
 use yii\web\JsExpression;
-use kartik\dialog\Dialog;
+//use kartik\dialog\Dialog;
 use kartik\editable\Editable;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Bm3Search */
