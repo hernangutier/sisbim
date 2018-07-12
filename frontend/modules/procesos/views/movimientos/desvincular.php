@@ -18,18 +18,25 @@ use yii\web\JsExpression;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-
+<?php
+		echo Dialog::widget();
+ ?>
 
 
 
 <?php
 $this->registerJs('
 		// obtener la id del formulario y establecer el manejador de eventos
-				$("#desvincular-form").on("beforeSubmit", function(e) {
+				$("#desvincular-form").on("submit", function(e) {
+
 					krajeeDialog.confirm("Esta seguro de procesar el Movimiento  ", function (result) {
 							 if (result) {
+								 alert("si");
+								 // enivamos por peticion por ajax -----
+								 
 							 } else {
-
+								 alert ("no");
+								 e.preventDefault();
 							 }
 						})
 
@@ -47,6 +54,9 @@ $this->registerJs('
 												<div class='widget-main no-padding'>
 													<?php $form = ActiveForm::begin([
 												      'id' => 'desvincular-form',
+															'enableAjaxValidation' => true,
+												      'enableClientScript' => true,
+												      'enableClientValidation' => true,
 
 												  ]); ?>
 														<!-- <legend>Form</legend> -->
