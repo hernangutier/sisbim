@@ -16,24 +16,60 @@ use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\FormDesvincular */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <?php
 		echo Dialog::widget();
- ?>
+?>
 
 
 
 <?php
 $this->registerJs('
 		// obtener la id del formulario y establecer el manejador de eventos
+
 				$("#desvincular-form").on("submit", function(e) {
+
+					if ($("#formdesvincular-motivo").val().length <=0) {
+						krajeeDialog.alert("Debe indicar el Motivo");
+						return 0;
+					}
+
+
+		      if (!($("#formdesvincular-id_resp").val()>0)) {
+						krajeeDialog.alert("Debe seleccionar un responsable...");
+						return 0;
+					};
+
+
+
 
 					krajeeDialog.confirm("Esta seguro de procesar el Movimiento  ", function (result) {
 							 if (result) {
-								 alert("si");
+
 								 // enivamos por peticion por ajax -----
-								 
+
+								 $.ajax({
+										 // En data puedes utilizar un objeto JSON, un array o un query string
+										 data: {"id" : $("#formdesvincular-id_resp").val(),
+										 "motivo": $("#formdesvincular-motivo").val() },
+										 //Cambiar a type: POST si necesario
+										 type: "GET",
+										 // Formato de datos que se espera en la respuesta
+										 dataType: "json",
+										 // URL a la que se enviará la solicitud Ajax
+										 url: "index.php?r=procesos%2Fmovimientos%2Fdesvincular-save",
+								 })
+									.done(function( data, textStatus, jqXHR ) {
+									 alert ("Guardo");
+									})
+									.fail(function( jqXHR, textStatus, errorThrown ) {
+											alert("fallo");
+								 });
+
+
+
 							 } else {
 								 alert ("no");
 								 e.preventDefault();
@@ -68,7 +104,7 @@ $this->registerJs('
 
                                  echo $form->field($model, 'id_resp')->widget(Select2::classname(), [
 
-                                      'data' => ArrayHelper::map(common\models\Responsables::find()->all(),'id',
+                                      'data' => ArrayHelper::map(common\models\Responsables::find()->andWhere(['activo'=>1])->all(),'id',
                                            function($model, $defaultValue) {
                                               return  $model->cedrif . ' ' . $model->nombres . ' ' . $model->apellidos;
                                       }

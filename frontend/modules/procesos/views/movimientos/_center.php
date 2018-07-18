@@ -5,17 +5,17 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use common\models\Bienes;
 use yii\helpers\Url;
+use yii\web\Response;
 use kartik\widgets\Select2;
 use yii\bootstrap\Modal;
-use yii\web\Response;
 use yii\web\View;
 use yii\web\JsExpression;
 use kartik\editable\Editable;
-use yii\helpers\ArrayHelper;
-use kartik\widgets\ActiveForm;
 $url =Url::to(['bienes-list','id_mov'=>$searchModel->idMov->id,'id_und'=>$searchModel->idMov->id_und_origen]);
-
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
+use kartik\widgets\ActiveForm;
+
 /* @var $searchModel common\models\MovimientosDtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -257,7 +257,7 @@ Select2::widget([
               'attribute'=>'id_user_new',
 
               'editableOptions'=>function ($model, $key, $index){
-                  
+
                   return [
                   'header'=>'Responsable Directo',
                   'inputType'=>Editable :: INPUT_SELECT2,

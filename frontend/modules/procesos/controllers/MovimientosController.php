@@ -7,6 +7,7 @@ use common\models\Movimientos;
 use common\models\MovimientosSearch;
 use common\models\MovimientosDtSearch;
 use common\models\MovimientosDt;
+use common\models\Responsables;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -158,6 +159,61 @@ class MovimientosController extends Controller
           'model' => $model,
       ]);
     }
+
+
+   public function actionDesvincularSave($id,$motivo)
+   {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        //--------- Consultamos el Usuario ----
+        $resp=Responsables::findOne($id);
+        $lsBm=$resp->bienes;
+        //------- Creamos el Movimiento ------
+        $model= new Movimientos();
+
+
+        $transaction = Movimientos::getDb()->beginTransaction();
+          try {
+            $model->id_und_origen=$resp->id_unidad;
+            $model->observaciones=$motivo;
+            $model->id_user=Yii::$app->user->identity->id_bm;
+
+            $model->save();
+            $model->refresh();
+            //----- Creamos los Detalles -----
+            foreach ($lsBm as $bien) {
+              if ($bien->tipobien==0) {
+              $dt= new MovimientosDt();
+                  $dt->id_bien=$bien->id;
+                      $dt->id_mov=$model->id;
+                          $dt->id_user_old=$id;
+                        $dt->id_user_new=null;
+                      $dt->estado_fisico=6;
+                    $dt->id_und_destino=$resp->id_unidad;
+                  $dt->save();
+              }
+            }
+
+            $model->status=1;
+            $model->save();
+            $transaction->commit();
+
+            return $resp=true;
+          } catch (\Exception $e) {
+            return $err=false;
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+   }
 
     /**
      * Updates an existing Movimientos model.
