@@ -187,7 +187,8 @@ class MovimientosController extends Controller
                       $dt->id_mov=$model->id;
                           $dt->id_user_old=$id;
                         $dt->id_user_new=null;
-                      $dt->estado_fisico=6;
+                      $dt->estado_fisico=$bien->estado_fisico;
+                      $dt->estado_uso=6;
                     $dt->id_und_destino=$resp->id_unidad;
                   $dt->save();
               }

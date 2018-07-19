@@ -111,7 +111,7 @@ $this->registerJs('
                               ),
                                       'language' => 'es',
 
-                                      'options' => ['placeholder' => 'Seleccione la Unidad de Origen ...'],
+                                      'options' => ['placeholder' => 'Seleccione el Responsable Directo ...'],
                                       'pluginOptions' => [
                                       'allowClear' => true
                                       ],
