@@ -23,6 +23,11 @@ use kartik\widgets\ActiveField;
 														</li>
 
 														<li class="">
+															<a data-toggle="tab" href="#ubicacion" aria-expanded="false">Ubicación</a>
+														</li>
+
+
+														<li class="">
 															<a data-toggle="tab" href="#profile" aria-expanded="false">de Adscripción</a>
 														</li>
 
@@ -37,6 +42,13 @@ use kartik\widgets\ActiveField;
 														<div id="home" class="tab-pane active">
                               <?php
                                   echo Yii::$app->controller->renderPartial('basicos',['model'=>$model,'form'=>$form]);
+                               ?>
+														</div>
+
+														<div id="ubicacion" class="tab-pane">
+                              <?php
+
+                                  echo Yii::$app->controller->renderPartial('_ubicacion',['model'=>$model,'form'=>$form]);
                                ?>
 														</div>
 

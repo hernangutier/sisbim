@@ -387,7 +387,7 @@
                       </li>
 
                       <li class="">
-                            <a href="<?=  Url::to(['inc-ordenes-compras/index'])  ?>">
+                            <a href="<?=  Url::to(['sa-ordenes-salida/index'])  ?>">
                               <i class="menu-icon fa fa-caret-right"></i>
                             Historico de Ordenes...
                             </a>

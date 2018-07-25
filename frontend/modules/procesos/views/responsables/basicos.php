@@ -23,28 +23,7 @@ use kartik\widgets\ActiveField;
 
     <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'direccion')->textarea(['maxlength' => true]) ?>
-
-
-
-
-
-    <?= $form->field($model, 'telefono')->widget(\yii\widgets\MaskedInput::className(), [
-    		'mask' => '(9999)-999-9999',
-
-	]) ?>
-
-  <?= $form->field($model, 'fax')->widget(\yii\widgets\MaskedInput::className(), [
-      'mask' => '(9999)-999-9999',
-
-]) ?>
-
-    <?= $form->field($model, 'email')->widget(\yii\widgets\MaskedInput::className(), [
-    		'name' => 'input-36',
-    			'clientOptions' => [
-        		'alias' =>  'email'
-    			],
-	]) ?>
+    
 
 
 

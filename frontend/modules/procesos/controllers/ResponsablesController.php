@@ -9,7 +9,10 @@ use common\models\ResponsablesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\Response;
+use yii\widgets\ActiveForm;
+
 
 /**
  * ResponsablesController implements the CRUD actions for Responsables model.
@@ -101,6 +104,36 @@ class ResponsablesController extends Controller
             ]);
         }
     }
+
+
+    public function actionCreateModal($submit = false)
+{
+  $model = new Responsables();
+
+
+
+    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
+
+    if ($model->load(Yii::$app->request->post())) {
+        if ($model->save()) {
+            $model->refresh();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'message' => '¡Éxito!',
+            ];
+        } else {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
+
+    return $this->renderAjax('_form_modal', [
+        'model' => $model,
+    ]);
+}
 
     /**
      * Updates an existing Responsables model.
