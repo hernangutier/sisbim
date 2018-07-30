@@ -53,8 +53,15 @@ class MovimientosController extends Controller
 
     public function actionResult()
     {
+      $model=new \frontend\models\Finish();
+      $model->title="Felicitaciones";
+      $content="Se ha Procesado correctamente el movimientos N°: <code> 001 </code>";
+      $model->content=$content;
+
       $this->layout="main";
-      return $this->render('result');
+      return $this->render('result',[
+        'model'=>$model
+      ]);
     }
 
     /**

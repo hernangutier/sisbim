@@ -164,7 +164,7 @@ Select2::widget([
                   'delete' => function ($url,$model, $key) {
                         $url=Url::to(['movimientos-dt/delete','id'=>$model->id]);
                         return ($model->idMov->status==0 ? Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash bigger-120"></i></span> ', '#', [
-                            'title' => Yii::t('yii', 'Delete'),
+                            'title' => Yii::t('yii', 'Eliminar Items'),
                             'aria-label' => Yii::t('yii', 'Delete'),
                             'onclick' => "
                             krajeeDialog.confirm('Esta seguro de eliminar el Items:  ', function (result) {
