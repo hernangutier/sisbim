@@ -51,6 +51,12 @@ class MovimientosController extends Controller
         ]);
     }
 
+    public function actionResult()
+    {
+      $this->layout="main";
+      return $this->render('result');
+    }
+
     /**
      * Displays a single Movimientos model.
      * @param integer $id
