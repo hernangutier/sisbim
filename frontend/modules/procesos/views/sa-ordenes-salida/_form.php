@@ -133,7 +133,7 @@ $this->registerJs($formatJs, View::POS_HEAD);
 
 																												<li>
 																													<?=
-																													Html::a('Proveedor', '#', [
+																													Html::a('Responsable Directo', '#', [
 																														'id' => 'activity-index-link1',
 
 																														'title'=>'Nuevo Responsable',
@@ -154,12 +154,15 @@ $this->registerJs($formatJs, View::POS_HEAD);
 																											</ul>
 
 
+
 															</div>
 
 
 
 
 														</div>
+
+														<br>
 
 
 															<?=

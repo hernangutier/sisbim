@@ -81,4 +81,27 @@ class SaOrdenesSalida extends \yii\db\ActiveRecord
 
         ];
     }
+
+    public static function getItemsMotivo(){
+
+            if ($this->motivo=='0') { return 'SALIDA A TALLER  O SERVICIO TECNICO ESPECIALIZADO'; };
+            if ($this->motivo=='1') { return 'ACTIVIDAD INSTITUSIONAL'; };
+            if ($this->motivo=='2') { return 'PRESTAMO TEMPORAL DEL BIEN'; };
+            if ($this->motivo=='3') { return 'OTRO MOTIVO'; };
+  }
+
+    public function getStatusHtml(){
+      if ($this->status==0){
+        return '<span class="badge badge-warning"><b>Pendiente</b></span>';
+      }
+
+      if ($this->status==1){
+        return '<span class="badge badge-success">Procesado</span>';
+      }
+
+      if ($this->status==2){
+        return '<span class="badge badge-danger">Anulado</span>';
+      }
+
+    }
 }

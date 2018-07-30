@@ -64,6 +64,18 @@ class MovimientosDtController extends Controller
         ]);
     }
 
+    public function actionDesvincularUser($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = $this->findModel($id);
+        $model->id_user_new=null;
+        if ($model->save()){
+          return $err=false;
+        } else {
+          return $err=true;
+        }
+    }
+
     /**
      * Creates a new MovimientosDt model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -126,7 +138,7 @@ class MovimientosDtController extends Controller
     {
         $this->findModel($id)->delete();
 
-        
+
     }
 
     /**

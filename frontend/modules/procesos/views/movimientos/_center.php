@@ -194,6 +194,43 @@ Select2::widget([
                     ],
             ],
 
+            [
+                  'class' => 'yii\grid\ActionColumn',
+                  'template' => '{desvincular}',
+                  'buttons' => [
+                    'desvincular' => function ($url,$model, $key) {
+                          $url1=Url::to(['movimientos-dt/desvincular-user','id'=>$model->id]);
+                          return  (isset($model->id_user_new) ? Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-user-times bigger-120"></i></span> ', '#', [
+                              'title' => Yii::t('yii', 'Desvincular Nuevo Usuario'),
+                              'aria-label' => Yii::t('yii', 'Delete'),
+                              'onclick' => "
+                              krajeeDialog.confirm('Esta seguro de Desvincular el Nuevo Usuario  ', function (result) {
+                                   if (result) {
+                                      $.ajax({
+
+                                      url: '$url1',
+                                      type: 'POST',
+
+                                      error : function(xhr, status) {
+
+                                        //$('.alert-d-ant').html('<strong>Error!</strong> El Registro no se pudo eliminar').show().fadeOut(2000);
+                                      },
+                                      success: function (json){
+                                        $.pjax.reload({container: '#grid-movimientos-dt'});
+                                        //$('.alert-s-ant').html('<strong>Felicitaciones!</strong> El Registro a sido Eliminado con Exito').show().fadeOut(2000);
+                                      },
+
+                                  });
+                                }
+                              });
+                                  return false;
+                              ",
+                          ]) : '');
+                      },
+
+                      ],
+              ],
+
 
             [
                 'attribute'=>'id_bien',
@@ -270,6 +307,7 @@ Select2::widget([
                             'allowClear' => true
                         ],
                   ],
+                  'displayValueConfig'=> ArrayHelper::map(common\models\Responsables::find()->all(),'id','nombres'),
                   //'options'=>['pluginOptions'=>['min'=>0, 'max'=>5000]],
                   'asPopover' => false,
               ];
