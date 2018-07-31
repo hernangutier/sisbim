@@ -122,6 +122,7 @@ class EntesExternosController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $this->layout="main";
         return $this->render('update', [
             'model' => $model,
         ]);

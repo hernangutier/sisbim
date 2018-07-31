@@ -3,16 +3,17 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\EntesExternos */
+/* @var $model common\models\Proveedores */
 
-$this->title = 'Update Entes Externos: ' . $model->id;
+$this->title = 'Actualizar';
 $this->params['breadcrumbs'][] = ['label' => 'Entes Externos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="entes-externos-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="col-sm-offset-2 col-sm-7">
+  <h3 class="header smaller lighter blue">
+    <i class="ace-icon fa  fa-refresh"></i>
+     Actualizar Ente Externo: <?= $model->rif ?>
+  </h3>
 
     <?= $this->render('_form', [
         'model' => $model,
