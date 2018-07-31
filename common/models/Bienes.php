@@ -47,6 +47,7 @@ use Yii;
  * @property integer $estado_fisico
  * @property string $old_id
  * @property integer $activo
+  * @property int $id_ente_ext
  * @property boolean $is_colectivo
  * @property boolean $pend_in_mov
  * @property string $motivo_indisponibilidad
@@ -84,26 +85,32 @@ class Bienes extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [['id', 'codigo', 'status', 'costo', 'notasigned', 'isvehicle', 'isasigned', 'tipobien', 'pendientedesinc', 'aplicaiva', 'existe', 'disponibilidad'], 'required'],
-            [['id', 'id_inc', 'dias_garantia', 'id_resp_directo', 'status', 'notasigned', 'isvehicle', 'id_vehicle', 'id_und_actual', 'isasigned', 'id_clas', 'id_user', 'operativo', 'tipobien', 'id_lin', 'pendientedesinc', 'aplicaiva', 'existe', 'id_cat', 'statusfisical', 'disponibilidad', 'mantenimiento', 'estado_uso', 'estado_fisico', 'activo','id_color'], 'integer'],
-            [['costo'], 'number'],
-            [['sin_user','etiquetar','desincorporar','no_ubicado','is_custodia'], 'boolean'],
-            [['foto', 'descripcion', 'foto1'], 'string'],
-            [['fcreacion', 'fdesinc'], 'safe'],
-            [['is_colectivo', 'is_in', 'is_asegurable','pend_in_mov'], 'boolean'],
-            [['codigo', 'serial'], 'string', 'max' => 50],
-            [['codigo', 'serial'], 'string', 'max' => 50],
-            [['observacion', 'localizacion', 'motivo_indisponibilidad'], 'string', 'max' => 400],
-            [['marca'], 'string', 'max' => 80],
-            [['undmedida', 'old_cod'], 'string', 'max' => 20],
-            [['codigo'], 'unique'],
-            [['id_vehicle'], 'exist', 'skipOnError' => true, 'targetClass' => VehiculosMaquinas::className(), 'targetAttribute' => ['id_vehicle' => 'id']],
-        ];
-    }
-
+     public function rules()
+      {
+          return [
+              [['codigo', 'status', 'costo', 'notasigned', 'isvehicle', 'isasigned', 'tipobien', 'pendientedesinc', 'aplicaiva', 'existe', 'disponibilidad'], 'required'],
+              [['id_inc', 'dias_garantia', 'id_resp_directo', 'status', 'notasigned', 'isvehicle', 'id_vehicle', 'id_und_actual', 'isasigned', 'id_clas', 'id_user', 'operativo', 'tipobien', 'id_lin', 'pendientedesinc', 'aplicaiva', 'existe', 'id_cat', 'statusfisical', 'disponibilidad', 'mantenimiento', 'estado_uso', 'estado_fisico', 'activo', 'id_color', 'id_modelo', 'barcode', 'tipo_indisponibilidad', 'id_ente_ext'], 'default', 'value' => null],
+              [['id_inc', 'dias_garantia', 'id_resp_directo', 'status', 'notasigned', 'isvehicle', 'id_vehicle', 'id_und_actual', 'isasigned', 'id_clas', 'id_user', 'operativo', 'tipobien', 'id_lin', 'pendientedesinc', 'aplicaiva', 'existe', 'id_cat', 'statusfisical', 'disponibilidad', 'mantenimiento', 'estado_uso', 'estado_fisico', 'activo', 'id_color', 'id_modelo', 'barcode', 'tipo_indisponibilidad', 'id_ente_ext'], 'integer'],
+              [['costo'], 'number'],
+              [['foto', 'descripcion', 'foto1'], 'string'],
+              [['fcreacion', 'fdesinc'], 'safe'],
+              [['is_colectivo', 'is_in', 'is_asegurable', 'pend_in_mov', 'aplica_garantia', 'etiquetar', 'desincorporar', 'no_ubicado', 'bm3', 'is_custodia'], 'boolean'],
+              [['codigo', 'serial'], 'string', 'max' => 50],
+              [['observacion', 'localizacion', 'motivo_indisponibilidad'], 'string', 'max' => 400],
+              [['marca'], 'string', 'max' => 80],
+              [['undmedida', 'old_cod'], 'string', 'max' => 20],
+              [['codigo'], 'unique'],
+              [['id_clas'], 'exist', 'skipOnError' => true, 'targetClass' => Clasificacion::className(), 'targetAttribute' => ['id_clas' => 'id']],
+              [['id_ente_ext'], 'exist', 'skipOnError' => true, 'targetClass' => EntesExternos::className(), 'targetAttribute' => ['id_ente_ext' => 'id']],
+              [['id_lin'], 'exist', 'skipOnError' => true, 'targetClass' => Lineas::className(), 'targetAttribute' => ['id_lin' => 'id']],
+              [['id_resp_directo'], 'exist', 'skipOnError' => true, 'targetClass' => Responsables::className(), 'targetAttribute' => ['id_resp_directo' => 'id']],
+              [['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => SdbCategoriasEsp::className(), 'targetAttribute' => ['id_cat' => 'id']],
+              [['id_color'], 'exist', 'skipOnError' => true, 'targetClass' => SdbColores::className(), 'targetAttribute' => ['id_color' => 'id']],
+              [['id_modelo'], 'exist', 'skipOnError' => true, 'targetClass' => SdbModelos::className(), 'targetAttribute' => ['id_modelo' => 'cod']],
+              [['id_und_actual'], 'exist', 'skipOnError' => true, 'targetClass' => UnidadesAdmin::className(), 'targetAttribute' => ['id_und_actual' => 'id']],
+              [['id_vehicle'], 'exist', 'skipOnError' => true, 'targetClass' => VehiculosMaquinas::className(), 'targetAttribute' => ['id_vehicle' => 'id']],
+          ];
+      }
     /**
      * @inheritdoc
      */
@@ -160,6 +167,7 @@ class Bienes extends \yii\db\ActiveRecord
             'desincorporar'=>'Desincorporar',
             'no_ubicado'=>'No Ubicado',
             'is_custodia'=>'Bien en Custodia o Cuido',
+            'id_ente_ext'=>'Ente Propietario del Bien',
         ];
     }
 

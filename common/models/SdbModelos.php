@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
  * This is the model class for table "sdb_modelos".
  *
- * @property integer $cod
+ * @property int $cod
  * @property string $descripcion
- * @property integer $codmarca
- * @property integer $cod_segun_cat
+ * @property int $codmarca
+ * @property int $cod_segun_cat Código Ségun Catalogo de Bienes al que aplica
  *
  * @property Bienes[] $bienes
  * @property SdbCategoriasEsp $codSegunCat
@@ -19,7 +19,7 @@ use Yii;
 class SdbModelos extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -27,19 +27,22 @@ class SdbModelos extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['descripcion'], 'required'],
+            [['codmarca', 'cod_segun_cat'], 'default', 'value' => null],
             [['codmarca', 'cod_segun_cat'], 'integer'],
-            [['descripcion'], 'string', 'max' => 100]
+            [['descripcion'], 'string', 'max' => 100],
+            [['cod_segun_cat'], 'exist', 'skipOnError' => true, 'targetClass' => SdbCategoriasEsp::className(), 'targetAttribute' => ['cod_segun_cat' => 'id']],
+            [['codmarca'], 'exist', 'skipOnError' => true, 'targetClass' => SdbMarcas::className(), 'targetAttribute' => ['codmarca' => 'cod']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -47,7 +50,7 @@ class SdbModelos extends \yii\db\ActiveRecord
             'cod' => 'Cod',
             'descripcion' => 'Descripcion',
             'codmarca' => 'Codmarca',
-            'cod_segun_cat' => 'Bien Mueble Según Catalogo al que Aplica',
+            'cod_segun_cat' => 'Cod Segun Cat',
         ];
     }
 
@@ -56,7 +59,7 @@ class SdbModelos extends \yii\db\ActiveRecord
      */
     public function getBienes()
     {
-        return $this->hasMany(Bienes::className(), ['codmodelo' => 'cod']);
+        return $this->hasMany(Bienes::className(), ['id_modelo' => 'cod']);
     }
 
     /**
@@ -64,7 +67,7 @@ class SdbModelos extends \yii\db\ActiveRecord
      */
     public function getCodSegunCat()
     {
-        return $this->hasOne(SdbCategoriasEsp::className(), ['cod' => 'cod_segun_cat']);
+        return $this->hasOne(SdbCategoriasEsp::className(), ['id' => 'cod_segun_cat']);
     }
 
     /**

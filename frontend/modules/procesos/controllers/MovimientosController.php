@@ -51,11 +51,12 @@ class MovimientosController extends Controller
         ]);
     }
 
-    public function actionResult()
+    public function actionResult($id)
     {
+      $mov = $this->findModel($id);
       $model=new \frontend\models\Finish();
-      $model->title="Felicitaciones";
-      $content="Se ha Procesado correctamente el movimientos N°: <code> 001 </code>";
+      $model->title="Felicitaciones!";
+      $content="Se ha Procesado correctamente el movimiento  <a href='#'>Imprimir Comprobante <code>" . str_pad($mov->ncontrol,10,'0',STR_PAD_LEFT) . "</code></a>";
       $model->content=$content;
 
       $this->layout="main";

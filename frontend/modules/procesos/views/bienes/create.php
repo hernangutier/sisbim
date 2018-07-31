@@ -4,18 +4,17 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Bienes */
+/* @var $model app\models\Bienes */
 
-$this->title = 'Create Bienes';
-$this->params['breadcrumbs'][] = ['label' => 'Bienes', 'url' => ['index']];
+$this->title = Yii::t('app', 'Registrar Bien Mueble en Custodia');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bienes en Custodia'), 'url' => ['index-cuido']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bienes-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="col-sm-offset-3 col-sm-6">
+              <?= $this->render('_form', [
+        					'model' => $model,
+    					]) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
 
 </div>

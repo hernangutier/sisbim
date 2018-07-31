@@ -1,14 +1,14 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
  * This is the model class for table "sdb_colores".
  *
- * @property integer $cod
- * @property integer $codigo
+ * @property int $id
+ * @property int $codigo
  * @property string $descripcion
  *
  * @property Bienes[] $bienes
@@ -16,7 +16,7 @@ use Yii;
 class SdbColores extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -24,26 +24,27 @@ class SdbColores extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['codigo', 'descripcion'], 'required'],
+            [['codigo'], 'default', 'value' => null],
             [['codigo'], 'integer'],
             [['descripcion'], 'string'],
             [['codigo'], 'unique'],
-            [['descripcion'], 'unique']
+            [['descripcion'], 'unique'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'cod' => 'Cod',
+            'id' => 'ID',
             'codigo' => 'Codigo',
             'descripcion' => 'Descripcion',
         ];
@@ -54,6 +55,6 @@ class SdbColores extends \yii\db\ActiveRecord
      */
     public function getBienes()
     {
-        return $this->hasMany(Bienes::className(), ['codcolor' => 'cod']);
+        return $this->hasMany(Bienes::className(), ['id_color' => 'id']);
     }
 }

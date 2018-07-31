@@ -76,10 +76,7 @@ class MovimientosDtController extends Controller
         }
     }
 
-    public function actionResult()
-    {
-      return $this->render('result');
-    }
+
 
     /**
      * Creates a new MovimientosDt model.

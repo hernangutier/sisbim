@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SaOrdenesSalida */
+/* @var $model common\models\EntesExternos */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Sa Ordenes Salidas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Entes Externos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sa-ordenes-salida-view">
+<div class="entes-externos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,14 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'motivo',
-            'id_resp',
-            'motivo_descripcion',
-            'date_creation',
-            'status',
-            'id_user',
-            'max_dias',
-            'ncontrol',
+            'rif',
+            'razon',
+            'direccion',
+            'telefono',
+            'fax',
+            'email:email',
         ],
     ]) ?>
 

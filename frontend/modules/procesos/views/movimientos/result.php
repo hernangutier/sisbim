@@ -3,10 +3,10 @@
 
  ?>
 
-<div class="container">
 
 
-<div class="row justify-content-center align-items-center">
+
+<div class="col-md-6 col-md-offset-3">
 <tr><td class="table-td-wrap" align="center" width="458"><table class="table-space" style="height: 18px; font-size: 0px; line-height: 0; width: 450px; background-color: #e4e6e9;" border="0" bgcolor="#E4E6E9" width="450" cellspacing="0" cellpadding="0" height="18"><tbody><tr><td class="table-space-td" style="height: 18px; width: 450px; background-color: #e4e6e9;" align="left" bgcolor="#E4E6E9" width="450" valign="middle" height="18">&nbsp;</td></tr></tbody></table>
 <table class="table-space" style="height: 8px; font-size: 0px; line-height: 0; width: 450px; background-color: #ffffff;" border="0" bgcolor="#FFFFFF" width="450" cellspacing="0" cellpadding="0" height="8"><tbody><tr><td class="table-space-td" style="height: 8px; width: 450px; background-color: #ffffff;" align="left" bgcolor="#FFFFFF" width="450" valign="middle" height="8">&nbsp;</td></tr></tbody></table>
 
@@ -16,7 +16,7 @@
     <div style="font-family: Arial, sans-serif; line-height: 20px; color: #444444; font-size: 13px;">
       <b style="color: #777777;"><?= $model->content  ?></b>
       <br>
-      Please confirm your registration to continue
+      Por Favor presione Nuevo para Generar un Nuevo Movimiento...
     </div>
   </td></tr></tbody></table>
 </td></tr></tbody></table>
@@ -39,13 +39,7 @@
 <table class="table-row-fixed" style="table-layout: fixed; background-color: #ffffff;" border="0" bgcolor="#FFFFFF" width="450" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-row-fixed-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 1px; padding-right: 1px;" align="left" valign="top">
   <table class="table-col" style="table-layout: fixed;" align="left" border="0" width="448" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-col-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" align="left" width="448" valign="top">
     <table style="table-layout: fixed;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="font-family: Arial, sans-serif; line-height: 24px; color: #bbbbbb; font-size: 13px; font-weight: normal; text-align: center; padding: 9px; border-width: 1px 0px 0px; border-style: solid; border-color: #e3e3e3; background-color: #f5f5f5;" align="center" bgcolor="#f5f5f5" width="100%" valign="top">
-      <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Ace © 2014</a>
-      <br>
-      <a href="#" style="color: #478fca; text-decoration: none; background-color: transparent;">twitter</a>
-      .
-      <a href="#" style="color: #5b7a91; text-decoration: none; background-color: transparent;">facebook</a>
-      .
-      <a href="#" style="color: #dd5a43; text-decoration: none; background-color: transparent;">google+</a>
+      
     </td></tr></tbody></table>
   </td></tr></tbody></table>
 </td></tr></tbody></table>
@@ -53,5 +47,4 @@
 <table class="table-space" style="height: 36px; font-size: 0px; line-height: 0; width: 450px; background-color: #e4e6e9;" border="0" bgcolor="#E4E6E9" width="450" cellspacing="0" cellpadding="0" height="36"><tbody><tr><td class="table-space-td" style="height: 36px; width: 450px; background-color: #e4e6e9;" align="left" bgcolor="#E4E6E9" width="450" valign="middle" height="36">&nbsp;</td></tr></tbody></table></td></tr>
 
 
-</div>
 </div>

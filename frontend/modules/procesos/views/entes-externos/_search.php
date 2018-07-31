@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SaOrdenesSalidaSearch */
+/* @var $model common\models\EntesExternosSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="sa-ordenes-salida-search">
+<div class="entes-externos-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,21 +17,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'motivo') ?>
+    <?= $form->field($model, 'rif') ?>
 
-    <?= $form->field($model, 'id_resp') ?>
+    <?= $form->field($model, 'razon') ?>
 
-    <?= $form->field($model, 'motivo_descripcion') ?>
+    <?= $form->field($model, 'direccion') ?>
 
-    <?= $form->field($model, 'date_creation') ?>
+    <?= $form->field($model, 'telefono') ?>
 
-    <?php // echo $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'fax') ?>
 
-    <?php // echo $form->field($model, 'id_user') ?>
-
-    <?php // echo $form->field($model, 'max_dias') ?>
-
-    <?php // echo $form->field($model, 'ncontrol') ?>
+    <?php // echo $form->field($model, 'email') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

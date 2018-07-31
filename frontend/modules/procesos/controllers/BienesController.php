@@ -4,10 +4,16 @@ namespace frontend\modules\procesos\controllers;
 
 use Yii;
 use common\models\Bienes;
+use common\models\EntesExternos;
 use common\models\BienesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use  yii\db\Query;
+use yii\web\Response;
+use yii\helpers\Url;
+use yii\helpers\Json;
+use yii\widgets\ActiveForm;
 
 /**
  * BienesController implements the CRUD actions for Bienes model.
@@ -100,6 +106,7 @@ class BienesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $this->layout="main";
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -154,4 +161,28 @@ class BienesController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    public function actionEntesList($q = null, $id = null) {
+    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $out = ['results' => ['id' => '', 'rif'=>'','razon' => '']];
+    if (!is_null($q)) {
+        $query = new Query;
+        $query->select('*')
+            ->from('vw_entes_externos')
+            ->where(['like', 'tostring', strtoupper($q)])
+            //->where(['id_und_actual'=>$id_und])
+            ->limit(40);
+        $command = $query->createCommand();
+        $data = $command->queryAll();
+        $out['results'] = array_values($data);
+    }
+    elseif ($id > 0) {
+        $out['results'] = ['id' => $id,
+                          'rif' => EntesExternos::find($id)->rif,
+                          'razon' => EntesExternos::find($id)->razon,
+                        ];
+    }
+    return $out;
+}
 }

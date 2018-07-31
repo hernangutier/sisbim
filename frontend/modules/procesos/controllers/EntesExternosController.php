@@ -3,17 +3,19 @@
 namespace frontend\modules\procesos\controllers;
 
 use Yii;
-use common\models\SaOrdenesSalida;
-use common\models\SaOrdenesSalidaSearch;
+use common\models\EntesExternos;
+use common\models\EntesExternosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use  yii\db\Query;
+use yii\helpers\Json;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
- * SaOrdenesSalidaController implements the CRUD actions for SaOrdenesSalida model.
+ * EntesExternosController implements the CRUD actions for EntesExternos model.
  */
-class SaOrdenesSalidaController extends Controller
+class EntesExternosController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,14 +33,14 @@ class SaOrdenesSalidaController extends Controller
     }
 
     /**
-     * Lists all SaOrdenesSalida models.
+     * Lists all EntesExternos models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SaOrdenesSalidaSearch();
+        $searchModel = new EntesExternosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $this->layout="main";
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -46,7 +48,7 @@ class SaOrdenesSalidaController extends Controller
     }
 
     /**
-     * Displays a single SaOrdenesSalida model.
+     * Displays a single EntesExternos model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,48 +60,55 @@ class SaOrdenesSalidaController extends Controller
         ]);
     }
 
+
+    public function actionCreateModal($submit = false)
+{
+  $model = new EntesExternos();
+
+
+
+    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
+
+    if ($model->load(Yii::$app->request->post())) {
+        if ($model->save()) {
+            $model->refresh();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'message' => '¡Éxito!',
+            ];
+        } else {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
+
+    return $this->renderAjax('_form', [
+        'model' => $model,
+    ]);
+}
     /**
-     * Creates a new SaOrdenesSalida model.
+     * Creates a new EntesExternos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SaOrdenesSalida();
-      
+        $model = new EntesExternos();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $this->layout="main";
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
-
-    public function actionRespList($q = null) {
-    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    $out = ['results' => ['id' => '', 'cedrif' => '','razon'=>'']];
-    if (!is_null($q)) {
-        $query = new Query;
-        $query->select('*')
-            ->from('vw_responsables_all')
-            ->where(['like', 'tostring', $q])
-
-            ->limit(40);
-        $command = $query->createCommand();
-        $data = $command->queryAll();
-        $out['results'] = array_values($data);
-    }
-    elseif ($id > 0) {
-        //$out['results'] = ['id' => $id, 'cedrif'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion];
-    }
-    return $out;
-}
-
     /**
-     * Updates an existing SaOrdenesSalida model.
+     * Updates an existing EntesExternos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -119,7 +128,7 @@ class SaOrdenesSalidaController extends Controller
     }
 
     /**
-     * Deletes an existing SaOrdenesSalida model.
+     * Deletes an existing EntesExternos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -133,15 +142,15 @@ class SaOrdenesSalidaController extends Controller
     }
 
     /**
-     * Finds the SaOrdenesSalida model based on its primary key value.
+     * Finds the EntesExternos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return SaOrdenesSalida the loaded model
+     * @return EntesExternos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SaOrdenesSalida::findOne($id)) !== null) {
+        if (($model = EntesExternos::findOne($id)) !== null) {
             return $model;
         }
 

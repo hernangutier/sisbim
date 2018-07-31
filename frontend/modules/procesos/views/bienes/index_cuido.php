@@ -23,7 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles en Cuido' : 'Consultar Registro Activo  Bienes de Uso' ?>
   </h3>
 
+  <p>
+    <div class="btn-group">
+      <?= Html::a('Registrar Bien', ['create'], ['class' => 'btn btn-success']) ?>
+      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
+    </div>
 
+  </p>
 
 
     <?php Pjax::begin(); ?>

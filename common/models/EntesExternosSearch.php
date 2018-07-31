@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\SaOrdenesSalida;
+use common\models\EntesExternos;
 
 /**
- * SaOrdenesSalidaSearch represents the model behind the search form of `common\models\SaOrdenesSalida`.
+ * EntesExternosSearch represents the model behind the search form of `common\models\EntesExternos`.
  */
-class SaOrdenesSalidaSearch extends SaOrdenesSalida
+class EntesExternosSearch extends EntesExternos
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class SaOrdenesSalidaSearch extends SaOrdenesSalida
     public function rules()
     {
         return [
-            [['id', 'motivo', 'id_resp', 'status', 'id_user', 'max_dias'], 'integer'],
-            [['motivo_descripcion', 'date_creation', 'ncontrol'], 'safe'],
+            [['id'], 'integer'],
+            [['rif', 'razon', 'direccion', 'telefono', 'fax', 'email'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SaOrdenesSalidaSearch extends SaOrdenesSalida
      */
     public function search($params)
     {
-        $query = SaOrdenesSalida::find();
+        $query = EntesExternos::find();
 
         // add conditions that should always apply here
 
@@ -60,16 +60,14 @@ class SaOrdenesSalidaSearch extends SaOrdenesSalida
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'motivo' => $this->motivo,
-            'id_resp' => $this->id_resp,
-            'date_creation' => $this->date_creation,
-            'status' => $this->status,
-            'id_user' => $this->id_user,
-            'max_dias' => $this->max_dias,
         ]);
 
-        $query->andFilterWhere(['ilike', 'motivo_descripcion', $this->motivo_descripcion])
-            ->andFilterWhere(['ilike', 'ncontrol', $this->ncontrol]);
+        $query->andFilterWhere(['ilike', 'rif', $this->rif])
+            ->andFilterWhere(['ilike', 'razon', $this->razon])
+            ->andFilterWhere(['ilike', 'direccion', $this->direccion])
+            ->andFilterWhere(['ilike', 'telefono', $this->telefono])
+            ->andFilterWhere(['ilike', 'fax', $this->fax])
+            ->andFilterWhere(['ilike', 'email', $this->email]);
 
         return $dataProvider;
     }

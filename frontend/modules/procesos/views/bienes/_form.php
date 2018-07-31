@@ -1,113 +1,70 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\ActiveField;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Bienes */
+/* @var $model app\models\Bienes */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bienes-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
+<?= ($model->isNewRecord) ? '<div class="widget-box widget-color-green vui-sortable-handle">' : '<div class="widget-box widget-color-blue2 vui-sortable-handle">' ?>
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller"><?= ($model->isNewRecord) ? 'Registrar Bien Mueble en Custodia' : 'Actualizar Bien N°: ' . $model->codigo ?></h5>
 
-    <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
+												<div class="widget-toolbar no-border">
+													<ul class="nav nav-tabs" id="myTab">
+														<li class="active">
+															<a data-toggle="tab" href="#home" aria-expanded="true">Principales</a>
+														</li>
 
-    <?= $form->field($model, 'serial')->textInput(['maxlength' => true]) ?>
+														<li class="">
+															<a data-toggle="tab" href="#profile" aria-expanded="false">de Ubicación</a>
+														</li>
 
-    <?= $form->field($model, 'dias_garantia')->textInput() ?>
+														<li class="">
+															<a data-toggle="tab" href="#info" aria-expanded="false">SUDEBIP</a>
+														</li>
+													</ul>
+												</div>
+											</div>
 
-    <?= $form->field($model, 'id_resp_directo')->textInput() ?>
+											<div class="widget-body">
+												<div class="widget-main padding-6">
+													<div class="tab-content">
+														<div id="home" class="tab-pane active">
+                              <?php
+                                  echo Yii::$app->controller->renderPartial('_basicos',['model'=>$model,'form'=>$form]);
+                               ?>
+														</div>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+														<div id="profile" class="tab-pane">
+                              <?php
 
-    <?= $form->field($model, 'costo')->textInput() ?>
+                                  echo Yii::$app->controller->renderPartial('_ubicacion',['model'=>$model,'form'=>$form]);
+                               ?>
+														</div>
 
-    <?= $form->field($model, 'notasigned')->textInput() ?>
+														<div id="info" class="tab-pane">
+                              <?php
 
-    <?= $form->field($model, 'observacion')->textInput(['maxlength' => true]) ?>
+                                  echo Yii::$app->controller->renderPartial('_sudebip',['model'=>$model,'form'=>$form]);
+                               ?>
+														</div>
+													</div>
+												</div>
 
-    <?= $form->field($model, 'isvehicle')->textInput() ?>
+                        <div class="widget-toolbox padding-8 clearfix">
+                          <div class="form-group">
+                              <?= Html::submitButton( ($model->isNewRecord) ? '<i class="ace-icon fa fa-floppy-o bigger-120 green "></i> Guardar' : '<i class="ace-icon fa fa-floppy-o bigger-120  "></i> Guardar' , ['class' => ($model->isNewRecord) ? 'btn btn-white btn-success btn-bold pull-right' : 'btn btn-white btn-primary btn-bold pull-right']  ) ?>
+                          </div>
+												</div>
 
-    <?= $form->field($model, 'id_vehicle')->textInput() ?>
+											</div>
+										<div></div></div>
 
-    <?= $form->field($model, 'foto')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'id_und_actual')->textInput() ?>
-
-    <?= $form->field($model, 'isasigned')->textInput() ?>
-
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'marca')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'id_clas')->textInput() ?>
-
-    <?= $form->field($model, 'fcreacion')->textInput() ?>
-
-    <?= $form->field($model, 'id_user')->textInput() ?>
-
-    <?= $form->field($model, 'operativo')->textInput() ?>
-
-    <?= $form->field($model, 'tipobien')->textInput() ?>
-
-    <?= $form->field($model, 'id_lin')->textInput() ?>
-
-    <?= $form->field($model, 'localizacion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'fdesinc')->textInput() ?>
-
-    <?= $form->field($model, 'pendientedesinc')->textInput() ?>
-
-    <?= $form->field($model, 'undmedida')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'aplicaiva')->textInput() ?>
-
-    <?= $form->field($model, 'existe')->textInput() ?>
-
-    <?= $form->field($model, 'id_cat')->textInput() ?>
-
-    <?= $form->field($model, 'statusfisical')->textInput() ?>
-
-    <?= $form->field($model, 'disponibilidad')->textInput() ?>
-
-    <?= $form->field($model, 'foto1')->textInput() ?>
-
-    <?= $form->field($model, 'mantenimiento')->textInput() ?>
-
-    <?= $form->field($model, 'estado_uso')->textInput() ?>
-
-    <?= $form->field($model, 'estado_fisico')->textInput() ?>
-
-    <?= $form->field($model, 'old_cod')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'activo')->textInput() ?>
-
-    <?= $form->field($model, 'is_colectivo')->checkbox() ?>
-
-    <?= $form->field($model, 'motivo_indisponibilidad')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'is_in')->checkbox() ?>
-
-    <?= $form->field($model, 'is_asegurable')->checkbox() ?>
-
-    <?= $form->field($model, 'id_color')->textInput() ?>
-
-    <?= $form->field($model, 'pend_in_mov')->checkbox() ?>
-
-    <?= $form->field($model, 'etiquetar')->checkbox() ?>
-
-    <?= $form->field($model, 'desincorporar')->checkbox() ?>
-
-    <?= $form->field($model, 'no_ubicado')->checkbox() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+<?php ActiveForm::end(); ?>
