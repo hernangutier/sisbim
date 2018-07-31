@@ -162,6 +162,15 @@
 										<b class="arrow"></b>
 							</li>
 
+              <li class="">
+										<a href="<?= Url::to(['entes-externos/index'])  ?>">
+											<i class="menu-icon fa fa-caret-right"></i>
+											Entes Externos
+										</a>
+
+										<b class="arrow"></b>
+							</li>
+
 
 
           </li>

@@ -40,7 +40,7 @@ class EntesExternosController extends Controller
     {
         $searchModel = new EntesExternosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $this->layout="main";
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
