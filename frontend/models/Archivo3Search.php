@@ -1,16 +1,16 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\EntesExternos;
+use frontend\models\Archivo;
 
 /**
- * EntesExternosSearch represents the model behind the search form of `common\models\EntesExternos`.
+ * Archivo3Search represents the model behind the search form of `common\models\Archivo`.
  */
-class EntesExternosSearch extends EntesExternos
+class Archivo3Search extends Archivo
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class EntesExternosSearch extends EntesExternos
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['rif', 'razon', 'direccion', 'telefono', 'fax', 'email'], 'safe'],
+            [['id', 'tipo_inmueble', 'id_user','id_mun'], 'integer'],
+            [['identificacion', 'ubicacion', 'nexp'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EntesExternosSearch extends EntesExternos
      */
     public function search($params)
     {
-        $query = EntesExternos::find();
+        $query = Archivo::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +60,15 @@ class EntesExternosSearch extends EntesExternos
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'tipo_inmueble' => $this->tipo_inmueble,
+            'id_user' => $this->id_user,
+            'id_mun' => $this->id_mun,
         ]);
 
-        $query->andFilterWhere(['ilike', 'rif', $this->rif])
-            ->andFilterWhere(['ilike', 'razon', $this->razon])
-            ->andFilterWhere(['ilike', 'direccion', $this->direccion])
-            ->andFilterWhere(['ilike', 'telefono', $this->telefono])
-            ->andFilterWhere(['ilike', 'fax', $this->fax])
-            ->andFilterWhere(['ilike', 'email', $this->email]);
+        $query->andFilterWhere(['ilike', 'identificacion', $this->identificacion])
+            ->andFilterWhere(['ilike', 'ubicacion', $this->ubicacion])
+
+            ->andFilterWhere(['ilike', 'nexp', $this->nexp]);
 
         return $dataProvider;
     }

@@ -114,7 +114,7 @@ transform: rotate(-7deg);
 									<div class="col-xs-4">
 										<div class="box-custom">
 											<div class="imagen">
-														<a href="<?= Url::to(['bienes/index'])  ?>"> <img src="../web/images/productos.png" class="imagen" /> </a>
+														<a href="<?= Url::to(['archivo/index'])  ?>"> <img src="../web/images/productos.png" class="imagen" /> </a>
 											</div>
 											<div class="titulo">
 												 	<h3>Archivo Inmuebles</h3>

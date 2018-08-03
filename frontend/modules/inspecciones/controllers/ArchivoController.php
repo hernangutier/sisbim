@@ -1,21 +1,18 @@
 <?php
 
-namespace frontend\modules\procesos\controllers;
+namespace frontend\modules\inspecciones\controllers;
 
 use Yii;
-use common\models\EntesExternos;
-use common\models\EntesExternosSearch;
+use frontend\models\Archivo;
+use frontend\models\Archivo3Search;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 /**
- * EntesExternosController implements the CRUD actions for EntesExternos model.
+ * ArchivoController implements the CRUD actions for Archivo model.
  */
-class EntesExternosController extends Controller
+class ArchivoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,12 +30,12 @@ class EntesExternosController extends Controller
     }
 
     /**
-     * Lists all EntesExternos models.
+     * Lists all Archivo models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EntesExternosSearch();
+        $searchModel = new Archivo3Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->layout="main";
         return $this->render('index', [
@@ -48,67 +45,40 @@ class EntesExternosController extends Controller
     }
 
     /**
-     * Displays a single EntesExternos model.
+     * Displays a single Archivo model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        $this->layout="main";
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-
-    public function actionCreateModal($submit = false)
-{
-  $model = new EntesExternos();
-
-
-
-    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($model);
-    }
-
-    if ($model->load(Yii::$app->request->post())) {
-        if ($model->save()) {
-            $model->refresh();
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'message' => '¡Éxito!',
-            ];
-        } else {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-    }
-
-    return $this->renderAjax('_form', [
-        'model' => $model,
-    ]);
-}
     /**
-     * Creates a new EntesExternos model.
+     * Creates a new Archivo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EntesExternos();
+        $model = new Archivo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
+        $this->layout="main";
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing EntesExternos model.
+     * Updates an existing Archivo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -121,7 +91,6 @@ class EntesExternosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         $this->layout="main";
         return $this->render('update', [
             'model' => $model,
@@ -129,7 +98,7 @@ class EntesExternosController extends Controller
     }
 
     /**
-     * Deletes an existing EntesExternos model.
+     * Deletes an existing Archivo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -143,15 +112,15 @@ class EntesExternosController extends Controller
     }
 
     /**
-     * Finds the EntesExternos model based on its primary key value.
+     * Finds the Archivo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return EntesExternos the loaded model
+     * @return Archivo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EntesExternos::findOne($id)) !== null) {
+        if (($model = Archivo::findOne($id)) !== null) {
             return $model;
         }
 

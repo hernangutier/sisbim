@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\EntesExternosSearch */
+/* @var $model common\models\Archivo3Search */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="entes-externos-search">
+<div class="archivo-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,17 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'rif') ?>
+    <?= $form->field($model, 'tipo_inmueble') ?>
 
-    <?= $form->field($model, 'razon') ?>
+    <?= $form->field($model, 'identificacion') ?>
 
-    <?= $form->field($model, 'direccion') ?>
+    <?= $form->field($model, 'ubicacion') ?>
 
-    <?= $form->field($model, 'telefono') ?>
+    <?= $form->field($model, 'nexp') ?>
 
-    <?php // echo $form->field($model, 'fax') ?>
-
-    <?php // echo $form->field($model, 'email') ?>
+    <?php // echo $form->field($model, 'id_user') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
