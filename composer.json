@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-widget-activeform": "@dev",
         "kartik-v/yii2-editable": "*",
-        "himiklab/yii2-jqgrid-widget": "*"
+        "himiklab/yii2-jqgrid-widget": "*",
+        "kartik-v/yii2-helpers": "dev-master"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

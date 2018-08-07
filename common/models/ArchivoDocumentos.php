@@ -13,8 +13,10 @@ use Yii;
  * @property string $monto
  * @property string $datos_registro
  * @property int $id_archivo
+ * @property string $tipo_descripcion
  *
  * @property Archivo $archivo
+ * @property ArchivoDocTipos $tipo0
  */
 class ArchivoDocumentos extends \yii\db\ActiveRecord
 {
@@ -33,11 +35,15 @@ class ArchivoDocumentos extends \yii\db\ActiveRecord
     {
         return [
             [['tipo', 'ano_ejecucion', 'id_archivo'], 'default', 'value' => null],
+            [['tipo'], 'required'],
+            [['monto'], 'default', 'value' => 0],
             [['tipo', 'ano_ejecucion', 'id_archivo'], 'integer'],
             [['ano_ejecucion'], 'required'],
             [['monto'], 'number'],
             [['datos_registro'], 'string', 'max' => 400],
+            [['tipo_descripcion'], 'string', 'max' => 200],
             [['id_archivo'], 'exist', 'skipOnError' => true, 'targetClass' => Archivo::className(), 'targetAttribute' => ['id_archivo' => 'id']],
+            [['tipo'], 'exist', 'skipOnError' => true, 'targetClass' => ArchivoDocTipos::className(), 'targetAttribute' => ['tipo' => 'id']],
         ];
     }
 
@@ -48,11 +54,12 @@ class ArchivoDocumentos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tipo' => 'Tipo',
-            'ano_ejecucion' => 'Ano Ejecucion',
+            'tipo' => 'Tipo de Documento',
+            'ano_ejecucion' => 'Año  de Ejecución',
             'monto' => 'Monto',
-            'datos_registro' => 'Datos Registro',
+            'datos_registro' => 'Datos Registro o Identificacion del Documento',
             'id_archivo' => 'Id Archivo',
+            'tipo_descripcion' => 'Tipo Descripcion',
         ];
     }
 
@@ -62,5 +69,13 @@ class ArchivoDocumentos extends \yii\db\ActiveRecord
     public function getArchivo()
     {
         return $this->hasOne(Archivo::className(), ['id' => 'id_archivo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTipo0()
+    {
+        return $this->hasOne(ArchivoDocTipos::className(), ['id' => 'tipo']);
     }
 }

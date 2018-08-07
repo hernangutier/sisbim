@@ -3,16 +3,16 @@
 namespace frontend\modules\inspecciones\controllers;
 
 use Yii;
-use common\models\Archivo;
-use common\models\ArchivoSearch;
+use common\models\ArchivoDocTipos;
+use common\models\ArchivoDocTiposSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArchivoController implements the CRUD actions for Archivo model.
+ * ArchivoDocTiposController implements the CRUD actions for ArchivoDocTipos model.
  */
-class ArchivoController extends Controller
+class ArchivoDocTiposController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class ArchivoController extends Controller
     }
 
     /**
-     * Lists all Archivo models.
+     * Lists all ArchivoDocTipos models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ArchivoSearch();
+        $searchModel = new ArchivoDocTiposSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->layout="main";
         return $this->render('index', [
@@ -45,32 +45,30 @@ class ArchivoController extends Controller
     }
 
     /**
-     * Displays a single Archivo model.
+     * Displays a single ArchivoDocTipos model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $this->layout="main";
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Archivo model.
+     * Creates a new ArchivoDocTipos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Archivo();
+        $model = new ArchivoDocTipos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
-
         $this->layout="main";
         return $this->render('create', [
             'model' => $model,
@@ -78,7 +76,7 @@ class ArchivoController extends Controller
     }
 
     /**
-     * Updates an existing Archivo model.
+     * Updates an existing ArchivoDocTipos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -89,7 +87,7 @@ class ArchivoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
         $this->layout="main";
         return $this->render('update', [
@@ -98,7 +96,7 @@ class ArchivoController extends Controller
     }
 
     /**
-     * Deletes an existing Archivo model.
+     * Deletes an existing ArchivoDocTipos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,19 +106,19 @@ class ArchivoController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+
     }
 
     /**
-     * Finds the Archivo model based on its primary key value.
+     * Finds the ArchivoDocTipos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Archivo the loaded model
+     * @return ArchivoDocTipos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Archivo::findOne($id)) !== null) {
+        if (($model = ArchivoDocTipos::findOne($id)) !== null) {
             return $model;
         }
 

@@ -3,11 +3,14 @@
 namespace frontend\modules\inspecciones\controllers;
 
 use Yii;
-use frontend\models\ArchivoDocumentos;
-use common\models\ArchivoDocumentos3Search;
+use common\models\ArchivoDocumentos;
+use frontend\models\ArchivoDocumentosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * ArchivoDocumentosController implements the CRUD actions for ArchivoDocumentos model.
@@ -75,6 +78,35 @@ class ArchivoDocumentosController extends Controller
         ]);
     }
 
+    public function actionCreateModal($submit = false,$id_archivo)
+{
+  $model = new ArchivoDocumentos();
+  $model->id_archivo=$id_archivo;
+
+
+    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
+
+    if ($model->load(Yii::$app->request->post())) {
+        if ($model->save()) {
+            $model->refresh();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'message' => '¡Éxito!',
+            ];
+        } else {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
+
+    return $this->renderAjax('create', [
+        'model' => $model,
+    ]);
+}
+
     /**
      * Updates an existing ArchivoDocumentos model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -82,18 +114,34 @@ class ArchivoDocumentosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+     public function actionUpdate($submit = false,$id)
+ {
+   $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+
+     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
+         Yii::$app->response->format = Response::FORMAT_JSON;
+         return ActiveForm::validate($model);
+     }
+
+     if ($model->load(Yii::$app->request->post())) {
+         if ($model->save()) {
+             $model->refresh();
+             Yii::$app->response->format = Response::FORMAT_JSON;
+             return [
+                 'message' => '¡Éxito!',
+             ];
+         } else {
+             Yii::$app->response->format = Response::FORMAT_JSON;
+             return ActiveForm::validate($model);
+         }
+     }
+
+     return $this->renderAjax('update', [
+         'model' => $model,
+     ]);
+ }
 
     /**
      * Deletes an existing ArchivoDocumentos model.
@@ -105,8 +153,6 @@ class ArchivoDocumentosController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

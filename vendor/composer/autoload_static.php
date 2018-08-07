@@ -60,6 +60,7 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
             'kartik\\plugins\\depdrop\\' => 23,
             'kartik\\nav\\' => 11,
             'kartik\\money\\' => 13,
+            'kartik\\helpers\\' => 15,
             'kartik\\growl\\' => 13,
             'kartik\\grid\\' => 12,
             'kartik\\form\\' => 12,
@@ -246,6 +247,10 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
         'kartik\\money\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-money',
+        ),
+        'kartik\\helpers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-helpers',
         ),
         'kartik\\growl\\' => 
         array (

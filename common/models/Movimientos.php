@@ -121,4 +121,14 @@ class Movimientos extends \yii\db\ActiveRecord
       }
 
     }
+
+    public static function getEstatusList(){
+      $date=[
+        '0'=>'Pendiente',
+        '1'=>'Procesado',
+        '2'=>'Anulado'
+
+      ];
+    return $data;
+    }
 }

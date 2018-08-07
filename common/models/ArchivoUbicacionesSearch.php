@@ -1,16 +1,16 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\ArchivoDocumentos;
+use common\models\ArchivoUbicaciones;
 
 /**
- * ArchivoDocumentos3Search represents the model behind the search form of `frontend\models\ArchivoDocumentos`.
+ * ArchivoUbicacionesSearch represents the model behind the search form of `common\models\ArchivoUbicaciones`.
  */
-class ArchivoDocumentosSearch extends ArchivoDocumentos
+class ArchivoUbicacionesSearch extends ArchivoUbicaciones
 {
     /**
      * {@inheritdoc}
@@ -18,9 +18,8 @@ class ArchivoDocumentosSearch extends ArchivoDocumentos
     public function rules()
     {
         return [
-            [['id', 'tipo', 'ano_ejecucion', 'id_archivo'], 'integer'],
-            [['monto'], 'number'],
-            [['datos_registro'], 'safe'],
+            [['id'], 'integer'],
+            [['referencia', 'descripcion'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class ArchivoDocumentosSearch extends ArchivoDocumentos
      */
     public function search($params)
     {
-        $query = ArchivoDocumentos::find();
+        $query = ArchivoUbicaciones::find();
 
         // add conditions that should always apply here
 
@@ -61,13 +60,10 @@ class ArchivoDocumentosSearch extends ArchivoDocumentos
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'tipo' => $this->tipo,
-            'ano_ejecucion' => $this->ano_ejecucion,
-            'monto' => $this->monto,
-            'id_archivo' => $this->id_archivo,
         ]);
 
-        $query->andFilterWhere(['ilike', 'datos_registro', $this->datos_registro]);
+        $query->andFilterWhere(['ilike', 'referencia', $this->referencia])
+            ->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }

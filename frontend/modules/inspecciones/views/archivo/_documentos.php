@@ -1,6 +1,6 @@
 <?php
-use frontend\models\ArchivoDocumentos;
-use frontend\models\ArchivoDocumentosSearch;
+use common\models\ArchivoDocumentos;
+use common\models\ArchivoDocumentosSearch;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
@@ -8,6 +8,7 @@ use yii\widgets\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\ArchivoDocumentos */
 
@@ -23,47 +24,6 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
  ?>
 
 
- <div class="row">
-   <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" style="min-height: 212.133px;">
-                   <div class="widget-box widget-color-blue2">
-                     <div class="widget-header">
-                       <h5 class="widget-title"> <b>Documentos</b></h5>
-
-                       <div class="widget-toolbar">
- 													<a href="#" data-action="collapse">
- 														<i class="1 ace-icon fa fa-chevron-up bigger-125"></i>
- 													</a>
-
-
-
- 												</div>
-
-                         <div class="widget-toolbar ">
-                         <div class="widget-menu">
-                           <?=
-                           Html::button('<i class="fa fa-plus"></i>',[
-                             'id' => 'activity-index-link',
-                             'class' => 'btn btn-primary add',
-                             'data-toggle' => 'modal',
-                             'data-target' => '#modal-accesorios',
-                             'data-url' => Url::to(['gv-accesorios-vehiculos/create','id_veh'=>$model->id]),
-                             'data-pjax' => '0',
-                           ]);
-                           ?>
-
-
-
-                         </div>
-                         </div>
-
-
-
-
-
-                     </div>
-
-                     <div class="widget-body">
-                       <div class="widget-main">
 
 <?= GridView::widget([
   'dataProvider' => $dataProvider,
@@ -73,9 +33,37 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
   'pjaxSettings'=>[
       'neverTimeout'=>true,
       'options'=>[
-        'id'=>'grid-accesorios',
+        'id'=>'grid-documentos',
       ],
   ],
+  'panel' => [
+        'heading'=>'<h3 class="panel-title"><i class="fa fa-folder-open"></i> Documentos del Expediente</h3>',
+        'type'=>'info',
+
+
+        'footer'=>false
+    ],
+  'toolbar' => [
+ [
+    'content'=>
+    Html::a('<i class="glyphicon glyphicon-plus"></i>', '#', [
+
+        'title' => 'Crear Expediente',
+        'class' => 'btn btn-success add',
+        'data-toggle' => 'modal',
+        'data-target' => '#modal-documentos',
+        'data-url' => Url::to(['archivo-documentos/create-modal','id_archivo'=>$model->id]),
+        'data-pjax' => '0',
+    ]) . ' '.
+        Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+            'class' => 'btn btn-info',
+            'title' => 'Listado'
+        ]),
+
+],
+'{export}',
+'{toggleData}'
+],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -83,15 +71,14 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                         'class' => 'yii\grid\ActionColumn',
                         'template' => '{update}',
                         'buttons' => [
-
-
-
-
-                          'update' => function ($url, $model, $key) {
-                              return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-refresh bigger-120"></i></span> ',
-                                  Url::to(['gv-accesorios-vehiculos/update','id'=>$model->id]), [
-                                  'id' => 'activity-index-link',
+                        'update' => function ($url, $model, $key) {
+                              return Html::a('<span class="btn btn-xs btn-primary update"><i class="ace-icon fa fa-refresh bigger-120"></i></span> ',
+                                  '#', [
                                   'title' => Yii::t('app', 'Actualizar'),
+                                  'data-toggle' => 'modal',
+                                  'data-target' => '#modal-documentos',
+                                  'data-url' => Url::to(['archivo-documentos/update', 'id' => $model->id]),
+                                  'data-pjax' => '0',
 
                               ]);
                           },
@@ -107,7 +94,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
               'template' => '{delete}',
               'buttons' => [
                 'delete' => function ($url,$model, $key) {
-                      $url=Url::to(['gv-accesorios-vehiculos/delete','id'=>$model->id]);
+                      $url=Url::to(['archivo-documentos/delete','id'=>$model->id]);
                       return Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash bigger-120"></i></span> ', '#', [
                           'title' => Yii::t('yii', 'Delete'),
                           'aria-label' => Yii::t('yii', 'Delete'),
@@ -123,7 +110,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                                     $('.alert-d-ant').html('<strong>Error!</strong> El Registro no se pudo eliminar').show().fadeOut(2000);
                                   },
                                   success: function (json){
-                                    $.pjax.reload({container: '#grid-accesorios'});
+                                    $.pjax.reload({container: '#grid-documentos'});
                                     //$('.alert-s-ant').html('<strong>Felicitaciones!</strong> El Registro a sido Eliminado con Exito').show().fadeOut(2000);
                                   },
 
@@ -138,18 +125,24 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                   ],
           ],
 
+          [
+            'attribute'=>'tipo',
+            'value'=>function($model){
+              return $model->tipo0->descripcion;
+            }
+          ],
+          'ano_ejecucion',
+          'datos_registro',
+          [
+            'attribute'=>'monto',
+            'value'=>function ($model)
+            {
+              return number_format($model->monto,2);
+            }
+          ]
+
+        ],
 
 
 
-
-
-    ],
 ]); ?>
-
-
-
-</div>
-</div>
-</div>
-</div>
-</div>

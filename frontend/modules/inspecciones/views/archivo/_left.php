@@ -29,7 +29,7 @@ use yii\helpers\Url;
   </div>
   <div class="col-sm-6">
     <?= '<label>Tipo de Inmueble</label><br>' ?>
-    <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;"><?= $model->tipo_inmueble  ?></a>
+    <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;"><?= $model->getTipo()  ?></a>
   </div>
 </div>
 

@@ -13,7 +13,7 @@ use common\models\Bienes;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bienes-form">
+<div class="bienes-form">ar
           <div class="row">
               <div class="col-sm-6">
                 <?= $form->field($model, 'estado_uso')->dropDownList(

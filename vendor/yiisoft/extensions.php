@@ -354,4 +354,13 @@ return array (
       '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid',
     ),
   ),
+  'kartik-v/yii2-helpers' => 
+  array (
+    'name' => 'kartik-v/yii2-helpers',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers',
+    ),
+  ),
 );

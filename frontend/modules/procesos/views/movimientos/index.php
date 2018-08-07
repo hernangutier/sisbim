@@ -1,10 +1,11 @@
 <?php
-
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
+use yii\widgets\Pjax;
+use common\models\MovimientosDtSearch;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\MovimientosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,13 +13,6 @@ use yii\helpers\Url;
 $this->title = 'Movimientos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
-
-
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-      Historico de Movimientos de Bienes
-  </h3>
 
 
 
@@ -26,6 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-archivo',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-history "></i> Historico de Movimientos</h3>',
+              'type'=>'info',
+
+
+              'footer'=>false
+          ],
+
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -71,6 +79,19 @@ $this->params['breadcrumbs'][] = $this->title;
                               },
                       ],
               ],
+              [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'width' => '50px',
+                    'value' => function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail' => function ($model, $key, $index, $column) {
+                        return Yii::$app->controller->renderPartial('_expand_info', ['model' => $model]);
+                    },
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
+                    'expandOneOnly' => true,
+                ],
+
 
             [
               'attribute'=>'ncontrol',
@@ -109,6 +130,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $searchModel->getStatusHtml();
               },
               'format'=>'raw',
+              'filter' => Html::activeDropDownList($searchModel,
+              'status', ['0'=>'Pendiente','1'=>'Procesado','2'=>'Anulado'],['class'=>'form-control','prompt' => 'No Filtro']),
 
             ],
             // 'id_user',
@@ -123,4 +146,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-</div>

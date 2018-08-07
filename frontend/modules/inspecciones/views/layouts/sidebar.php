@@ -60,50 +60,48 @@
 						<ul class="submenu">
 
               <li class="">
-										<a href="<?= Url::to(['bienes/index'])  ?>">
+										<a href="<?= Url::to(['archivo/index'])  ?>">
 											<i class="menu-icon fa fa-caret-right"></i>
-											Bienes Muebles
+											Archivo de Inmuebles
 										</a>
 
 										<b class="arrow"></b>
 							</li>
 
               <li class="">
-										<a href="<?= Url::to(['fact-lineas/index'])  ?>">
+										<a href="<?= Url::to(['archivo-doc-tipos/index'])  ?>">
 											<i class="menu-icon fa fa-caret-right"></i>
-										  Bienes de Uso
+											Tipos de Documentos
 										</a>
 
 										<b class="arrow"></b>
 							</li>
 
+              <li class="">
+										<a href="<?= Url::to(['archivo-ubicaciones/index'])  ?>">
+											<i class="menu-icon fa fa-caret-right"></i>
+											Archivo Ubicaciones
+										</a>
+
+										<b class="arrow"></b>
+							</li>
 
               <li class="">
-                    <a href="<?= Url::to(['personal-profesiones/index'])  ?>">
+                    <a href="<?= Url::to(['div-inspecciones/index'])  ?>">
                       <i class="menu-icon fa fa-caret-right"></i>
-                      Vehiculos
+                      Registro de Inspecciones
                     </a>
 
                     <b class="arrow"></b>
               </li>
 
-              <li class="">
-										<a href="<?= Url::to(['unidades-admin/index'])  ?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Unidades Administrativas
-										</a>
 
-										<b class="arrow"></b>
-							</li>
 
-              <li class="">
-										<a href="<?= Url::to(['responsables/index'])  ?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Responsables
-										</a>
 
-										<b class="arrow"></b>
-							</li>
+
+
+
+
 
 </li>
 
@@ -127,79 +125,39 @@
 						<ul class="submenu">
 
               <li class="">
-										<a href="<?=  Url::to('/sisbim/report/bienes_no_ubicados.php')  ?>">
+										<a href="#">
 											<i class="menu-icon fa fa-caret-right"></i>
-										Bienes por Ubicar
+										Listado de Inpecciones
                     </a>
 
 										<b class="arrow"></b>
 									</li>
 
                 <li class="">
-    										<a href="<?= Url::to('/sisbim/report/bienes_propuestos.php')  ?>">
+    										<a href="#">
     											<i class="menu-icon fa fa-caret-right"></i>
-    											Bienes a Desincorporar
+    											Listado de Archivo de Bienes Inmuebles
     										</a>
 
     										<b class="arrow"></b>
     						</li>
 
                 <li class="">
-    										<a href="<?= Url::to('/sisbim/report/bienes_etiquetar.php')  ?>">
+    										<a href="#">
     											<i class="menu-icon fa fa-caret-right"></i>
-    											Bienes a Etiquetar
+    											Imprimir BM1
     										</a>
 
     										<b class="arrow"></b>
     						</li>
 
-                <li class="">
-    										<a href="<?= Url::to('/sisbim/report/bienes_colectivo_general.php')  ?>">
-    											<i class="menu-icon fa fa-caret-right"></i>
-    											Bienes Uso Colectivo (General)
-    										</a>
 
-    										<b class="arrow"></b>
-    						</li>
+
 
 
           </li>
 
-          <li class="">
-              <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-street-view"></i>
-                <span class="menu-text">
-                   Formulación
-                </span>
 
-                <b class="arrow fa fa-angle-down"></b>
-              </a>
-
-              <b class="arrow"></b>
-
-              <ul class="submenu">
-
-                <li class="">
-                      <a href="<?= Url::to(['personal/create'])  ?>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Crear Integrante
-                      </a>
-
-                      <b class="arrow"></b>
-                    </li>
-
-                  <li class="">
-                          <a href="<?= Url::to(['personal/index'])  ?>">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Integrantes
-                          </a>
-
-                          <b class="arrow"></b>
-                        </li>
-                </ul>
-
-
-            </li>
 
 
     <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

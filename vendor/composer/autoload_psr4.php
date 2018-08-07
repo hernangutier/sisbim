@@ -35,6 +35,7 @@ return array(
     'kartik\\plugins\\depdrop\\' => array($vendorDir . '/kartik-v/dependent-dropdown'),
     'kartik\\nav\\' => array($vendorDir . '/kartik-v/yii2-nav-x'),
     'kartik\\money\\' => array($vendorDir . '/kartik-v/yii2-money'),
+    'kartik\\helpers\\' => array($vendorDir . '/kartik-v/yii2-helpers'),
     'kartik\\growl\\' => array($vendorDir . '/kartik-v/yii2-widget-growl'),
     'kartik\\grid\\' => array($vendorDir . '/kartik-v/yii2-grid'),
     'kartik\\form\\' => array($vendorDir . '/kartik-v/yii2-widget-activeform'),

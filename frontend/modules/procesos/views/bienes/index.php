@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use common\models\SbdCategoriasEsp;
@@ -15,7 +15,7 @@ use  yii\helpers\Url;
 $this->title = Yii::t('app', 'Bienes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
+
 
 
   <h3 class="header smaller lighter blue">
@@ -26,10 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-    <?php Pjax::begin(); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>false,
+            'options'=>[
+              'id'=>'grid-bienes',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="ace-icon fa  	fa-comments"></i> Consultar Registro de Bienes Muebles</h3>',
+              'type'=>'info',
+
+
+              'footer'=>false
+          ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -150,6 +164,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
-
-</div>

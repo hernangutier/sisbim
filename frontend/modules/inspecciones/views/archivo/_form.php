@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\ActiveField;
-use frontend\models\Archivo;
+use common\models\Archivo;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use \kartik\switchinput\SwitchInput;
 use kartik\dialog\Dialog;
+use kartik\helpers\Enum;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Archivo */
@@ -20,19 +21,54 @@ use kartik\dialog\Dialog;
 
     <?php $form = ActiveForm::begin(); ?>
 <fieldset>
+<div class="row">
+  <div class="col-sm-6">
+    <?= $form->field($model, 'nexp', [
+      'addon' => ['prepend' => ['content'=>'<i class="fa fa-barcode"></i>']]
+        ])->widget('yii\widgets\MaskedInput', [
+        'mask' => '9999'
+    ])?>
+  </div>
+  <div class="col-sm-6">
+    <?= $form->field($model, 'ano_in')->dropDownList(
+                    Enum::yearList(1900, 2018, true, false)
+                  )
+    ?>
+  </div>
+</div>
 
-	<?= $form->field($model, 'nexp', [
-		'addon' => ['prepend' => ['content'=>'<i class="fa fa-barcode"></i>']]
-			])->widget('yii\widgets\MaskedInput', [
-			'mask' => '9999'
-	])?>
 
 		<?= $form->field($model, 'identificacion')->textarea(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'tipo_inmueble')->dropDownList(
+<div class="row">
+  <div class="col-sm-6">
+    <?= $form->field($model, 'tipo_inmueble')->dropDownList(
 										Archivo::getListTipo()
 									)
 		?>
+  </div>
+  <div class="col-sm-6">
+    <?php //-------------- Lineas -------------
+
+       echo $form->field($model, 'id_ubic')->widget(Select2::classname(), [
+
+            'data' => ArrayHelper::map(common\models\ArchivoUbicaciones::find()->all(),'id',
+                 function($model, $defaultValue) {
+                    return $model->referencia;
+            }
+    ),
+            'language' => 'es',
+
+            'options' => ['placeholder' => 'Seleccione la Ubicacion Fisica ...'],
+            'pluginOptions' => [
+            'allowClear' => true
+            ],
+
+            ]);
+
+    ?>
+  </div>
+</div>
+
 
 
 		<div class="row">

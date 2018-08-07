@@ -17,28 +17,28 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerJs("
 $(document).on('click','.add',function (){
 
-  $('.tl').text('Agregar Accesorio');
+  $('.tl').text('Agregar Documento');
   $.get(
 
       $(this).data('url'),
       function (data) {
           $('.modal-body').html(data);
-          $('#modal-accesorios').modal();
+          $('#modal-documentos').modal();
       }
   );
 
 
   });
 
-  $(document).on('click','.add-poliza',function (){
+  $(document).on('click','.update',function (){
 
-    $('.tl').text('Registrar Poliza');
+    $('.tl').text('Actualizar Documento');
     $.get(
 
         $(this).data('url'),
         function (data) {
             $('.modal-body').html(data);
-            $('#modal-accesorios').modal();
+            $('#modal-documentos').modal();
         }
     );
 
@@ -54,7 +54,7 @@ $(document).on('click','.add',function (){
 
 <?php
 Modal::begin([
-    'id' => 'modal-accesorios',
+    'id' => 'modal-documentos',
     'header' => '<h4 class="blue bigger tl">Nuevo Articulo</h4>',
 
 ]);
