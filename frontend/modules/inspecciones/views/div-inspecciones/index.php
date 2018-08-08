@@ -1,6 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -30,13 +31,6 @@ echo "<div class='well'></div>";
 Modal::end();
 ?>
 
-<div class="container">
-
-
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-      Registro de Inspecciones
-  </h3>
 
 
 
@@ -51,6 +45,29 @@ Modal::end();
               'id'=>'grid-inspecciones',
             ],
         ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-user-secret"></i> Registro de Inspecciones</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Registrar Inspección'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -151,4 +168,3 @@ Modal::end();
 
         ],
     ]); ?>
-</div>

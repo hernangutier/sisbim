@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
         'pjax'=>true,
         'pjaxSettings'=>[
             'neverTimeout'=>true,
@@ -39,6 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
                 'class' => 'btn btn-success',
                 'title' => 'Crear Carpeta'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
             ]) . ' '.
                 Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
                     'class' => 'btn btn-info',

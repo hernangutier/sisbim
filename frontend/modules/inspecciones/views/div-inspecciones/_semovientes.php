@@ -2,8 +2,9 @@
 use common\models\DivSemovientes;
 use common\models\DivSemovientesSearch;
 use kartik\grid\GridView;
+use kartik\helpers\Enum;
 use yii\widgets\Pjax;
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
@@ -28,12 +29,10 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
   'dataProvider' => $dataProvider,
   'responsive'=>true,
   'hover'=>true,
-  'pjax'=>true,
   'filterModel' => $searchModel,
   'pjax'=>true,
-
   'pjaxSettings'=>[
-      'neverTimeout'=>true,
+      'neverTimeout'=>false,
       'options'=>[
         'id'=>'grid-semovientes',
       ],
@@ -56,6 +55,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         'data-url' => Url::to(['div-semovientes/create','id_insp'=>$model->id]),
         'data-pjax' => '0',
       ]) . ' '.
+      
           Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
               'class' => 'btn btn-info',
               'title' => 'Listado'
@@ -155,7 +155,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           'class'=>'kartik\grid\EditableColumn',
           'attribute'=>'categoria',
           'filter' => Html::activeDropDownList($searchModel,
-          'sexo', ['0'=>'Vaca','1'=>'Toro','2'=>'Becerro(a)','3'=>'Maute(a)','4'=>'Novillo(a)'],['class'=>'form-control','prompt' => 'No Filtro']),
+          'categoria', [0=>'Vaca',1=>'Toro',2=>'Becerro(a)',3=>'Maute(a)',4=>'Novillo(a)'],['class'=>'form-control','prompt' => 'No Filtro']),
           'editableOptions'=>[
               'header'=>'Categoria',
               'asPopover' => false,
@@ -180,13 +180,15 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
       [
         'class'=>'kartik\grid\EditableColumn',
         'attribute'=>'is_auditado',
-
+        'filter' => Html::activeDropDownList($searchModel,
+        'is_auditado', Enum::boolList('No', 'Si') ,
+        ['class'=>'form-control','prompt' => 'No Filtro']),
         'editableOptions'=>[
             'header'=>'Auditado',
             'asPopover' => false,
             'inputType'=>Editable :: INPUT_DROPDOWN_LIST,
             'data' => [0 => 'No', 1 => 'Si'],
-            'options' => ['class'=>'form-control', 'prompt'=>'Select status...'],
+            'options' => ['class'=>'form-control', 'prompt'=>'Selecionar...'],
             'displayValueConfig'=> [
                 '1' => '<i class="ace-icon fa fa-check green bigger-160"></i>',
                 '0' => '<i class="ace-icon fa fa-times red2 bigger-160"></i>'

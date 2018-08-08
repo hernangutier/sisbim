@@ -13,19 +13,19 @@ use common\models\DivSemovientes;
 class DivSemovientesSearch extends DivSemovientes
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'id_insp', 'categoria'], 'integer'],
-            [['nbov', 'sexo', 'observaciones', 'date_creation'], 'safe'],
+            [['id', 'id_insp', 'categoria', 'is_auditado'], 'integer'],
+            [['sexo', 'observaciones', 'date_creation', 'nbov'], 'safe'],
             [['is_herrado'], 'boolean'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -65,11 +65,12 @@ class DivSemovientesSearch extends DivSemovientes
             'categoria' => $this->categoria,
             'is_herrado' => $this->is_herrado,
             'date_creation' => $this->date_creation,
+            'is_auditado' => $this->is_auditado,
         ]);
 
-        $query->andFilterWhere(['ilike', 'nbov', $this->nbov])
-            ->andFilterWhere(['ilike', 'sexo', $this->sexo])
-            ->andFilterWhere(['ilike', 'observaciones', $this->observaciones]);
+        $query->andFilterWhere(['ilike', 'sexo', $this->sexo])
+            ->andFilterWhere(['ilike', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['ilike', 'nbov', $this->nbov]);
 
         return $dataProvider;
     }

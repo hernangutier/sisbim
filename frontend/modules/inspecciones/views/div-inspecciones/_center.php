@@ -53,26 +53,40 @@ use yii\helpers\Url;
                   </div>
 
                   <div id="componentes" class="tab-pane fade">
-                    <?php
-                      //echo Yii::$app->controller->renderPartial('_accesorios',['model'=>$model]);
-                      'Hola'
-                    ?>
+
+                    <div class="alert alert-info">
+                         <button type="button" class="close" data-dismiss="alert">
+                           <i class="ace-icon fa fa-times"></i>
+                         </button>
+                         <strong>Upps!</strong>
+                         Opcion en desarrollo
+                         <br>
+                    </div>
+
                   </div>
 
                   <div id="poliza" class="tab-pane fade">
                     <div class="widget-body">
-                      <?php
-                          //echo Yii::$app->controller->renderPartial('_poliza',['model'=>$model]);
-                          'Hola'
-                       ?>
+                      <div class="alert alert-info">
+                           <button type="button" class="close" data-dismiss="alert">
+                             <i class="ace-icon fa fa-times"></i>
+                           </button>
+                           <strong>Upps!</strong>
+                           Opcion en desarrollo
+                           <br>
+                      </div>
                     </div>
                   </div>
 
                   <div id="archivo" class="tab-pane fade">
-                    <?php
-                        //echo "HOLA"; //echo Yii::$app->controller->renderPartial('_view_adicionales',['model'=>$model]);
-                        'Hola'
-                    ?>
+                    <div class="alert alert-info">
+                         <button type="button" class="close" data-dismiss="alert">
+                           <i class="ace-icon fa fa-times"></i>
+                         </button>
+                         <strong>Upps!</strong>
+                         Opcion en desarrollo
+                         <br>
+                    </div>
                   </div>
 
 
