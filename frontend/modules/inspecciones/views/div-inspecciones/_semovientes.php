@@ -177,7 +177,26 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
       ],
 
+      [
+        'class'=>'kartik\grid\EditableColumn',
+        'attribute'=>'is_auditado',
 
+        'editableOptions'=>[
+            'header'=>'Auditado',
+            'asPopover' => false,
+            'inputType'=>Editable :: INPUT_DROPDOWN_LIST,
+            'data' => [0 => 'No', 1 => 'Si'],
+            'options' => ['class'=>'form-control', 'prompt'=>'Select status...'],
+            'displayValueConfig'=> [
+                '1' => '<i class="ace-icon fa fa-check green bigger-160"></i>',
+                '0' => '<i class="ace-icon fa fa-times red2 bigger-160"></i>'
+            ],
+
+        ],
+        'hAlign'=>'center',
+        'vAlign'=>'middle',
+        'width'=>'200px',
+      ],
 
 
     ],

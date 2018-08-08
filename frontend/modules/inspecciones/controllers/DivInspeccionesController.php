@@ -96,6 +96,17 @@ class DivInspeccionesController extends Controller
 
           }
 
+          if (isset($posted['is_auditado'])){
+              $model->is_auditado=$posted['is_auditado'];
+              $output=$model->is_auditado;
+              if ($model->save() ) {
+                $out = Json::encode(['output'=>$output, 'message'=>'']);
+                echo $out;
+                return;
+              }
+
+          }
+
 
           if (isset($posted['categoria'])){
               $model->sexo=$posted['categoria'];

@@ -14,6 +14,7 @@ use Yii;
  * @property string $sexo 'H' o 'M'
  * @property bool $is_herrado
  * @property string $observaciones
+ * @property int $is_auditado
  *
  * @property DivInspecciones $insp
  */
@@ -34,7 +35,7 @@ class DivSemovientes extends \yii\db\ActiveRecord
     {
         return [
             [['id_insp', 'categoria'], 'default', 'value' => null],
-            [['id_insp', 'categoria'], 'integer'],
+            [['id_insp', 'categoria','is_auditado'], 'integer'],
             [['nbov'], 'required'],
             [['sexo'], 'string'],
             [['is_herrado'], 'boolean'],
@@ -57,6 +58,7 @@ class DivSemovientes extends \yii\db\ActiveRecord
             'sexo' => 'Sexo',
             'is_herrado' => 'Esta Herrado',
             'observaciones' => 'Observaciones',
+            'is_auditado'=>'Auditado'
         ];
     }
 
