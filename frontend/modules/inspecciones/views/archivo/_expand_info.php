@@ -46,7 +46,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
   'showPageSummary' => true,
     'columns' => [
-        //['class' => 'yii\grid\SerialColumn'],
+        ['class' => '\kartik\grid\SerialColumn'],
         [
           'attribute'=>'tipo',
           'value'=>function($model){

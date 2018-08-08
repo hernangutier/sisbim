@@ -101,9 +101,14 @@ Modal::end();
                     </div>
 
                     <div id="componentes" class="tab-pane fade">
-                      <?php
-                        echo 'Hola'//Yii::$app->controller->renderPartial('_accesorios',['model'=>$model]);
-                      ?>
+                      <div class="alert alert-info">
+                     <button type="button" class="close" data-dismiss="alert">
+                       <i class="ace-icon fa fa-times"></i>
+                     </button>
+                     <strong>Upps!</strong>
+                     Opcion en desarrollo
+                     <br>
+                   </div>
                     </div>
 
                     <div id="poliza" class="tab-pane fade">

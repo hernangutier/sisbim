@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
   $this->registerJs("
   $(document).on('click', '#activity-index-link', (function() {
-      $('.tl').text('Nuevo Bovino');
+      $('.tl').text('Nuevo Semoviente');
       $.get(
 
           $(this).data('url'),
@@ -55,7 +55,7 @@ Modal::end();
 <div class="widget-box transparent">
 											<div class="widget-header widget-header-large">
 												<h3 class="widget-title grey lighter">
-													<i class="ace-icon fa fa-retweet green"></i>
+													<i class="ace-icon fa fa-user-secret green"></i>
 													Datos de la Inspeccion
 												</h3>
 

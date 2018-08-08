@@ -16,10 +16,6 @@ $this->title = Yii::t('app', 'Archivo de Bienes Inmuebles');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
-
-
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -35,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'type'=>'info',
 
 
-              'footer'=>false
+              'footer'=>true,
           ],
           'toolbar' => [
         [
@@ -55,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => '\kartik\grid\SerialColumn'],
 
 
 

@@ -5,52 +5,64 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%sdb_municipios}}".
+ * This is the model class for table "sdb_municipios".
  *
- * @property integer $cod
- * @property integer $codest
+ * @property int $id
+ * @property int $id_est
  * @property string $descripcion
  * @property string $codigo
  *
+ * @property Archivo[] $archivos
  * @property SdbCiudades[] $sdbCiudades
- * @property SdbEstados $codest0
- * @property SdbParroquias $sdbParroquias
+ * @property SdbEstados $est
+ * @property SdbParroquias[] $sdbParroquias
+ * @property SdbSedes[] $sdbSedes
  */
 class SdbMunicipios extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%sdb_municipios}}';
+        return 'sdb_municipios';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['codest', 'descripcion', 'codigo'], 'required'],
-            [['codest'], 'integer'],
+            [['id_est', 'descripcion', 'codigo'], 'required'],
+            [['id_est'], 'default', 'value' => null],
+            [['id_est'], 'integer'],
             [['descripcion'], 'string', 'max' => 200],
             [['codigo'], 'string', 'max' => 20],
-            [['codigo'], 'unique']
+            [['codigo'], 'unique'],
+            [['id_est'], 'exist', 'skipOnError' => true, 'targetClass' => SdbEstados::className(), 'targetAttribute' => ['id_est' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'cod' => 'Cod',
-            'codest' => 'Estado',
-            'descripcion' => 'Descripción',
-            'codigo' => 'Código',
+            'id' => 'ID',
+            'id_est' => 'Id Est',
+            'descripcion' => 'Descripcion',
+            'codigo' => 'Código (SUDEBIP)',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArchivos()
+    {
+        return $this->hasMany(Archivo::className(), ['id_mun' => 'id']);
     }
 
     /**
@@ -58,15 +70,15 @@ class SdbMunicipios extends \yii\db\ActiveRecord
      */
     public function getSdbCiudades()
     {
-        return $this->hasMany(SdbCiudades::className(), ['codmun' => 'cod']);
+        return $this->hasMany(SdbCiudades::className(), ['codmun' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCodest0()
+    public function getEst()
     {
-        return $this->hasOne(SdbEstados::className(), ['cod' => 'codest']);
+        return $this->hasOne(SdbEstados::className(), ['id' => 'id_est']);
     }
 
     /**
@@ -74,6 +86,14 @@ class SdbMunicipios extends \yii\db\ActiveRecord
      */
     public function getSdbParroquias()
     {
-        return $this->hasOne(SdbParroquias::className(), ['codmun' => 'cod']);
+        return $this->hasMany(SdbParroquias::className(), ['codmun' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSdbSedes()
+    {
+        return $this->hasMany(SdbSedes::className(), ['codmun' => 'id']);
     }
 }

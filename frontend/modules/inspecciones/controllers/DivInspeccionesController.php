@@ -4,13 +4,16 @@ namespace frontend\modules\inspecciones\controllers;
 
 use Yii;
 use common\models\DivInspecciones;
+use common\models\DivSemovientes;
 use common\models\DivInspeccionesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use  yii\db\Query;
 use yii\web\Response;
 use yii\helpers\Url;
 use yii\helpers\Json;
+
 
 /**
  * DivInspeccionesController implements the CRUD actions for DivInspecciones model.
@@ -58,8 +61,8 @@ class DivInspeccionesController extends Controller
 
       if (Yii::$app->request->post('hasEditable')) {
           // instantiate your book model for saving
-          $dtId = Yii::$app->request->post('hasEditable');
-          $model = DivInspecciones::findOne($dtId);
+          $dtId = Yii::$app->request->post('editableKey');
+          $model = DivSemovientes::findOne($dtId);
 
           // store a default json response as desired by editable
           $out = Json::encode(['output'=>'', 'message'=>'']);
@@ -68,11 +71,35 @@ class DivInspeccionesController extends Controller
           // anyway in this array for an editable submission)
           // - $posted is the posted data for Book without any indexes
           // - $post is the converted array for single model validation
+          $posted = current($_POST['DivSemovientes']);
+          $post = ['detalle' => $posted];
+
+          if (isset($posted['nbov'])){
+              $model->nbov=$posted['nbov'];
+              $output=$model->nbov;
+              if ($model->save() ) {
+                $out = Json::encode(['output'=>$output, 'message'=>'']);
+                echo $out;
+                return;
+              }
+
+          }
+
+          if (isset($posted['sexo'])){
+              $model->sexo=$posted['sexo'];
+              $output=$model->sexo;
+              if ($model->save() ) {
+                $out = Json::encode(['output'=>$output, 'message'=>'']);
+                echo $out;
+                return;
+              }
+
+          }
 
 
-          if (isset($_POST['motivo'])){
-              $model->descripcion=$_POST['motivo'];
-              $output=$model->descripcion;
+          if (isset($posted['categoria'])){
+              $model->sexo=$posted['categoria'];
+              $output=$model->sexo;
               if ($model->save() ) {
                 $out = Json::encode(['output'=>$output, 'message'=>'']);
                 echo $out;

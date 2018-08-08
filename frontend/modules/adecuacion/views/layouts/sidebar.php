@@ -104,6 +104,14 @@
 
 										<b class="arrow"></b>
 							</li>
+              <li class="">
+										<a href="<?= Url::to(['sdb-municipios/index'])  ?>">
+											<i class="menu-icon fa fa-caret-right"></i>
+											Estados (SUDEBIP)
+										</a>
+
+										<b class="arrow"></b>
+							</li>
 
 </li>
 

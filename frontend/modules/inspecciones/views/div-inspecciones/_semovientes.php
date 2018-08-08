@@ -23,56 +23,6 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
  ?>
 
 
- <div class="row">
-   <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" style="min-height: 212.133px;">
-                   <div class="widget-box widget-color-blue2">
-                     <div class="widget-header">
-                       <h5 class="widget-title"> <b>Bovinos Registrados</b></h5>
-
-                       <div class="widget-toolbar">
- 													<a href="#" data-action="collapse">
- 														<i class="1 ace-icon fa fa-chevron-up bigger-125"></i>
- 													</a>
-
-
-
- 												</div>
-
-                         <div class="widget-toolbar ">
-                         <div class="widget-menu">
-                           <?=
-                           Html::button('<i class="fa fa-plus"></i>',[
-                             'id' => 'activity-index-link',
-                             'class' => 'btn btn-primary add',
-                             'data-toggle' => 'modal',
-                             'data-target' => '#modal-semovientes',
-                             'data-url' => Url::to(['div-semovientes/create','id_insp'=>$model->id]),
-                             'data-pjax' => '0',
-                           ]);
-                           ?>
-
-                           <?=
-                           Html::button('<i class="fa fa-print"></i>',[
-                             'id' => 'reporte',
-                             'class' => 'btn btn-primary',
-                             'data-url' => Url::to('/sisbim/report/bienes_no_ubicados.php'),
-                             'data-pjax' => '0',
-                           ]);
-                           ?>
-
-
-
-                         </div>
-                         </div>
-
-
-
-
-
-                     </div>
-
-                     <div class="widget-body">
-                       <div class="widget-main">
 
 <?= GridView::widget([
   'dataProvider' => $dataProvider,
@@ -80,12 +30,41 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
   'hover'=>true,
   'pjax'=>true,
   'filterModel' => $searchModel,
+  'pjax'=>true,
+
   'pjaxSettings'=>[
       'neverTimeout'=>true,
       'options'=>[
         'id'=>'grid-semovientes',
       ],
   ],
+  'panel' => [
+        'heading'=>'<h3 class="panel-title"><i class="fa fa-intersex"></i> Registro de Semovientes</h3>',
+        'type'=>'info',
+
+
+        'footer'=>true
+    ],
+    'toolbar' => [
+  [
+      'content'=>
+      Html::button('<i class="fa fa-plus"></i>',[
+        'id' => 'activity-index-link',
+        'class' => 'btn btn-success add',
+        'data-toggle' => 'modal',
+        'data-target' => '#modal-semovientes',
+        'data-url' => Url::to(['div-semovientes/create','id_insp'=>$model->id]),
+        'data-pjax' => '0',
+      ]) . ' '.
+          Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+              'class' => 'btn btn-info',
+              'title' => 'Listado'
+          ]),
+
+  ],
+  '{export}',
+  '{toggleData}'
+],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -127,30 +106,79 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           ],
 
 
-        'nbov',
+          [
+            'class'=>'kartik\grid\EditableColumn',
+            'attribute'=>'nbov',
+
+            'editableOptions'=>[
+                'header'=>'Categoria',
+                'asPopover' => false,
+                'inputType'=>Editable :: INPUT_TEXT,
+
+
+                //'options'=>['pluginOptions'=>['min'=>0, 'max'=>5000]],
+
+            ],
+            'hAlign'=>'left',
+            'vAlign'=>'middle',
+            'width'=>'400px',
+          ],
+
+
         [
+          'class'=>'kartik\grid\EditableColumn',
           'attribute'=>'sexo',
-          'value'=>function($model){
-            return $model->getSexoHtml();
-          },
-          'format'=>'raw',
-        ],
+
+          'filter' => Html::activeDropDownList($searchModel,
+          'sexo', ['H'=>'Hembras','M'=>'Machos'],['class'=>'form-control','prompt' => 'No Filtro']),
+          'editableOptions'=>[
+              'header'=>'Categoria',
+              'asPopover' => false,
+              'inputType'=>Editable :: INPUT_SELECT2,
+              'options'=>[
+                'data'=> ['H'=>'Hembras','M'=>'Machos']
+              ],
+              'displayValueConfig'=> ['H'=>'Hembras','M'=>'Machos'],
+
+
+              //'options'=>['pluginOptions'=>['min'=>0, 'max'=>5000]],
+
+          ],
+          'hAlign'=>'left',
+          'vAlign'=>'middle',
+          'width'=>'300px',
+          //'format'=>['decimal', 2],
+
+      ],
+
         [
+          'class'=>'kartik\grid\EditableColumn',
           'attribute'=>'categoria',
-          'value'=>function($model){
-            return $model->getCategoria();
-          }
-        ]
+          'filter' => Html::activeDropDownList($searchModel,
+          'sexo', ['0'=>'Vaca','1'=>'Toro','2'=>'Becerro(a)','3'=>'Maute(a)','4'=>'Novillo(a)'],['class'=>'form-control','prompt' => 'No Filtro']),
+          'editableOptions'=>[
+              'header'=>'Categoria',
+              'asPopover' => false,
+              'inputType'=>Editable :: INPUT_SELECT2,
+              'options'=>[
+                'data'=> ['0'=>'Vaca','1'=>'Toro','2'=>'Becerro(a)','3'=>'Maute(a)','4'=>'Novillo(a)']
+              ],
+
+
+                'displayValueConfig'=> ['0'=>'Vaca','1'=>'Toro','2'=>'Becerro(a)','3'=>'Maute(a)','4'=>'Novillo(a)'],
+
+              //'options'=>['pluginOptions'=>['min'=>0, 'max'=>5000]],
+
+          ],
+          'hAlign'=>'left',
+          'vAlign'=>'middle',
+          'width'=>'200px',
+          //'format'=>['decimal', 2],
+
+      ],
+
 
 
 
     ],
 ]); ?>
-
-
-
-</div>
-</div>
-</div>
-</div>
-</div>

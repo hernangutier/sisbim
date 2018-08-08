@@ -21,7 +21,8 @@
         "kartik-v/yii2-widget-activeform": "@dev",
         "kartik-v/yii2-editable": "*",
         "himiklab/yii2-jqgrid-widget": "*",
-        "kartik-v/yii2-helpers": "dev-master"
+        "kartik-v/yii2-helpers": "dev-master",
+        "skinka/yii2-alert-gritter": "*"
 
     },
     "require-dev": {
