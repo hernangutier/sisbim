@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LineasSearch */
@@ -10,27 +11,45 @@ use yii\helpers\Url;
 $this->title = Yii::t('app', 'Lineas');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
 
-
-
-  <div class="container">
-
-
-    <h3 class="header smaller lighter blue">
-      <i class="ace-icon fa  	fa-comments "></i>
-        Maestro de Lineas
-    </h3>
-  <p>
-    <div class="btn-group">
-      <?= Html::a('Crear Linea', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  '#', ['class' => 'btn btn-info']) ?>
-    </div>
-
-  </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-archivo',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-tags "></i> Lineas</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Linea'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -57,12 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
                       'template' => '{delete}',
                       'buttons' => [
                         'delete' => function ($url,$model, $key) {
-                              $url=Url::to(['proveedores/delete','id'=>$model->id]);
+                              $url=Url::to(['lineas/delete','id'=>$model->id]);
                               return Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash bigger-120"></i></span> ', '#', [
-                                  'title' => Yii::t('yii', 'Delete'),
-                                  'aria-label' => Yii::t('yii', 'Delete'),
+                                  'title' => 'Eliminar Linea:  ' .  $model->ref,
+                                  'aria-label' => Yii::t('yii', 'Eliminar Linea'),
                                   'onclick' => "
-                                  krajeeDialog.confirm('Esta seguro de eliminar el Proveedor:  ' +  '$model->descripcion', function (result) {
+                                  krajeeDialog.confirm('Esta seguro de eliminar la Linea:  ' +  '$model->ref', function (result) {
                                        if (result) {
                                           $.ajax({
 
@@ -120,7 +139,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-
-
-    </div>
-    </div>

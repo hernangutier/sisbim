@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
@@ -12,26 +13,49 @@ use yii\helpers\Url;
 $this->title = 'Unidades Funcionales';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
 
-
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-      Maestro de Unidades Funcionales
-  </h3>
-<p>
-  <div class="btn-group">
-    <?= Html::a('Crear Unidad Administrativa', ['create'], ['class' => 'btn btn-success']) ?>
-    <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
-  </div>
-
-</p>
 
 
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-unidad',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-sitemap bigger-160"></i> Unidades Funcionales</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Unidad Funcional'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
+
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -98,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>'categoria0.descripcion',
                 'filter' => Html::activeDropDownList($searchModel,
                 'categoria', ArrayHelper::map(common\models\SdbCatUnidadesAdmin::find()->asArray()->all(),
-                'id', 'descripcion'),['class'=>'form-control','prompt' => 'Filtrar por Categoria']),
+                'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
 
             [
@@ -106,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>'idsede.descripcion',
                 'filter' => Html::activeDropDownList($searchModel,
                 'id_sede', ArrayHelper::map(common\models\SdbSedes::find()->asArray()->all(),
-                'id', 'descripcion'),['class'=>'form-control','prompt' => 'Filtrar por Sede']),
+                'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
             ],
 
 
@@ -114,4 +138,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-    </div>

@@ -1,36 +1,65 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProveedoresSearch */
+/* @var $searchModel common\models\ProveedoresSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Proveedores');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
-
-
-
-  <div class="container">
-
-
-    <h3 class="header smaller lighter blue">
-      <i class="ace-icon fa  	fa-comments "></i>
-        Maestro de Proveedores
-    </h3>
-  <p>
-    <div class="btn-group">
-      <?= Html::a('Crear Proveedor', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
-    </div>
-
-  </p>
+<?php
+     $this->registerJs('
+      $(document).ready(function() {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, "", window.location.href);
+         };
+       })
+       
+     ');
+ ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-proveedores',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-archive"></i> Proveedores</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Proveedor'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -123,7 +152,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-
-
-    </div>
-    </div>

@@ -1,8 +1,8 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
 use kartik\grid\GridView;
-use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\widgets\Select2;
@@ -56,16 +56,6 @@ $this->registerJs($formatJs, View::POS_HEAD);
 
 
 
-
-<div class="container">
-
-
-
-
-  <h3 class="header smaller lighter red">
-    <i class="ace-icon fa  	fa-comments "></i>
-      Registro de Bienes en 60 Faltantes
-  </h3>
 
 
   <?=
@@ -148,6 +138,30 @@ $this->registerJs($formatJs, View::POS_HEAD);
           'id'=>'grid-bm3',
         ],
     ],
+    'panel' => [
+          'heading'=>'<h3 class="panel-title"><i class="fa fa-archive"></i> Registro de 60 Faltantes</h3>',
+          'type'=>'danger',
+
+
+          'footer'=>true,
+      ],
+      'toolbar' => [
+    [
+        'content'=>
+
+        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+            'class' => 'btn btn-primary',
+            'title' => 'Limpiar Filtros'
+        ]) . ' '.
+            Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                'class' => 'btn btn-info',
+                'title' => 'Listado'
+            ]),
+
+    ],
+    '{export}',
+    '{toggleData}'
+],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -227,4 +241,3 @@ $this->registerJs($formatJs, View::POS_HEAD);
 
         ],
     ]); ?>
-</div>

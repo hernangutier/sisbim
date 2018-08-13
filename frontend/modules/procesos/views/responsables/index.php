@@ -1,40 +1,54 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ResponsablesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Usuarios Responsables';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
-
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-      Maestro de Responsables
-  </h3>
-
-
-
-
-
-
-  <p>
-    <div class="btn-group">
-      <?= Html::a('Crear Responsable', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/list_responsables.php') , ['class' => 'btn btn-info']) ?>
-    </div>
-
-  </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-responsables',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-archive"></i> Usuarios Responsables</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Responsable'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -144,7 +158,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-
-
-
-  </div>

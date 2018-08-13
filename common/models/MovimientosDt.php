@@ -15,6 +15,7 @@ use Yii;
  * @property integer $estado_uso
  * @property integer $estado_fisico
  * @property integer $id_und_destino
+ * @property bool $is_colectivo
  *
  * @property Bienes $idBien
  * @property Movimientos $idMov
@@ -44,6 +45,8 @@ class MovimientosDt extends \yii\db\ActiveRecord
             [['id_user_old'], 'exist', 'skipOnError' => true, 'targetClass' => Responsables::className(), 'targetAttribute' => ['id_user_old' => 'id']],
             [['id_user_new'], 'exist', 'skipOnError' => true, 'targetClass' => Responsables::className(), 'targetAttribute' => ['id_user_new' => 'id']],
             [['id_und_destino'], 'exist', 'skipOnError' => true, 'targetClass' => UnidadesAdmin::className(), 'targetAttribute' => ['id_und_destino' => 'id']],
+            [['is_colectivo'],'boolean'],
+
         ];
     }
 
@@ -61,6 +64,7 @@ class MovimientosDt extends \yii\db\ActiveRecord
             'estado_uso' => 'Estado de Uso',
             'estado_fisico' => 'Condición Fisica Actual',
             'id_und_destino' => 'Destino del Bien',
+            'is_colectivo'=>'Uso Colectivo',
         ];
     }
 

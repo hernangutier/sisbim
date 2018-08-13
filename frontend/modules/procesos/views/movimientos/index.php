@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use common\models\MovimientosDtSearch;
+use kartik\dialog\Dialog;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\MovimientosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -14,16 +15,31 @@ $this->title = 'Movimientos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?php echo Dialog::widget(); ?>
 
+
+<?php
+     $this->registerJs("
+      $(document).ready(function() {
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, '', window.location.href);
+         };
+       })
+        ");
+ ?>
 
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'responsive'=>true,
         'pjaxSettings'=>[
             'neverTimeout'=>true,
             'options'=>[
-              'id'=>'grid-archivo',
+              'id'=>'grid-movimientos',
             ],
         ],
         'panel' => [
@@ -31,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'type'=>'info',
 
 
-              'footer'=>false
+              'footer'=>true,
           ],
 
         'columns' => [
@@ -41,12 +57,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => '{admin}',
                             'buttons' => [
                               'admin' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-wrench bigger-120"></i></span> ',
+                                  return (($model->status==0) ? Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-wrench bigger-120"></i></span> ',
                                       Url::to(['movimientos/view','id'=>$model->id]), [
                                       'id' => 'activity-index-link',
                                       'title' => Yii::t('app', 'Administrar'),
 
-                                  ]);
+                                  ]) : '' );
                               },
                       ],
               ],
@@ -56,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                               'buttons' => [
                                 'print' => function ($url, $model, $key) {
                                     return Html::a('<span class="btn btn-xs btn-default"><i class="ace-icon fa fa-print bigger-120"></i></span> ',
-                                        Url::to(['movimientos/view','id'=>$model->id]), [
+                                        '#', [
                                         'id' => 'activity-index-link',
                                         'title' => Yii::t('app', 'Imprimir Comprobante'),
 
@@ -65,20 +81,44 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                 ],
 
-            [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{nulls}',
-                            'buttons' => [
-                              'nulls' => function ($url, $model, $key) {
-                                  return Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-ban bigger-120"></i></span> ',
-                                      Url::to(['bienes/update','id'=>$model->id]), [
-                                      'id' => 'activity-index-link',
-                                      'title' => Yii::t('app', 'Anular Transacción'),
 
-                                  ]);
-                              },
-                      ],
-              ],
+                [
+                      'class' => 'yii\grid\ActionColumn',
+                      'template' => '{delete}',
+                      'buttons' => [
+                        'delete' => function ($url,$model, $key) {
+                              $url=Url::to(['movimientos/nulls','id'=>$model->id]);
+                              return ($model->status==0) ? Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-ban bigger-120"></i></span> ', '#', [
+                                  'title' => Yii::t('yii', 'Delete'),
+                                  'aria-label' => Yii::t('yii', 'Delete'),
+                                  'onclick' => "
+                                  krajeeDialog.confirm('Esta seguro de anular la transaccion:  ' +  '$model->ncontrol', function (result) {
+                                       if (result) {
+                                          $.ajax({
+
+                                          url: '$url',
+                                          type: 'POST',
+
+                                          error : function(xhr, status) {
+                                            alert('error')
+                                          },
+                                          success: function (json){
+                                            $.pjax.reload({container: '#grid-movimientos'});
+
+                                          },
+
+                                      });
+                                    }
+                                  });
+                                      return false;
+                                  ",
+                              ]) : '';
+                          },
+
+                          ],
+                  ],
+
+
               [
                     'class' => 'kartik\grid\ExpandRowColumn',
                     'width' => '50px',

@@ -23,7 +23,22 @@ use yii\web\JsExpression;
 		echo Dialog::widget();
 ?>
 
+<?php
+		 $this->registerJs("
+			$(document).ready(function() {
+				window.history.pushState(null, '', window.location.href);
+				window.onpopstate = function() {
+					 window.history.pushState(null, '', window.location.href);
+				 };
+			 })
 
+			 $(document).on('click', '.refresh', (function() {
+					$.pjax.reload({container: '#grid-movimientos-dt'});
+
+			 }))
+
+		 ");
+ ?>
 
 <?php
 $this->registerJs('
@@ -62,7 +77,8 @@ $this->registerJs('
 										 url: "index.php?r=procesos%2Fmovimientos%2Fdesvincular-save",
 								 })
 									.done(function( data, textStatus, jqXHR ) {
-									 alert ("Guardo");
+										var url = "index.php?r=procesos%2Fmovimientos%2Fresult&id=" + data + "&type=1";
+									  $(location).attr("href", url);
 									})
 									.fail(function( jqXHR, textStatus, errorThrown ) {
 											alert("fallo");

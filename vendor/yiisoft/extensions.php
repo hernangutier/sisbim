@@ -363,4 +363,22 @@ return array (
       '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers',
     ),
   ),
+  '2amigos/yii2-ckeditor-widget' => 
+  array (
+    'name' => '2amigos/yii2-ckeditor-widget',
+    'version' => '2.1.0.0',
+    'alias' => 
+    array (
+      '@dosamigos/ckeditor' => $vendorDir . '/2amigos/yii2-ckeditor-widget/src',
+    ),
+  ),
+  'skinka/yii2-alert-gritter' => 
+  array (
+    'name' => 'skinka/yii2-alert-gritter',
+    'version' => '1.3.0.0',
+    'alias' => 
+    array (
+      '@skinka/widgets/gritter' => $vendorDir . '/skinka/yii2-alert-gritter/src',
+    ),
+  ),
 );

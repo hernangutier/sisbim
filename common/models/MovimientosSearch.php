@@ -41,7 +41,7 @@ class MovimientosSearch extends Movimientos
      */
     public function search($params)
     {
-        $query = Movimientos::find();
+        $query = Movimientos::find()->orderBy(['(status)' => SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -62,7 +62,7 @@ class MovimientosSearch extends Movimientos
             'id' => $this->id,
             'fecha' => $this->fecha,
             'id_und_origen' => $this->id_und_origen,
-            
+
             'id_user' => $this->id_user,
             'tipo' => $this->tipo,
             'status' => $this->status,

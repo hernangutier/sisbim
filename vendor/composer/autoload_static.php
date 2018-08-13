@@ -32,6 +32,10 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
         array (
             'xj\\bootbox\\' => 11,
         ),
+        's' => 
+        array (
+            'skinka\\widgets\\gritter\\' => 23,
+        ),
         'r' => 
         array (
             'rmrevin\\yii\\fontawesome\\' => 24,
@@ -80,6 +84,10 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
         'h' => 
         array (
             'himiklab\\jqgrid\\' => 16,
+        ),
+        'd' => 
+        array (
+            'dosamigos\\ckeditor\\' => 19,
         ),
         'c' => 
         array (
@@ -165,6 +173,10 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
         'xj\\bootbox\\' => 
         array (
             0 => __DIR__ . '/..' . '/xj/yii2-bootbox-widget',
+        ),
+        'skinka\\widgets\\gritter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/skinka/yii2-alert-gritter/src',
         ),
         'rmrevin\\yii\\fontawesome\\' => 
         array (
@@ -315,6 +327,10 @@ class ComposerStaticInit386f5080ec67995415da8b8cca5c572a
         'himiklab\\jqgrid\\' => 
         array (
             0 => __DIR__ . '/..' . '/himiklab/yii2-jqgrid-widget',
+        ),
+        'dosamigos\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-ckeditor-widget/src',
         ),
         'cornernote\\ace\\' => 
         array (

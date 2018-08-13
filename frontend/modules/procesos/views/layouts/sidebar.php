@@ -364,6 +364,15 @@
                   </li>
 
                   <li class="">
+                          <a href="<?= Url::to(['movimientos-dt/index'])  ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Relacion de Mov. del Periodo
+                          </a>
+
+                          <b class="arrow"></b>
+                  </li>
+
+                  <li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-caret-right"></i>
                       <span class="menu-text">

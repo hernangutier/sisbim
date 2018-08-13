@@ -19,6 +19,7 @@ class MovimientosDtSearch extends MovimientosDt
     {
         return [
             [['id', 'id_bien', 'id_mov', 'id_user_old', 'id_user_new', 'estado_uso', 'estado_fisico', 'id_und_destino'], 'integer'],
+            [['is_colectivo'], 'boolean'],
         ];
     }
 
@@ -66,6 +67,7 @@ class MovimientosDtSearch extends MovimientosDt
             'estado_uso' => $this->estado_uso,
             'estado_fisico' => $this->estado_fisico,
             'id_und_destino' => $this->id_und_destino,
+            'is_colectivo'=>$this->is_colectivo,
         ]);
 
         return $dataProvider;

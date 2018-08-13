@@ -24,6 +24,7 @@
         "kartik-v/yii2-helpers": "dev-master",
         "skinka/yii2-alert-gritter": "*"
 
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -44,7 +45,8 @@
         "codeception/verify": "~0.3.1",
         "kartik-v/yii2-dialog": "*",
         "xj/yii2-bootbox-widget": "*",
-        "kartik-v/bootstrap-fileinput": "dev-master"
+        "kartik-v/bootstrap-fileinput": "dev-master",
+        "2amigos/yii2-ckeditor-widget": "^2.1"
 
 
     },

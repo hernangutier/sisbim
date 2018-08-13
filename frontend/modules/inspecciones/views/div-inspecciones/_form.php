@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
-
+use dosamigos\ckeditor\CKEditor;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lineas */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,7 +19,9 @@ use kartik\widgets\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 <fieldset>
-		<?= $form->field($model, 'sitio')->textarea(['rows' => 6]) ?>
+	<?= $form->field($model, 'sitio')->widget(CKEditor::className(), [
+	'preset' => 'avance'
+]) ?>
 		<?= $form->field($model, 'ubicacion')->textarea(['rows' => 6]) ?>
 		<?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 

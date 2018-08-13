@@ -48,6 +48,7 @@ class Movimientos extends \yii\db\ActiveRecord
             [['periodo'], 'exist', 'skipOnError' => true, 'targetClass' => Periodos::className(), 'targetAttribute' => ['periodo' => 'id']],
             [['id_und_origen'], 'exist', 'skipOnError' => true, 'targetClass' => UnidadesAdmin::className(), 'targetAttribute' => ['id_und_origen' => 'id']],
 
+
         ];
     }
 
@@ -60,7 +61,6 @@ class Movimientos extends \yii\db\ActiveRecord
             'id' => 'ID',
             'fecha' => 'Fecha',
             'id_und_origen' => 'Origen del Inventario',
-
             'observaciones' => 'Observaciones',
             'id_user' => 'Usuario',
             'ncontrol' => 'N°. de Control',

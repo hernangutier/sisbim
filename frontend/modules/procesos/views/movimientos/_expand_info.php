@@ -63,10 +63,17 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
           'attribute'=>'id_und_destino',
           'value'=>function($model){
-            return isset($model->idUndDestino) ? 'Sin Informacion' : $model->idUndDestino->descripcion;
+            return isset($model->idUndDestino) ? $model->idUndDestino->descripcion : 'Sin Información';
           }
         ],
 
+        [
+
+          'attribute'=>'id_user_new',
+          'value'=>function($model){
+            return isset($model->idUser1) ? $model->idUser1->getNombreCompleto()  : 'Sin Información';
+          }
+        ],
 
 
 

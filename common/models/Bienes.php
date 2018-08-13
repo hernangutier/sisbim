@@ -47,7 +47,7 @@ use Yii;
  * @property integer $estado_fisico
  * @property string $old_id
  * @property integer $activo
-  * @property int $id_ente_ext
+ * @property int $id_ente_ext
  * @property boolean $is_colectivo
  * @property boolean $pend_in_mov
  * @property string $motivo_indisponibilidad

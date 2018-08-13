@@ -1,6 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use common\models\Bienes;
@@ -20,7 +21,7 @@ use kartik\widgets\ActiveForm;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-?>
+ ?>
 
 <?php
 
@@ -55,14 +56,6 @@ JS;
 $this->registerJs($formatJs, View::POS_HEAD);
 
  ?>
-
-
-
-
-
-
-
-
 
 
 <?=
@@ -148,16 +141,34 @@ Select2::widget([
         'id'=>'grid-movimientos-dt',
       ],
   ],
+  'panel' => [
+        'heading'=>'<h3 class="panel-title"><i class="fa fa-list-ol"></i> Detalles del Movimiento</h3>',
+        'type'=>'info',
+
+
+        'footer'=>true,
+    ],
+    'toolbar' => [
+  [
+      'content'=>
+
+      Html::a('<i class="glyphicon glyphicon-repeat"></i>', '#', [
+          'class' => 'btn btn-primary refresh',
+          'title' => 'Limpiar Filtros'
+      ]) . ' '.
+          Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+              'class' => 'btn btn-info',
+              'title' => 'Listado'
+          ]),
+
+  ],
+  '{export}',
+  '{toggleData}'
+],
   'columns' => [
       ['class' => 'yii\grid\SerialColumn'],
 
-
-
-
-
-
-
-          [
+        [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{delete}',
                 'buttons' => [
@@ -260,6 +271,7 @@ Select2::widget([
 
             ],
 
+
             [
               'class'=>'kartik\grid\EditableColumn',
               'attribute'=>'id_und_destino',
@@ -287,6 +299,30 @@ Select2::widget([
               //'format'=>['decimal', 2],
 
           ],
+
+          [
+            'class'=>'kartik\grid\EditableColumn',
+            'attribute'=>'is_colectivo',
+            'filter' => Html::activeDropDownList($searchModel,
+            'is_colectivo', Enum::boolList('No', 'Si') ,
+            ['class'=>'form-control','prompt' => 'No Filtro']),
+            'editableOptions'=>[
+                'header'=>'Uso Colectivo',
+                'asPopover' => false,
+                'inputType'=>Editable :: INPUT_DROPDOWN_LIST,
+                'data' => [0 => 'No', 1 => 'Si'],
+                'options' => ['class'=>'form-control', 'prompt'=>'Selecionar...'],
+                'displayValueConfig'=> [
+                    '1' => '<i class="ace-icon fa fa-check green bigger-160"></i>',
+                    '0' => '<i class="ace-icon fa fa-times red2 bigger-160"></i>'
+                ],
+
+            ],
+            'hAlign'=>'center',
+            'vAlign'=>'middle',
+            'width'=>'200px',
+          ],
+
 
             [
               'class'=>'kartik\grid\EditableColumn',

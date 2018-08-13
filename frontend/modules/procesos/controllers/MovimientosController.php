@@ -51,12 +51,23 @@ class MovimientosController extends Controller
         ]);
     }
 
-    public function actionResult($id)
+
+    public function actionSave($id){
+      \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+      $model = $this->findModel($id);
+      $model->status=1;
+      if ($model->save()) {
+        return $id=$model->id;
+      }
+    }
+
+    public function actionResult($id,$type)
     {
       $mov = $this->findModel($id);
       $model=new \frontend\models\Finish();
       $model->title="Felicitaciones!";
       $content="Se ha Procesado correctamente el movimiento  <a href='#'>Imprimir Comprobante <code>" . str_pad($mov->ncontrol,10,'0',STR_PAD_LEFT) . "</code></a>";
+      $model->urlButton= ($type==1) ? Url::toRoute(['movimientos/desvincular']) : Url::toRoute(['movimientos/create']);
       $model->content=$content;
 
       $this->layout="main";
@@ -113,6 +124,19 @@ class MovimientosController extends Controller
         if (isset($posted['estado_fisico'])){
             $model->estado_fisico=$posted['estado_fisico'];
             $output=$model->estado_fisico;
+            if ($model->save() ) {
+              $out = Json::encode(['output'=>$output, 'message'=>'']);
+              echo $out;
+              return;
+            }
+
+        }
+
+
+        if (isset($posted['is_colectivo'])){
+            $model->is_colectivo=$posted['is_colectivo'];
+            if ($model->is_colectivo) $model->id_user_new=null;
+            $output=$model->is_colectivo;
             if ($model->save() ) {
               $out = Json::encode(['output'=>$output, 'message'=>'']);
               echo $out;
@@ -209,10 +233,12 @@ class MovimientosController extends Controller
             }
 
             $model->status=1;
-            $model->save();
-            $transaction->commit();
 
-            return $resp=true;
+            $model->save();
+
+            $transaction->commit();
+            $model->refresh();
+            return $id=$model->id;
           } catch (\Exception $e) {
             return $err=false;
           }
@@ -278,12 +304,24 @@ class MovimientosController extends Controller
         }
     }
 
-
+  public function actionNulls($id)  {
+    $model=Movimientos::findOne($id);
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $model->status=2;
+      if ($model->save()){
+        return $err=false;
+      }else {
+        return $err=true;
+      }
+  }
     public function actionAddItems($id_mov,$id_bien)
     {
+      $mov=Movimientos::findOne($id_mov);
       $model= new MovimientosDt();
         $model->id_mov=$id_mov;
+        $model->id_und_destino=$mov->id_und_origen;
         $model->id_bien=$id_bien;
+        $model->is_colectivo=$model->idBien->is_colectivo;
         $model->estado_fisico=$model->idBien->estado_fisico;
 
         Yii::$app->response->format = Response::FORMAT_JSON;

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -17,17 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
+<?php
+     $this->registerJs("
+      $(document).ready(function() {
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, '', window.location.href);
+         };
+       })
+        ");
+ ?>
 
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-    <?= ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles' : 'Consultar Registro Activo  Bienes de Uso' ?>
-  </h3>
-
-
-
-
-
-    <?= GridView::widget([
+  <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'pjax'=>true,
@@ -38,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
         'panel' => [
-              'heading'=>'<h3 class="panel-title"><i class="ace-icon fa  	fa-comments"></i> Consultar Registro de Bienes Muebles</h3>',
+              'heading'=>'<h3 class="panel-title"><i class="ace-icon fa  	fa-comments"></i>' . ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles' : 'Consultar Registro Activo  Bienes de Uso' . '</h3>',
               'type'=>'info',
 
 
@@ -67,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'Ubicacion Actual',
                 'value'=>function($model){
-                  return $model->idUndActual->descripcion;
+                  return isset($model->idUndActual) ? $model->idUndActual->descripcion : 'No Ubicado';
                 },
                 'filter' => Html::activeDropDownList($searchModel,
                 'id_und_actual', ArrayHelper::map(common\models\UnidadesAdmin::find()->all(),

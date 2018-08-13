@@ -19,20 +19,26 @@ $(document).ready(function (){
   $(document).on('click','.procesar',function (){
     krajeeDialog.confirm('Esta seguro de Procesar  ', function (result) {
          if (result) {
-            $.ajax({
 
-            url: (this).data('url'),
-            type: 'POST',
+           $.ajax({
+               // En data puedes utilizar un objeto JSON, un array o un query string
+               data: {'id' : '$model->id'},
+               //Cambiar a type: POST si necesario
+               type: 'GET',
+               // Formato de datos que se espera en la respuesta
+               dataType: 'json',
+               // URL a la que se enviará la solicitud Ajax
+               url: 'index.php?r=procesos%2Fmovimientos%2Fsave',
+           })
+            .done(function( data, textStatus, jqXHR ) {
+              var url = 'index.php?r=procesos%2Fmovimientos%2Fresult&id=' + data + '&type=2';
+              $(location).attr('href', url);
+            })
+            .fail(function( jqXHR, textStatus, errorThrown ) {
+                alert('fallo');
+           });
 
-            error : function(xhr, status) {
-              //$('.alert-d-ant').html('<strong>Error!</strong> El Registro no se pudo eliminar').show().fadeOut(2000);
-            },
-            success: function (json){
 
-
-            },
-
-          });
         }
       });
 

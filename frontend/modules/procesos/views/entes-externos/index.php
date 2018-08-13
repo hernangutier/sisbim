@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EntesExternosSearch */
@@ -10,27 +11,45 @@ use yii\helpers\Url;
 $this->title = Yii::t('app', 'Entes Externos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
 
-
-
-  <div class="container">
-
-
-    <h3 class="header smaller lighter blue">
-      <i class="ace-icon fa  	fa-comments "></i>
-        Maestro de Entes Externos
-    </h3>
-  <p>
-    <div class="btn-group">
-      <?= Html::a('Registrar Ente Externo', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
-    </div>
-
-  </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-archivo',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-university "></i> Entes Externos</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Carpeta'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+                Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -123,7 +142,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-
-
-    </div>
-    </div>

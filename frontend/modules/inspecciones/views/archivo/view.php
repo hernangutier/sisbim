@@ -13,8 +13,19 @@ $this->title ='Información del Expediente';
 $this->params['breadcrumbs'][] = ['label' => 'Archivo de Bienes Inmuebles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <?php
+
 $this->registerJs("
+
+$(document).ready(function() {
+  window.history.pushState(null, '', window.location.href);
+  window.onpopstate = function() {
+     window.history.pushState(null, '', window.location.href);
+   }
+ })
+
 $(document).on('click','.add',function (){
 
   $('.tl').text('Agregar Documento');

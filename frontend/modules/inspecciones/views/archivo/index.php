@@ -16,6 +16,18 @@ $this->title = Yii::t('app', 'Archivo de Bienes Inmuebles');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?php
+     $this->registerJs('
+      $(document).ready(function() {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, "", window.location.href);
+         };
+       })
+
+     ');
+ ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

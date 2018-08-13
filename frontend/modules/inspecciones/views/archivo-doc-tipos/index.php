@@ -15,6 +15,18 @@ $this->title = Yii::t('app', 'Maestro Tipos de Documentos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?php
+     $this->registerJs('
+      $(document).ready(function() {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, "", window.location.href);
+         };
+       })
+
+     ');
+ ?>
+
 <?php echo Dialog::widget(); ?>
 
 

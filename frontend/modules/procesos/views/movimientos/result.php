@@ -3,6 +3,22 @@
 
  ?>
 
+ <?php
+      $this->registerJs("
+       $(document).ready(function() {
+         window.history.pushState(null, '', window.location.href);
+         window.onpopstate = function() {
+            window.history.pushState(null, '', window.location.href);
+          };
+        })
+
+        $(document).on('click', '.refresh', (function() {
+           $.pjax.reload({container: '#grid-movimientos-dt'});
+
+        }))
+
+      ");
+  ?>
 
 
 
@@ -28,7 +44,7 @@
 <table class="table-row" style="table-layout: fixed; background-color: #ffffff;" border="0" bgcolor="#FFFFFF" width="450" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-row-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 36px; padding-right: 36px;" align="left" valign="top">
   <table class="table-col" style="table-layout: fixed;" align="left" border="0" width="378" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-col-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; width: 378px;" align="left" width="378" valign="top">
     <div style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; text-align: center;">
-      <a href="#" style="color: #ffffff; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #6fb3e0; padding: 4px 9px; font-size: 15px; line-height: 21px; background-color: #6fb3e0;">&nbsp; Nuevo &nbsp;</a>
+      <a href="<?= $model->urlButton ?>" style="color: #ffffff; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #6fb3e0; padding: 4px 9px; font-size: 15px; line-height: 21px; background-color: #6fb3e0;">&nbsp; Nuevo &nbsp;</a>
     </div>
     <table class="table-space" style="height: 16px; font-size: 0px; line-height: 0; width: 378px; background-color: #ffffff;" border="0" bgcolor="#FFFFFF" width="378" cellspacing="0" cellpadding="0" height="16"><tbody><tr><td class="table-space-td" style="height: 16px; width: 378px; background-color: #ffffff;" align="left" bgcolor="#FFFFFF" width="378" valign="middle" height="16">&nbsp;</td></tr></tbody></table>
   </td></tr></tbody></table>
@@ -39,7 +55,7 @@
 <table class="table-row-fixed" style="table-layout: fixed; background-color: #ffffff;" border="0" bgcolor="#FFFFFF" width="450" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-row-fixed-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 1px; padding-right: 1px;" align="left" valign="top">
   <table class="table-col" style="table-layout: fixed;" align="left" border="0" width="448" cellspacing="0" cellpadding="0"><tbody><tr><td class="table-col-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" align="left" width="448" valign="top">
     <table style="table-layout: fixed;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="font-family: Arial, sans-serif; line-height: 24px; color: #bbbbbb; font-size: 13px; font-weight: normal; text-align: center; padding: 9px; border-width: 1px 0px 0px; border-style: solid; border-color: #e3e3e3; background-color: #f5f5f5;" align="center" bgcolor="#f5f5f5" width="100%" valign="top">
-      
+
     </td></tr></tbody></table>
   </td></tr></tbody></table>
 </td></tr></tbody></table>

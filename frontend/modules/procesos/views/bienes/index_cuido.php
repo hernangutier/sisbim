@@ -1,8 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
+use kartik\helpers\Html;
+use kartik\helpers\Enum;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use common\models\SbdCategoriasEsp;
 use  yii\helpers\Url;
@@ -15,27 +15,55 @@ use  yii\helpers\Url;
 $this->title = Yii::t('app', 'Bienes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
+<?php
+     $this->registerJs("
+      $(document).ready(function() {
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, '', window.location.href);
+         };
+       })
+        ");
+ ?>
 
-
-  <h3 class="header smaller lighter blue">
-    <i class="ace-icon fa  	fa-comments "></i>
-    <?= ($searchModel->tipobien==0) ?  'Consultar Registro Activo de Bienes Muebles en Cuido' : 'Consultar Registro Activo  Bienes de Uso' ?>
-  </h3>
-
-  <p>
-    <div class="btn-group">
-      <?= Html::a('Registrar Bien', ['create'], ['class' => 'btn btn-success']) ?>
-      <?= Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>'.'Listado PDF',  Url::to('/sisbim/report/unidades_funcionales.php') , ['class' => 'btn btn-info']) ?>
-    </div>
-
-  </p>
-
-
-    <?php Pjax::begin(); ?>
-    <?= GridView::widget([
+  <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true,
+            'options'=>[
+              'id'=>'grid-bienes-custodia',
+            ],
+        ],
+        'panel' => [
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-archive"></i> Bienes en Custodia</h3>',
+              'type'=>'info',
+
+
+              'footer'=>true,
+          ],
+          'toolbar' => [
+        [
+            'content'=>
+            Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
+                'class' => 'btn btn-success',
+                'title' => 'Crear Carpeta'
+            ]) . ' '.
+            Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                'class' => 'btn btn-primary',
+                'title' => 'Limpiar Filtros'
+            ]) . ' '.
+            Html::a('<i class="ace-icon fa fa-file-pdf-o bigger-125"></i>', ['grid-demo'], [
+                    'class' => 'btn btn-info',
+                    'title' => 'Listado'
+                ]),
+
+        ],
+        '{export}',
+        '{toggleData}'
+    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -156,6 +184,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
-
-</div>

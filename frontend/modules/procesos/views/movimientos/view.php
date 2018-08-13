@@ -19,6 +19,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php echo Dialog::widget(); ?>
 
+
+<?php
+     $this->registerJs("
+      $(document).ready(function() {
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+           window.history.pushState(null, '', window.location.href);
+         };
+       })
+
+       $(document).on('click', '.refresh', (function() {
+          $.pjax.reload({container: '#grid-movimientos-dt'});
+
+       }))
+
+     ");
+ ?>
+
+
 <?php
 //---------------   Script me controla la Tabla -------
 
