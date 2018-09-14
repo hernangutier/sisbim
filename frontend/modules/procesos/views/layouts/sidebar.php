@@ -419,9 +419,121 @@
                   </li>
 
 
+
+
+
               </ul>
 
    </li>
+
+
+   <li class="">
+       <a href="#" class="dropdown-toggle">
+         <i class="menu-icon fa fa-reorder"></i>
+         <span class="menu-text">
+            Inventarios
+         </span>
+
+         <b class="arrow fa fa-angle-down"></b>
+       </a>
+
+       <b class="arrow"></b>
+
+       <ul class="submenu">
+
+         <li class="">
+               <a href="<?= Url::to(['periodos/index'])  ?>">
+                 <i class="menu-icon fa fa-caret-right"></i>
+                  Registro de Inventarios
+               </a>
+
+               <b class="arrow"></b>
+           </li>
+
+           <li class="">
+                 <a href="<?= Url::to(['movimientos/desvincular'])  ?>">
+                   <i class="menu-icon fa fa-caret-right"></i>
+                    Desvincular Bienes a Usuarios...
+                 </a>
+
+                 <b class="arrow"></b>
+             </li>
+
+
+
+
+
+           <li class="">
+                   <a href="<?= Url::to(['movimientos/index'])  ?>">
+                     <i class="menu-icon fa fa-caret-right"></i>
+                     Historico de Movimientos
+                   </a>
+
+                   <b class="arrow"></b>
+           </li>
+
+           <li class="">
+                   <a href="<?= Url::to(['movimientos-dt/index'])  ?>">
+                     <i class="menu-icon fa fa-caret-right"></i>
+                     Relacion de Mov. del Periodo
+                   </a>
+
+                   <b class="arrow"></b>
+           </li>
+
+           <li class="">
+             <a href="#" class="dropdown-toggle">
+                 <i class="menu-icon fa fa-caret-right"></i>
+               <span class="menu-text">
+                  Ordenes de Salida
+               </span>
+
+               <b class="arrow fa fa-angle-down"></b>
+             </a>
+
+             <b class="arrow"></b>
+
+             <ul class="submenu">
+
+               <li class="">
+                     <a href="<?=  Url::to(['sa-ordenes-salida/create'])  ?>">
+                       <i class="menu-icon fa fa-caret-right"></i>
+                     Registrar Orden de Salida (Bienes Muebles)
+                     </a>
+
+                     <b class="arrow"></b>
+               </li>
+
+               <li class="">
+                     <a href="<?=  Url::to(['inc-ordenes-compras/create'])  ?>">
+                       <i class="menu-icon fa fa-caret-right"></i>
+                     Registrar Orden de Salida (Vehiculos)
+                     </a>
+
+                     <b class="arrow"></b>
+               </li>
+
+               <li class="">
+                     <a href="<?=  Url::to(['sa-ordenes-salida/index'])  ?>">
+                       <i class="menu-icon fa fa-caret-right"></i>
+                     Historico de Ordenes...
+                     </a>
+
+                     <b class="arrow"></b>
+                   </li>
+
+
+
+               </ul>
+           </li>
+
+
+
+
+
+       </ul>
+
+</li>
 
 
 

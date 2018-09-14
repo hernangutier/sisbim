@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/himiklab/yii2-jqgrid-widget
- * @copyright Copyright (c) 2014-2017 HimikLab
+ * @copyright Copyright (c) 2014-2018 HimikLab
  * @license http://opensource.org/licenses/MIT MIT
  */
 
@@ -54,17 +54,17 @@ trait JqGridActionTrait
      */
     protected function getRealPOSTData()
     {
-        $pairs = explode('&', file_get_contents('php://input'));
+        $pairs = \explode('&', \file_get_contents('php://input'));
         $vars = [];
         foreach ($pairs as $pair) {
-            $pairParts = explode('=', $pair);
-            $name = urldecode($pairParts[0]);
+            $pairParts = \explode('=', $pair);
+            $name = \urldecode($pairParts[0]);
 
-            $value = urldecode($pairParts[1]);
+            $value = \urldecode($pairParts[1]);
             if ($value === 'null') {
                 $value = null;
             }
-            if (preg_match('/(.+)\[\]$/', $name, $nameParts)) {
+            if (\preg_match('/(.+)\[\]$/', $name, $nameParts)) {
                 $vars[$nameParts[1]][] = $value;
             } else {
                 $vars[$name] = $value;
@@ -72,5 +72,49 @@ trait JqGridActionTrait
         }
 
         return $vars;
+    }
+
+    /**
+     * @param \yii\db\ActiveRecord|array $record
+     * @param string $attribute
+     * @param string $separator
+     * @return array|null|string
+     */
+    protected function getValueFromAr($record, $attribute, $separator = "\n")
+    {
+        if (($pointPosition = \strrpos($attribute, '.')) !== false) {
+            $record = $this->getValueFromAr($record, \substr($attribute, 0, $pointPosition));
+            $attribute = \substr($attribute, $pointPosition + 1);
+        }
+
+        if ($record === null) {
+            return null;
+        }
+        if (\is_array($record)) {
+            $result = null;
+            foreach ($record as $currentRecord) {
+                $currentValue = $currentRecord->$attribute;
+                if (\is_object($currentValue)) {
+                    $result[] = $currentValue;
+                } elseif (\is_array($currentValue)) {
+                    if ($result === null) {
+                        $result = $currentValue;
+                    } else {
+                        $result = \array_merge($currentValue, $result);
+                    }
+                } elseif ($currentValue === null) {
+                    return null;
+                } else {
+                    $result .= ($currentRecord->$attribute . $separator);
+                }
+            }
+            if (\is_string($result)) {
+                return \trim($result, $separator);
+            }
+
+            return $result;
+        }
+
+        return $record->$attribute;
     }
 }

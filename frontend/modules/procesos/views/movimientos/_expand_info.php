@@ -71,8 +71,18 @@ $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
           'attribute'=>'id_user_new',
           'value'=>function($model){
-            return isset($model->idUser1) ? $model->idUser1->getNombreCompleto()  : 'Sin Información';
-          }
+            if (isset($model->idUser1)) {
+                return $model->idUser1->getNombreCompleto();
+              } else {
+                if ($model->is_colectivo) {
+                  return 'Uso Colectivo';
+                } else {
+                  return 'Sin Información';
+                }
+              }
+          },
+
+
         ],
 
 

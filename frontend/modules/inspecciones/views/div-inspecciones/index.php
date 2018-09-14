@@ -125,6 +125,21 @@ Modal::end();
                   ],
 
 
+                  [
+                        'class' => 'kartik\grid\ExpandRowColumn',
+                        'width' => '50px',
+                        'value' => function ($model, $key, $index, $column) {
+                            return GridView::ROW_COLLAPSED;
+                        },
+                        'detail' => function ($model, $key, $index, $column) {
+                            return Yii::$app->controller->renderPartial('_expand_info', ['model' => $model]);
+                        },
+                        'headerOptions' => ['class' => 'kartik-sheet-style'],
+                        'expandOneOnly' => true,
+                    ],
+
+
+
 
             [
               'attribute'=>'ncontrol',

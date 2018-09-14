@@ -1,13 +1,14 @@
 <?php
 /**
  * @link https://github.com/himiklab/yii2-jqgrid-widget
- * @copyright Copyright (c) 2014-2017 HimikLab
+ * @copyright Copyright (c) 2014-2018 HimikLab
  * @license http://opensource.org/licenses/MIT MIT
  */
 
 namespace himiklab\jqgrid;
 
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -29,7 +30,6 @@ use yii\web\JsExpression;
  *       ],
  *       'rowNum' => 15,
  *       'autowidth' => true,
- *       'height' => 'auto',
  *   ],
  *   'pagerSettings' => [
  *       'edit' => ['reloadAfterSubmit' => true, 'modal' => true],
@@ -52,6 +52,12 @@ class JqGridWidget extends Widget
     /** @var string */
     public $requestUrl = 'jqgrid';
 
+    /** @var string */
+    public $requestUrlSubgrid = 'jqgrid-subgrid';
+
+    /** @var bool */
+    public $subgrid = false;
+
     /** @var bool */
     public $enablePager = true;
 
@@ -69,6 +75,9 @@ class JqGridWidget extends Widget
 
     /** @var bool */
     public $enableHiddenColumnsOptimization = false;
+
+    /** @var bool */
+    public $reloadAfterCellEdit = false;
 
     /** @var array */
     public $filterToolbarSettings = [];
@@ -92,6 +101,10 @@ class JqGridWidget extends Widget
         parent::init();
         $view = $this->getView();
         $widgetId = $this->id;
+
+        if ($this->reloadAfterCellEdit && !$this->enableCellEdit) {
+            throw new InvalidConfigException('reloadAfterCellEdit without enableCellEdit.');
+        }
 
         if (isset($this->gridSettings['iconSet']) && $this->gridSettings['iconSet'] === 'fontAwesome') {
             $useFontAwesome = true;
@@ -169,6 +182,12 @@ class JqGridWidget extends Widget
         $gridSettings['datatype'] = 'json';
         $gridSettings['iconSet'] = 'jQueryUI'; // OlegKi's version only
 
+        if ($this->subgrid) {
+            $gridSettings['subGrid'] = true;
+            $gridSettings['subGridUrl'] = Url::to([$this->requestUrlSubgrid]);
+            $gridSettings['jsonReader']['subgrid']['repeatitems'] = false;
+        }
+
         if ($this->enableHiddenColumnsOptimization) {
             $gridSettings['serializeGridData'] = new JsExpression(
                 "function(postData) {
@@ -193,8 +212,11 @@ class JqGridWidget extends Widget
         if ($this->enableCellEdit) {
             $gridSettings['cellEdit'] = true;
             $gridSettings['cellurl'] = Url::to([$this->requestUrl, 'action' => 'edit']);
+            if ($this->reloadAfterCellEdit) {
+                $gridSettings['afterSaveCell'] = new JsExpression('function(){jQuery(this).trigger("reloadGrid");}');
+            }
         }
-        $gridSettings = array_merge($gridSettings, $gridUserSettings);
+        $gridSettings = \array_merge($gridSettings, $gridUserSettings);
 
         return Json::encode($gridSettings, $this->jsonSettings);
     }
@@ -227,7 +249,7 @@ class JqGridWidget extends Widget
                     function(response){
                         return [response.responseText == "", response.responseText, null];
                     }');
-                    $pagerOptions['edit'] = array_merge($editSettings, $optionSettings);
+                    $pagerOptions['edit'] = \array_merge($editSettings, $optionSettings);
                     break;
                 case 'add':
                     $addSettings['url'] = Url::to([$this->requestUrl, 'action' => 'add']);
@@ -235,7 +257,7 @@ class JqGridWidget extends Widget
                     function(response){
                         return [response.responseText == "", response.responseText, null];
                     }');
-                    $pagerOptions['add'] = array_merge($addSettings, $optionSettings);
+                    $pagerOptions['add'] = \array_merge($addSettings, $optionSettings);
                     break;
                 case 'del':
                     $delSettings['url'] = Url::to([$this->requestUrl, 'action' => 'del']);
@@ -243,7 +265,7 @@ class JqGridWidget extends Widget
                     function(response){
                         return [response.responseText == "", response.responseText, null];
                     }');
-                    $pagerOptions['del'] = array_merge($delSettings, $optionSettings);
+                    $pagerOptions['del'] = \array_merge($delSettings, $optionSettings);
                     break;
                 case 'search':
                     $pagerOptions['search'] = $optionSettings;
@@ -252,7 +274,7 @@ class JqGridWidget extends Widget
                     $pagerOptions['view'] = $optionSettings;
                     break;
                 default:
-                    throw new InvalidParamException("Invalid param `$optionName` in pager settings");
+                    throw new InvalidArgumentException("Invalid param `$optionName` in pager settings");
             }
         }
 
@@ -269,8 +291,8 @@ class JqGridWidget extends Widget
         }
         $resultOptions = Json::encode($resultOptions, $this->jsonSettings);
 
-        array_unshift($resultSettings, $resultOptions);
-        return implode(',' . PHP_EOL, $resultSettings);
+        \array_unshift($resultSettings, $resultOptions);
+        return \implode(',' . PHP_EOL, $resultSettings);
     }
 
     protected function prepareToolbarSettings($filterToolbarSettings)
@@ -280,18 +302,5 @@ class JqGridWidget extends Widget
         }
 
         return Json::encode($filterToolbarSettings, $this->jsonSettings);
-    }
-
-    /**
-     * @param array|\yii\db\ActiveRecord $array
-     * @return string
-     */
-    public static function optionsGenerate($array)
-    {
-        $result = ':';
-        foreach ($array as $key => $option) {
-            $result .= ";{$key}:{$option}";
-        }
-        return $result;
     }
 }

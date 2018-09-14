@@ -479,6 +479,7 @@
 							addedrow: "first",
 							topinfo: "",
 							bottominfo: "",
+							labelswidth: "",
 							savekey: [false, 13],
 							navkeys: [false, 38, 40],
 							checkOnSubmit: false,
@@ -542,32 +543,32 @@
 				}
 				function getFormData() {
 					$(frmtb + " > tbody > tr > td .FormElement").each(function () {
-						var $celm = $(".customelement", this), nm = this.name, cm, iCol, editoptions, formatoptions, newformat, type;
-						if ($celm.length) {
-							nm = $celm.attr("name");
-							iCol = iColByName[nm];
-							if (iCol !== undefined) {
-								cm = colModel[iCol];
-								editoptions = cm.editoptions || {};
-								if ($.isFunction(editoptions.custom_value)) {
-									try {
-										postdata[nm] = editoptions.custom_value.call($t, $("#" + jqID(nm), frmtb), "get");
-										if (postdata[nm] === undefined) { throw "e1"; }
-									} catch (e) {
-										if (e === "e1") {
-											jgrid.info_dialog.call($t, errcap, "function 'custom_value' " + o.msg.novalue, o.bClose);
-										} else {
-											jgrid.info_dialog.call($t, errcap, e.message, o.bClose);
-										}
-									}
-									return true;
+						var $celm = $(".customelement", this),
+							nm = $celm.length ? $celm.attr("name") : this.name,
+							iCol = iColByName[nm],
+							cm = iCol !== undefined ? colModel[iCol] || {} : {},
+							editoptions = cm.editoptions || {},
+							formatoptions, newformat, type;
+						if ($celm.length && $.isFunction(editoptions.custom_value)) {
+							try {
+								postdata[nm] = editoptions.custom_value.call($t, $("#" + jqID(nm), frmtb), "get");
+								if (postdata[nm] === undefined) { throw "e1"; }
+							} catch (e) {
+								if (e === "e1") {
+									jgrid.info_dialog.call($t, errcap, "function 'custom_value' " + o.msg.novalue, o.bClose);
+								} else {
+									jgrid.info_dialog.call($t, errcap, e.message, o.bClose);
 								}
 							}
+							return true;
 						} else {
 							type = $(this)[0].type;
 							switch (type) {
 								case "checkbox":
-									postdata[nm] = $(this).is(":checked") ? $(this).val() : $(this).data("offval");
+									var checkBoxValues = typeof editoptions.value === "string" ?
+											editoptions.value.split(":") :
+											["Yes", "No"];
+									postdata[nm] = $(this).is(":checked") ? checkBoxValues[0] : checkBoxValues[1];
 									break;
 								case "select-one":
 									postdata[nm] = $("option:selected", this).val();
@@ -585,13 +586,9 @@
 								case "date":
 									postdata[nm] = $(this).val();
 									if (String(postdata[nm]).split("-").length === 3) {
-										iCol = iColByName[nm];
-										if (iCol !== undefined) {
-											cm = colModel[iCol];
-											formatoptions = cm.formatoptions || {};
-											newformat = formatoptions.newformat || getGridRes.call($self, "formatter.date.newformat");
-											postdata[nm] = jgrid.parseDate.call($self[0], "Y-m-d", postdata[nm], newformat);
-										}
+										formatoptions = cm.formatoptions || {};
+										newformat = formatoptions.newformat || getGridRes.call($self, "formatter.date.newformat");
+										postdata[nm] = jgrid.parseDate.call($self[0], "Y-m-d", postdata[nm], newformat);
 									}
 									break;
 								default:
@@ -606,7 +603,10 @@
 				}
 				function createData(rowid1, tb, maxcols) {
 					var cnt = 0, retpos = [], ind = false, $tb = $(tb),
-						tdtmpl = "<td class='CaptionTD'>&#160;</td><td class='DataTD'>&#160;</td>", tmpl = "", i; //*2
+						labelsWidth = String(o.labelswidth) + (!o.labelswidth || isNaN(o.labelswidth) ? "" : "px"),
+						tdtmpl = "<td class='CaptionTD" +
+							(labelsWidth ? "' style='width:" + labelsWidth + ";" : "") +
+							"'>&#160;</td><td class='DataTD'>&#160;</td>", tmpl = "", i; //*2
 					for (i = 1; i <= maxcols; i++) {
 						tmpl += tdtmpl;
 					}

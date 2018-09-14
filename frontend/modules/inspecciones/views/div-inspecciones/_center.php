@@ -22,7 +22,7 @@ use yii\helpers\Url;
                   </li>
 
                   <li >
-                    <a data-toggle="tab" href="#componentes">
+                    <a data-toggle="tab" href="#bienes">
                       <i class="blue fa fa-address-book bigger-110"></i>
                       Bienes Muebles
                     </a>
@@ -52,16 +52,12 @@ use yii\helpers\Url;
                     ?>
                   </div>
 
-                  <div id="componentes" class="tab-pane fade">
+                  <div id="bienes" class="tab-pane fade">
 
-                    <div class="alert alert-info">
-                         <button type="button" class="close" data-dismiss="alert">
-                           <i class="ace-icon fa fa-times"></i>
-                         </button>
-                         <strong>Upps!</strong>
-                         Opcion en desarrollo
-                         <br>
-                    </div>
+                    <?php
+                        echo Yii::$app->controller->renderPartial('_bienes',['model'=>$model]);
+
+                    ?>
 
                   </div>
 

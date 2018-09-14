@@ -37,7 +37,7 @@ class Periodos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fini', 'fclose'], 'safe'],
+            [['fini', 'fclose','descripcion'], 'required'],
             [['status'], 'boolean'],
             [['saldo_bm_ini', 'saldo_bu_ini', 'saldo_in_bm', 'saldo_in_bu'], 'number'],
             [['descripcion'], 'string', 'max' => 100],
@@ -52,9 +52,9 @@ class Periodos extends \yii\db\ActiveRecord
         return [
             'id' => 'Id',
             'descripcion' => 'Descripcion',
-            'fini' => 'Fini',
-            'fclose' => 'Fclose',
-            'status' => 'Status',
+            'fini' => 'Fecha de Inicio',
+            'fclose' => 'Fecha de Cierres',
+            'status' => 'Estado',
             'saldo_bm_ini' => 'Saldo Bm Ini',
             'saldo_bu_ini' => 'Saldo Bu Ini',
             'saldo_in_bm' => 'Saldo In Bm',
@@ -93,4 +93,18 @@ class Periodos extends \yii\db\ActiveRecord
            return $periodo;
       }
     }
+
+    public function getStatusHtml(){
+      if ($this->status==0){
+        return '<span class="badge badge-default"><b>Cerrado</b></span>';
+      }
+
+      if ($this->status==1){
+        return '<span class="badge badge-warning">En Curso</span>';
+      }
+
+
+
+    }
+
 }

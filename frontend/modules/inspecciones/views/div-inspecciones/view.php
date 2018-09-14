@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php echo Dialog::widget(); ?>
 
 <?php
-  $this->registerJs("
+$this->registerJs("
   $(document).on('click', '#activity-index-link', (function() {
       $('.tl').text('Nuevo Semoviente');
       $.get(
@@ -33,6 +33,19 @@ $this->params['breadcrumbs'][] = $this->title;
           }
       );
   }));
+
+  $(document).on('click', '#activity-bien', (function() {
+      $('.tl').text('Nuevo Bien');
+      $.get(
+
+          $(this).data('url'),
+          function (data) {
+              $('.modal-body').html(data);
+              $('#modal-semovientes').modal();
+          }
+      );
+  }));
+
   ");
  ?>
 
