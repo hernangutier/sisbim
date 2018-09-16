@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Bm3 */
+/* @var $model common\models\Clasificacion */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Bm3s', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Clasificacions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bm3-view">
+<div class="clasificacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,13 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'descripcion',
+            'grupo',
+            'subgrupo',
+            'seccion',
             'id',
-            'id_bien',
-            'id_bm3',
-            'date_caducidad',
-            'active:boolean',
-            'date_in',
-            'observaciones',
         ],
     ]) ?>
 

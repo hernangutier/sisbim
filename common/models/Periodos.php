@@ -16,6 +16,7 @@ use Yii;
  * @property string $saldo_bu_ini
  * @property string $saldo_in_bm
  * @property string $saldo_in_bu
+ * @property string $saldo_out_bm
  *
  * @property DesincorporacionesBm[] $desincorporacionesBms
  * @property Movimientos[] $movimientos
@@ -55,10 +56,11 @@ class Periodos extends \yii\db\ActiveRecord
             'fini' => 'Fecha de Inicio',
             'fclose' => 'Fecha de Cierres',
             'status' => 'Estado',
-            'saldo_bm_ini' => 'Saldo Bm Ini',
-            'saldo_bu_ini' => 'Saldo Bu Ini',
+            'saldo_bm_ini' => 'Saldo Bienes Muebles',
+            'saldo_bu_ini' => 'Saldo Bienes de Uso',
             'saldo_in_bm' => 'Saldo In Bm',
             'saldo_in_bu' => 'Saldo In Bu',
+            'saldo_out_bm' => 'Desincorporaciones del Mes',
         ];
     }
 
@@ -88,10 +90,11 @@ class Periodos extends \yii\db\ActiveRecord
 
     public static function getActivo()
     {
-      $model=Periodos::find(['status'=>true])->limit(1)->all();
-      foreach ($model as $periodo) {
-           return $periodo;
-      }
+      $model=Periodos::find()->where(['status'=>true])->one();
+
+
+              return $model;
+
     }
 
     public function getStatusHtml(){
@@ -105,6 +108,10 @@ class Periodos extends \yii\db\ActiveRecord
 
 
 
+    }
+
+    public function getTotals(){
+      return ($this->saldo_bm_ini+$this->saldo_in_bm-$this->saldo_out_bm);
     }
 
 }

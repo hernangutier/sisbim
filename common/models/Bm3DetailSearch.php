@@ -5,27 +5,26 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Bm3;
+use common\models\Bm3Detail;
 
 /**
- * Bm3Search represents the model behind the search form of `common\models\Bm3`.
+ * Bm3DetailSearch represents the model behind the search form of `common\models\Bm3Detail`.
  */
-class Bm3Search extends Bm3
+class Bm3DetailSearch extends Bm3Detail
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'id_bien'], 'integer'],
-            [['date_caducidad', 'date_in', 'observaciones'], 'safe'],
-            [['active'], 'boolean'],
+            [['id', 'id_bm3', 'id_bien'], 'integer'],
+            [['is_recovered'], 'boolean'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -42,7 +41,7 @@ class Bm3Search extends Bm3
      */
     public function search($params)
     {
-        $query = Bm3::find();
+        $query = Bm3Detail::find();
 
         // add conditions that should always apply here
 
@@ -61,13 +60,10 @@ class Bm3Search extends Bm3
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_bm3' => $this->id_bm3,
             'id_bien' => $this->id_bien,
-            'date_caducidad' => $this->date_caducidad,
-            'active' => $this->active,
-            'date_in' => $this->date_in,
+            'is_recovered' => $this->is_recovered,
         ]);
-
-        $query->andFilterWhere(['ilike', 'observaciones', $this->observaciones]);
 
         return $dataProvider;
     }

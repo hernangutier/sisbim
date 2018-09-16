@@ -5,14 +5,14 @@ use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-use common\models\MovimientosDtSearch;
+use common\models\Bm3MasterSearch;
 use kartik\dialog\Dialog;
 use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\PeriodosSearch */
+/* @var $searchModel common\models\Bm3MasterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Registro de Inventarios';
+$this->title = 'Comprobantes Bm3';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -86,7 +86,7 @@ $this->registerJs("
             ],
         ],
         'panel' => [
-              'heading'=>'<h3 class="panel-title"><i class="fa fa-history "></i> Historico de Inventarios</h3>',
+              'heading'=>'<h3 class="panel-title"><i class="fa fa-history "></i> Comprobantes Bm3</h3>',
               'type'=>'info',
 
 
@@ -95,21 +95,7 @@ $this->registerJs("
 
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{admin}',
-                            'buttons' => [
-                              'admin' => function ($url, $model, $key) {
-                                  return (($model->status==1) ? Html::a('<span class="btn btn-xs btn-primary"><i class="ace-icon fa fa-wrench bigger-120"></i></span> ',
-                                      '#', [
-                                      'id' => 'activity-close-link',
-                                      'title' => Yii::t('app', 'Cerrar Inventario'),
-                                      'data-url'=>Url::to(['periodos/close','id'=>$model->id]),
 
-                                  ]) : '' );
-                              },
-                      ],
-              ],
               [
                               'class' => 'yii\grid\ActionColumn',
                               'template' => '{print}',
@@ -124,44 +110,6 @@ $this->registerJs("
                                 },
                         ],
                 ],
-
-
-                [
-                      'class' => 'yii\grid\ActionColumn',
-                      'template' => '{delete}',
-                      'buttons' => [
-                        'delete' => function ($url,$model, $key) {
-                              $url=Url::to(['movimientos/nulls','id'=>$model->id]);
-                              return ($model->status==0) ? Html::a('<span class="btn btn-xs btn-danger"><i class="ace-icon fa fa-ban bigger-120"></i></span> ', '#', [
-                                  'title' => Yii::t('yii', 'Delete'),
-                                  'aria-label' => Yii::t('yii', 'Delete'),
-                                  'onclick' => "
-                                  krajeeDialog.confirm('Esta seguro de anular la transaccion:  ' +  '$model->descripcion', function (result) {
-                                       if (result) {
-                                          $.ajax({
-
-                                          url: '$url',
-                                          type: 'POST',
-
-                                          error : function(xhr, status) {
-                                            alert('error')
-                                          },
-                                          success: function (json){
-                                            $.pjax.reload({container: '#grid-periodos'});
-
-                                          },
-
-                                      });
-                                    }
-                                  });
-                                      return false;
-                                  ",
-                              ]) : '';
-                          },
-
-                          ],
-                  ],
-
 
               [
                     'class' => 'kartik\grid\ExpandRowColumn',
@@ -181,33 +129,20 @@ $this->registerJs("
 
             [
               'attribute'=>'id',
-              'label'=>'Descripcion',
+              'label'=>'N° de Control',
               'value'=>function ($searchModel){
-                return $searchModel->descripcion;
+                return $searchModel->getNControlFormat();
               }
             ],
 
-            'fini',
-            'fclose',
-
+            'date_ini',
+            'date_close',
             [
-              'attribute'=>'saldo_bm_ini',
+              'attribute'=>'id_periodo',
               'value'=>function($model){
-                return '<b class="blue">' . number_format($model->saldo_bm_ini,2) . '</b>';
-              },
-              'format'=>'raw',
+                return $model->periodo->descripcion;
+              }
             ],
-
-            [
-              'attribute'=>'saldo_bu_ini',
-              'value'=>function($model){
-                return '<b class="blue">' . number_format($model->saldo_bu_ini,2) . '</b>';
-              },
-              'format'=>'raw',
-            ],
-
-            
-
             [
               'attribute'=>'status',
               'value'=>function ($searchModel){

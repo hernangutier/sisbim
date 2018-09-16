@@ -110,6 +110,15 @@
                           <b class="arrow"></b>
                     </li>
 
+                    <li class="">
+                          <a href="<?=  Url::to(['clasificacion/index'])  ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                           Clasificacion
+                          </a>
+
+                          <b class="arrow"></b>
+                    </li>
+
 
 
                   </ul>
@@ -277,14 +286,50 @@
 						<ul class="submenu">
 
               <li class="">
-										<a href="<?=  Url::to(['bm3/index'])  ?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-										Registro de (60 Faltantes)
-                    </a>
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                  <span class="menu-text">
+                     Desincorporacion por 60 Faltantes
+                  </span>
 
-										<b class="arrow"></b>
-									</li>
+                  <b class="arrow fa fa-angle-down"></b>
+                </a>
 
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                  <li class="">
+                        <a href="<?=  Url::to(['bm3-master/open'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Nuevo Comprobante BM3
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+
+                  <li class="">
+                        <a href="<?=  Url::to(['bm3-master/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Gestion de Comprobantes
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+
+                  <li class="">
+                        <a href="<?=  Url::to(['sa-ordenes-salida/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Analisis de la Cuenta de 60 Faltantes
+                        </a>
+
+                        <b class="arrow"></b>
+                      </li>
+
+
+
+                  </ul>
+              </li>
                 <li class="">
     										<a href="<?= Url::to('/sisbim/report/bienes_propuestos.php')  ?>">
     											<i class="menu-icon fa fa-caret-right"></i>

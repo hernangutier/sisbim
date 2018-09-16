@@ -3,19 +3,24 @@
 namespace frontend\modules\procesos\controllers;
 
 use Yii;
+use common\models\Bm3Master;
+use common\models\Bm3MasterSearch;
+use common\models\Bm3Detail;
 use common\models\Periodos;
-use common\models\PeriodosSearch;
+use common\models\Bm3DetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use  yii\db\Query;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
-use yii\db\Connection;
+use yii\helpers\Url;
+use yii\helpers\Json;
+
 
 /**
- * PeriodosController implements the CRUD actions for Periodos model.
+ * Bm3MasterController implements the CRUD actions for Bm3Master model.
  */
-class PeriodosController extends Controller
+class Bm3MasterController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,12 +38,12 @@ class PeriodosController extends Controller
     }
 
     /**
-     * Lists all Periodos models.
+     * Lists all Bm3Master models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PeriodosSearch();
+        $searchModel = new Bm3MasterSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $this->layout="main";
@@ -48,91 +53,61 @@ class PeriodosController extends Controller
         ]);
     }
 
-
-
-    public function actionClose($submit = false,$id)
-{
-  $model_old=$this->findModel($id);
-  $model=new Periodos();
-  $model->fini=$model_old->fclose;
-
-
-    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($model);
-    }
-
-    if ($model->load(Yii::$app->request->post())) {
-        // abrir aqui una transaccion para procesar
-        $transaction=$model::getDb()->beginTransaction();
-        try
-
-        {
-              // sp_close_periodo
-              $model::getDb()->createCommand("SELECT sp_cierre_periodo()")->execute();
-              // luego guardar el nuevo periodo
-              if ($model->save()) {
-                  $model->refresh();
-                   $transaction->commit();
-                  Yii::$app->response->format = Response::FORMAT_JSON;
-                  return [
-                      'message' => '¡Éxito!',
-                  ];
-              } else {
-                  Yii::$app->response->format = Response::FORMAT_JSON;
-                  return ActiveForm::validate($model);
-              }
-            }
-            catch(Exception $e)
-
-      {
-
-      	$transaction->rollBack();
-
-      }
-
-    }
-
-    return $this->renderAjax('_form_cierre', [
-        'model' => $model,
-        'model_close' => $model_old,
-    ]);
-}
-
-
     /**
-     * Displays a single Periodos model.
+     * Displays a single Bm3Master model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+      $searchModel = new Bm3DetailSearch();
+      $searchModel->id_bm3=$id;
+      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+      $this->layout="main";
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel'=>$searchModel,
+            'dataProvider'=>$dataProvider,
         ]);
     }
 
     /**
-     * Creates a new Periodos model.
+     * Creates a new Bm3Master model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Periodos();
+        $model = new Bm3Master();
+        $model->date_ini=date('Y-m-d');
+        $model->id_user=Yii::$app->user->identity->id_bm;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $this->layout="main";
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
+
+    public function actionOpen(){
+      $this->layout="main";
+      $model=Bm3Master::find()->where(['id_periodo'=>Periodos::getActivo()->id])->one();
+      if (isset($model)){
+        return $this->redirect(['view', 'id' => $model->id]);
+      }
+
+
+
+      return $this->redirect(['create']);
+
+    }
+
     /**
-     * Updates an existing Periodos model.
+     * Updates an existing Bm3Master model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -152,7 +127,7 @@ class PeriodosController extends Controller
     }
 
     /**
-     * Deletes an existing Periodos model.
+     * Deletes an existing Bm3Master model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -162,22 +137,65 @@ class PeriodosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+
     }
 
     /**
-     * Finds the Periodos model based on its primary key value.
+     * Finds the Bm3Master model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Periodos the loaded model
+     * @return Bm3Master the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Periodos::findOne($id)) !== null) {
+        if (($model = Bm3Master::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionBienesList($q = null) {
+    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'', 'ubicacion'=>'']];
+    if (!is_null($q)) {
+        $query = new Query;
+        $query->select('*')
+            ->from('vw_bienes_disp_bm3')
+            ->where(['like', 'tostring', strtoupper($q)])
+            ->limit(40);
+        $command = $query->createCommand();
+        $data = $command->queryAll();
+        $out['results'] = array_values($data);
+    }
+    elseif ($id > 0) {
+        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion,'ubicacion' => Bienes::find($id)->idUndActual->descripcion];
+    }
+    return $out;
+}
+
+
+public function actionAddItems($id_bm3,$id_bien)
+{
+
+    $model= new Bm3Detail();
+    $model->id_bm3=$id_bm3;
+    $model->id_bien=$id_bien;
+
+
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    if ($model->isDuplicate()){
+      return $error=true;
+    }
+
+    if ($model->save()){
+      return $error=false;
+    } else {
+      return $error=true;
+    }
+}
+
+
+
 }

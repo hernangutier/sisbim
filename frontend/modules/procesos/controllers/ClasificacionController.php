@@ -3,19 +3,16 @@
 namespace frontend\modules\procesos\controllers;
 
 use Yii;
-use common\models\Periodos;
-use common\models\PeriodosSearch;
+use common\models\Clasificacion;
+use common\models\ClasificacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
-use yii\db\Connection;
 
 /**
- * PeriodosController implements the CRUD actions for Periodos model.
+ * ClasificacionController implements the CRUD actions for Clasificacion model.
  */
-class PeriodosController extends Controller
+class ClasificacionController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,14 +30,13 @@ class PeriodosController extends Controller
     }
 
     /**
-     * Lists all Periodos models.
+     * Lists all Clasificacion models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PeriodosSearch();
+        $searchModel = new ClasificacionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $this->layout="main";
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,60 +44,8 @@ class PeriodosController extends Controller
         ]);
     }
 
-
-
-    public function actionClose($submit = false,$id)
-{
-  $model_old=$this->findModel($id);
-  $model=new Periodos();
-  $model->fini=$model_old->fclose;
-
-
-    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $submit == false) {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($model);
-    }
-
-    if ($model->load(Yii::$app->request->post())) {
-        // abrir aqui una transaccion para procesar
-        $transaction=$model::getDb()->beginTransaction();
-        try
-
-        {
-              // sp_close_periodo
-              $model::getDb()->createCommand("SELECT sp_cierre_periodo()")->execute();
-              // luego guardar el nuevo periodo
-              if ($model->save()) {
-                  $model->refresh();
-                   $transaction->commit();
-                  Yii::$app->response->format = Response::FORMAT_JSON;
-                  return [
-                      'message' => '¡Éxito!',
-                  ];
-              } else {
-                  Yii::$app->response->format = Response::FORMAT_JSON;
-                  return ActiveForm::validate($model);
-              }
-            }
-            catch(Exception $e)
-
-      {
-
-      	$transaction->rollBack();
-
-      }
-
-    }
-
-    return $this->renderAjax('_form_cierre', [
-        'model' => $model,
-        'model_close' => $model_old,
-    ]);
-}
-
-
     /**
-     * Displays a single Periodos model.
+     * Displays a single Clasificacion model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -114,25 +58,25 @@ class PeriodosController extends Controller
     }
 
     /**
-     * Creates a new Periodos model.
+     * Creates a new Clasificacion model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Periodos();
+        $model = new Clasificacion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
-
+        $this->layout="main";
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Periodos model.
+     * Updates an existing Clasificacion model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -143,16 +87,16 @@ class PeriodosController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
-
+        $this->layout="main";
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing Periodos model.
+     * Deletes an existing Clasificacion model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -162,19 +106,19 @@ class PeriodosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+
     }
 
     /**
-     * Finds the Periodos model based on its primary key value.
+     * Finds the Clasificacion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Periodos the loaded model
+     * @return Clasificacion the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Periodos::findOne($id)) !== null) {
+        if (($model = Clasificacion::findOne($id)) !== null) {
             return $model;
         }
 

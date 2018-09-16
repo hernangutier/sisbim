@@ -1,5 +1,6 @@
 <?php
 
+
 namespace common\models;
 
 use Yii;
@@ -47,8 +48,8 @@ class Clasificacion extends \yii\db\ActiveRecord
         return [
             'descripcion' => 'Descripcion',
             'grupo' => 'Grupo',
-            'subgrupo' => 'Subgrupo',
-            'seccion' => 'Seccion',
+            'subgrupo' => 'Sub-Grupo',
+            'seccion' => 'Sección',
             'id' => 'Id',
         ];
     }

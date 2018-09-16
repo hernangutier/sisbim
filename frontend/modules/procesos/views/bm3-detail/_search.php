@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Bm3Search */
+/* @var $model common\models\Bm3DetailSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bm3-search">
+<div class="bm3-detail-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,17 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'id_bien') ?>
-
     <?= $form->field($model, 'id_bm3') ?>
 
-    <?= $form->field($model, 'date_caducidad') ?>
+    <?= $form->field($model, 'id_bien') ?>
 
-    <?= $form->field($model, 'active')->checkbox() ?>
-
-    <?php // echo $form->field($model, 'date_in') ?>
-
-    <?php // echo $form->field($model, 'observaciones') ?>
+    <?= $form->field($model, 'is_recovered')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

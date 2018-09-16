@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Clasificacion;
+use common\models\Bm3Master;
 
 /**
- * ClasificacionSearch represents the model behind the search form of `common\models\Clasificacion`.
+ * Bm3MasterSearch represents the model behind the search form of `common\models\Bm3Master`.
  */
-class ClasificacionSearch extends Clasificacion
+class Bm3MasterSearch extends Bm3Master
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class ClasificacionSearch extends Clasificacion
     public function rules()
     {
         return [
-            [['descripcion', 'grupo', 'subgrupo', 'seccion'], 'safe'],
-            [['id'], 'integer'],
+            [['id', 'id_periodo', 'id_user', 'ncontrol'], 'integer'],
+            [['date_creation', 'date_close', 'date_ini', 'observaciones'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ClasificacionSearch extends Clasificacion
      */
     public function search($params)
     {
-        $query = Clasificacion::find();
+        $query = Bm3Master::find();
 
         // add conditions that should always apply here
 
@@ -60,12 +60,15 @@ class ClasificacionSearch extends Clasificacion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'date_creation' => $this->date_creation,
+            'date_close' => $this->date_close,
+            'date_ini' => $this->date_ini,
+            'id_periodo' => $this->id_periodo,
+            'id_user' => $this->id_user,
+            'ncontrol' => $this->ncontrol,
         ]);
 
-        $query->andFilterWhere(['ilike', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['ilike', 'grupo', $this->grupo])
-            ->andFilterWhere(['ilike', 'subgrupo', $this->subgrupo])
-            ->andFilterWhere(['ilike', 'seccion', $this->seccion]);
+        $query->andFilterWhere(['ilike', 'observaciones', $this->observaciones]);
 
         return $dataProvider;
     }
