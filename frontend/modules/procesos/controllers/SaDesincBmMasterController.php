@@ -3,11 +3,10 @@
 namespace frontend\modules\procesos\controllers;
 
 use Yii;
-use common\models\Bm3Master;
-use common\models\Bm3MasterSearch;
-use common\models\Bm3Detail;
-use common\models\Periodos;
-use common\models\Bm3DetailSearch;
+use common\models\SaDesincBmMaster;
+use common\models\SaDesincBmMasterSearch;
+use common\models\SaDesincBmDetailSearch;
+use common\models\SaDesincBmDetail;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,11 +15,10 @@ use yii\web\Response;
 use yii\helpers\Url;
 use yii\helpers\Json;
 
-
 /**
- * Bm3MasterController implements the CRUD actions for Bm3Master model.
+ * SaDesincBmMasterController implements the CRUD actions for SaDesincBmMaster model.
  */
-class Bm3MasterController extends Controller
+class SaDesincBmMasterController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -38,14 +36,13 @@ class Bm3MasterController extends Controller
     }
 
     /**
-     * Lists all Bm3Master models.
+     * Lists all SaDesincBmMaster models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new Bm3MasterSearch();
+        $searchModel = new SaDesincBmMasterSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $this->layout="main";
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -53,50 +50,15 @@ class Bm3MasterController extends Controller
         ]);
     }
 
-    public function actionSave($id){
-      \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-      $model=$this->findModel($id);
-      $model->status=1;
-      if ($model->save()){
-        return $id=$model->id;
-
-      }
-    }
-
-    public function actionResult($id,$type)
-    {
-      $mov = $this->findModel($id);
-      $model=new \frontend\models\Finish();
-      $model->title="Felicitaciones!";
-      $content="Se ha Procesado correctamente la Transacción  <a href='#'>Imprimir Comprobante BM3 <code>" . str_pad($mov->ncontrol,10,'0',STR_PAD_LEFT) . "</code></a>";
-      $model->urlButton=  Url::toRoute(['bm3-master/index']);
-      $model->content=$content;
-
-      $this->layout="main";
-      return $this->render('result',[
-        'model'=>$model
-      ]);
-    }
-
-
-    public function actionAnalisis(){
-
-      $this->layout="main";
-        return $this->render('_analisis', [
-            'model' => new Bm3Master(),
-                    ]);
-    }
-
     /**
-     * Displays a single Bm3Master model.
+     * Displays a single SaDesincBmMaster model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-      $searchModel = new Bm3DetailSearch();
-      $searchModel->id_bm3=$id;
+    public function actionView($id){
+      $searchModel = new SaDesincBmDetailSearch();
+      $searchModel->id_des=$id;
       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
       $this->layout="main";
         return $this->render('view', [
@@ -104,44 +66,28 @@ class Bm3MasterController extends Controller
             'searchModel'=>$searchModel,
             'dataProvider'=>$dataProvider,
         ]);
-    }
 
+    }
     /**
-     * Creates a new Bm3Master model.
+     * Creates a new SaDesincBmMaster model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Bm3Master();
-        $model->date_ini=date('Y-m-d');
-        $model->id_user=Yii::$app->user->identity->id_bm;
-
+        $model = new SaDesincBmMaster();
+        $this->layout="main";
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        $this->layout="main";
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
-
-    public function actionOpen(){
-      $this->layout="main";
-      $model=Bm3Master::find()->where(['id_periodo'=>Periodos::getActivo()->id])->one();
-      if (isset($model)){
-        return $this->redirect(['view', 'id' => $model->id]);
-      }
-
-
-
-      return $this->redirect(['create']);
-
-    }
-
     /**
-     * Updates an existing Bm3Master model.
+     * Updates an existing SaDesincBmMaster model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -161,7 +107,7 @@ class Bm3MasterController extends Controller
     }
 
     /**
-     * Deletes an existing Bm3Master model.
+     * Deletes an existing SaDesincBmMaster model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -171,32 +117,33 @@ class Bm3MasterController extends Controller
     {
         $this->findModel($id)->delete();
 
-
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Bm3Master model based on its primary key value.
+     * Finds the SaDesincBmMaster model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Bm3Master the loaded model
+     * @return SaDesincBmMaster the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Bm3Master::findOne($id)) !== null) {
+        if (($model = SaDesincBmMaster::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+
     public function actionBienesList($q = null) {
     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'', 'ubicacion'=>'']];
+    $out = ['results' => ['id' => '', 'codigo' => '','descripcion'=>'']];
     if (!is_null($q)) {
         $query = new Query;
         $query->select('*')
-            ->from('vw_bienes_disp_bm3')
+            ->from('vw_bienes_activos')
             ->where(['like', 'tostring', strtoupper($q)])
             ->limit(40);
         $command = $query->createCommand();
@@ -204,17 +151,16 @@ class Bm3MasterController extends Controller
         $out['results'] = array_values($data);
     }
     elseif ($id > 0) {
-        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion,'ubicacion' => Bienes::find($id)->idUndActual->descripcion];
+        $out['results'] = ['id' => $id, 'codigo'=>Bienes::find($id)->codigo, 'descripcion' => Bienes::find($id)->descripcion];
     }
     return $out;
 }
 
-
-public function actionAddItems($id_bm3,$id_bien)
+public function actionAddItems($id_des,$id_bien)
 {
 
-    $model= new Bm3Detail();
-    $model->id_bm3=$id_bm3;
+    $model= new SaDesincBmDetail();
+    $model->id_des=$id_des;
     $model->id_bien=$id_bien;
 
 
@@ -229,7 +175,5 @@ public function actionAddItems($id_bm3,$id_bien)
       return $error=true;
     }
 }
-
-
 
 }

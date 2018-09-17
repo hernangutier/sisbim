@@ -318,7 +318,7 @@
                   </li>
 
                   <li class="">
-                        <a href="<?=  Url::to(['sa-ordenes-salida/index'])  ?>">
+                        <a href="<?=  Url::to(['bm3-master/analisis'])  ?>">
                           <i class="menu-icon fa fa-caret-right"></i>
                         Analisis de la Cuenta de 60 Faltantes
                         </a>
@@ -330,14 +330,60 @@
 
                   </ul>
               </li>
-                <li class="">
-    										<a href="<?= Url::to('/sisbim/report/bienes_propuestos.php')  ?>">
-    											<i class="menu-icon fa fa-caret-right"></i>
-    											Bienes a Desincorporar
-    										</a>
 
-    										<b class="arrow"></b>
-    						</li>
+              <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                  <span class="menu-text">
+                     Enajenación de Bienes
+                  </span>
+
+                  <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                  <li class="">
+                        <a href="<?=  Url::to(['sa-desinc-bm-master/create'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Nueva Propuesta de Enajenación
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+
+                  <li class="">
+                        <a href="<?=  Url::to(['sa-desinc-bm-master/index'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Gestion de Propuestas
+                        </a>
+
+                        <b class="arrow"></b>
+                  </li>
+
+                  <li class="">
+                        <a href="<?=  Url::to(['bm3-master/analisis'])  ?>">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                        Bienes Desincorporados
+                        </a>
+
+                        <b class="arrow"></b>
+                      </li>
+                 <li class="">
+                            <a href="<?=  Url::to(['sa-desinc-conceptos/index'])  ?>">
+                              <i class="menu-icon fa fa-caret-right"></i>
+                            Conceptos Pub. 21
+                            </a>
+
+                            <b class="arrow"></b>
+                  </li>
+
+
+
+                  </ul>
+              </li>
 
                 <li class="">
     										<a href="<?= Url::to('/sisbim/report/bienes_etiquetar.php')  ?>">

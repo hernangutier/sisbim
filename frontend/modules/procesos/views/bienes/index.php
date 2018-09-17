@@ -117,11 +117,24 @@ $this->params['breadcrumbs'][] = $this->title;
                   }  else {
                       return $model->getEstadoUso();
                   }
+                 },
+                  'filter' => Html::activeDropDownList($searchModel,
+                  'estado_uso', [
+                      '1'=>'En Uso',
+                      '2'=>'En Comodato',
+                      '3'=>'En Arrendamiento',
+                      '4'=>'En Mantenimiento',
+                      '5'=>'En Reparación',
+                      '6'=>'En Proceso de Dispocición',
+                      '7'=>'En Desuso por Obsolecencia',
+                      '8'=>'En Desuso por Inservibilidad',
+                      '9'=>'En Desuso por Obsolecencia e Inservibilidad',
+                      '10'=>'En Almacen o Deposito para su Asignación'
+                      ],
+                      ['class'=>'form-control','prompt' => 'No Filtro']),
 
-                },
-                'filter' => Html::activeDropDownList($searchModel,
-                'estado_uso', ArrayHelper::map(common\models\Bienes::getListEstadosUso(),
-                'id', 'descripcion'),['class'=>'form-control','prompt' => 'No Filtro']),
+
+
             ],
 
 

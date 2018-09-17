@@ -6,7 +6,7 @@ use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $model common\models\Bm3Master */
+/* @var $model common\models\SaDesincBmMaster */
 
 ?>
 
@@ -28,10 +28,10 @@ $(document).ready(function (){
                // Formato de datos que se espera en la respuesta
                dataType: 'json',
                // URL a la que se enviará la solicitud Ajax
-               url: 'index.php?r=procesos%2Fbm3-master%2Fsave',
+               url: 'index.php?r=procesos%2Fmovimientos%2Fsave',
            })
             .done(function( data, textStatus, jqXHR ) {
-              var url = 'index.php?r=procesos%2Fbm3-master%2Fresult&id=' + data + '&type=2';
+              var url = 'index.php?r=procesos%2Fmovimientos%2Fresult&id=' + data + '&type=2';
               $(location).attr('href', url);
             })
             .fail(function( jqXHR, textStatus, errorThrown ) {
@@ -56,10 +56,10 @@ $(document).ready(function (){
 <table class="header-row" style="table-layout: fixed;" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tbody>
   <tr><td class="header-row-td" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 0px;" width="100%" valign="top" align="left">Informacion de la Transacción</td></tr></tbody></table>
-<span style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px;">Registro de 60 Faltantes </span>
+<span style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px;">Propuesta de Enajenación de Bienes </span>
 
 <table class="table-space" style="height: 10px; font-size: 0px; line-height: 0; width: 100px; background-color: transparent;" width="100" cellspacing="0" cellpadding="0" height="10" border="0" bgcolor="transparent"><tbody><tr><td class="table-space-td" style="height: 10px; width: 100px; background-color: transparent;" width="100" valign="middle" height="10" bgcolor="transparent" align="left">&nbsp;</td></tr></tbody></table>
-<?= '<label>N° de Control</label><br>' ?>
+<?= '<label>N° de Comprobante</label><br>' ?>
 <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;"><?= $model->getNControlFormat()  ?></a>
 <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
 <?php
@@ -90,7 +90,7 @@ echo Editable::widget([
     if ($model->status==0){
       echo '<div class="clearfix form-actions">
       										<div class="col-md-offset-3 col-md-9">
-      											<button class="btn btn-info procesar" type="button" data-url='. Url::to(['save','id'=>$model->id]) .'>' .
+      											<button class="btn btn-info procesar" type="button" data-url='. Url::to(['procesar','id'=>$model->id]) .'>' .
       												'<i class="ace-icon fa fa-check bigger-110 "></i>
       												Procesar
       											</button>
